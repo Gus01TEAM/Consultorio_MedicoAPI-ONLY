@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Consultorio_Medico.BL": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51658;http://localhost:51660"
+    }
+  }
+}

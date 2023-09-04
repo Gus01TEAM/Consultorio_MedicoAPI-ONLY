@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Consultorio_Medico.BL.DTOs\Consultorio_Medico.BL.DTOs.csproj" />
+    <ProjectReference Include="..\Consultorio_Medico.BL.Interfaces\Consultorio_Medico.BL.Interfaces.csproj" />
+    <ProjectReference Include="..\Consultorio_Medico.Entities.Interfaces\Consultorio_Medico.Entities.Interfaces.csproj" />
+    <ProjectReference Include="..\Consultorio_Medico.Entities\Consultorio_Medico.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ScriptDB\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>
