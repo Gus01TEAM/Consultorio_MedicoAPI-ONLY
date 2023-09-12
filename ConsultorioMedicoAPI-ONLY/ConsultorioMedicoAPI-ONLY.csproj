@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Consultorio_Medico.BL.DTOs\Consultorio_Medico.BL.DTOs.csproj" />
+    <ProjectReference Include="..\Consultorio_Medico.BL.Interfaces\Consultorio_Medico.BL.Interfaces.csproj" />
+    <ProjectReference Include="..\Consultorio_Medico.loC\Consultorio_Medico.loC.csproj" />
+  </ItemGroup>
+
 </Project>
