@@ -43,7 +43,7 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
             _logger.LogInformation("---- INICIO METODO GET BY ID SPECIALTIE CONTROLLER ----");
             var specialtie = await _specialtieBL.GetById(Id);
 
-            var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Obteniendo Schedule by Id", specialtie);
+            var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Obteniendo la especialidad by Id", specialtie);
             _logger.LogInformation("---- FIN METODO GET BY ID SPECIALTIE CONTROLLER ----");
             return pDTOGenResponse;
         }
