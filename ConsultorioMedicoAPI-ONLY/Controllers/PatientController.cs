@@ -1,8 +1,5 @@
-﻿using Consultorio_Medico.BL;
-using Consultorio_Medico.BL.DTOs.PatientDTO;
-using Consultorio_Medico.BL.DTOs.RolDTO;
+﻿using Consultorio_Medico.BL.DTOs.PatientDTO;
 using Consultorio_Medico.BL.Interfaces;
-using Consultorio_Medico.Entities;
 using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
 using Microsoft.AspNetCore.Mvc;
 
