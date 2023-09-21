@@ -55,10 +55,11 @@ GO
 CREATE TABLE [dbo].[UserSchedules](
 [UserSchedulesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 [UserId] [int] NOT NULL,
+[SpecialtieId] [int] NOT NULL,
+[SchedulesId] [int] NOT NULL,
 [NumberHoursFree] DECIMAL(10, 2) NOT NULL,
 [NumberHoursUsed] DECIMAL(10, 2) NOT NULL,
-[SpecialtieId] [int] NOT NULL,
-[SchedulesId] [int] NOT NULL
+[NumberOfHours] int NOT NULL,
 CONSTRAINT FK1_UserSchedules_Usuario FOREIGN KEY (UserId) REFERENCES Users (UserId),
 CONSTRAINT FK2_UserSchedules_Schedules FOREIGN KEY (SchedulesId) REFERENCES Schedules (SchedulesId),
 CONSTRAINT FK3_UserSchedules_Specialtie FOREIGN KEY (SpecialtieId) REFERENCES Specialties (SpecialtiesId)
