@@ -55,9 +55,13 @@ GO
 CREATE TABLE [dbo].[UserSchedules](
 [UserSchedulesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 [UserId] [int] NOT NULL,
+[NumberHoursFree] DECIMAL(10, 2) NOT NULL,
+[NumberHoursUsed] DECIMAL(10, 2) NOT NULL,
+[SpecialtieId] [int] NOT NULL,
 [SchedulesId] [int] NOT NULL
 CONSTRAINT FK1_UserSchedules_Usuario FOREIGN KEY (UserId) REFERENCES Users (UserId),
-CONSTRAINT FK2_UserSchedules_Schedules FOREIGN KEY (SchedulesId) REFERENCES Schedules (SchedulesId)
+CONSTRAINT FK2_UserSchedules_Schedules FOREIGN KEY (SchedulesId) REFERENCES Schedules (SchedulesId),
+CONSTRAINT FK3_UserSchedules_Specialtie FOREIGN KEY (SpecialtieId) REFERENCES Specialties (SpecialtiesId)
 )
 GO
 
@@ -84,17 +88,13 @@ GO
 
 CREATE TABLE [dbo].[Appointment] (
 	[AppointmentId] [int] primary key identity(1000, 2) NOT NULL,
-	[UserId] [int] NOT NULL,
-	[SpecialtieId] [int] NOT NULL,
+	[UserSchedulesId] [int] NOT NULL,
 	[PatientId] [int] NOT NULL,
-	[Appointment_Name] [varchar](50) NOT NULL,
 	[Reason] [varchar](200) NOT NULL,
-	[Appointment_date] date NOT NULL,
-	[Appointment_Hour] decimal NOT NULL,
-	[Shift] [bit] NOT NULL,
+	[Appointment_date] datetime NOT NULL,
+	[EndOfAppoinmet] datetime NOT NULL,
 	[Status] [tinyint] NOT NULL
-	CONSTRAINT FK1_Appointment_Usuario FOREIGN KEY (UserId) REFERENCES Users (UserId),
-	CONSTRAINT FK2_Appointment_Specialtie FOREIGN KEY (SpecialtieId) REFERENCES Specialties (SpecialtiesId),
+	CONSTRAINT FK1_Appointment_Usuario FOREIGN KEY (UserSchedulesId) REFERENCES UserSchedules (UserSchedulesId),
 	CONSTRAINT FK2_Appointment_Patient FOREIGN KEY (PatientId) REFERENCES Patient (PatientId)
 )
 GO
