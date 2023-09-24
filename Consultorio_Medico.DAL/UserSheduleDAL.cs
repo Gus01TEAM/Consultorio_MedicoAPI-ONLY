@@ -50,18 +50,29 @@ namespace Consultorio_Medico.DAL
             var query = _DbContext.UserSchedules.AsQueryable();
             if (pUserChed.UserSchedulesId > 0)
                 query = query.Where(s => s.UserSchedulesId == pUserChed.UserSchedulesId);
+
             if(pUserChed.UserId>0)
                 query = query.Where(s => s.UserId == pUserChed.UserId);
+
             if (pUserChed.SchedulesId > 0)
                 query = query.Where(s => s.SchedulesId == pUserChed.SchedulesId);
+
+            if (pUserChed.SpecialtieId > 0)
+                query = query.Where(s => s.SpecialtieId == pUserChed.SpecialtieId);
+
             query = query.OrderByDescending(s => s.UserId).AsQueryable();
+
             query = query.Include(s => s.User).AsQueryable();
+
             query = query.Include(s => s.Schedules).AsQueryable();
+
+            query = query.Include(s => s.Specialties).AsQueryable();
+
             return await query.ToListAsync();
         }
         public void Update(UserSchedules pUserChed)
         {
-
+            _DbContext.Update(pUserChed);
         }
     }
 

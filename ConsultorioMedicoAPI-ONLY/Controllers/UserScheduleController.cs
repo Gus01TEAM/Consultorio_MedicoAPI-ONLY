@@ -35,7 +35,7 @@ namespace Consultorio_Medico.API.Controllers
 
             UserScheduleSearchInpuntDTO userSchedule = new UserScheduleSearchInpuntDTO();
             var usersSched = await _userScheduleBL.Search(userSchedule);
-
+            
             var DTOGenResponse = ListDTOresponse.GetGenericResponse(true, "Obtencion de todos los registros", usersSched);
             _logger.LogInformation("---- FIN METODO GET USERSCHEDULE CONTROLLER ----");
             return DTOGenResponse;
@@ -70,6 +70,7 @@ namespace Consultorio_Medico.API.Controllers
                         UserSchedulesId = pUserSchedule.SchedulesId,
                         UserId = pUserSchedule.UserId,
                         SchedulesId = pUserSchedule.SchedulesId
+                        
                     });
                     _logger.LogInformation("---- FIN METODO POST USERSCHEDULE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -80,7 +81,9 @@ namespace Consultorio_Medico.API.Controllers
                     {
                         UserSchedulesId = pUserSchedule.SchedulesId,
                         UserId = pUserSchedule.UserId,
-                        SchedulesId = pUserSchedule.SchedulesId
+                        SchedulesId = pUserSchedule.SchedulesId,
+                        SpecialtieId = pUserSchedule.SpecialtieId,
+
                     });
                     _logger.LogWarning("---- ERROR EN METODO POST USERSCHEDULE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -93,7 +96,8 @@ namespace Consultorio_Medico.API.Controllers
                 {
                     UserSchedulesId = pUserSchedule.SchedulesId,
                     UserId = pUserSchedule.UserId,
-                    SchedulesId = pUserSchedule.SchedulesId
+                    SchedulesId = pUserSchedule.SchedulesId,
+                    SpecialtieId = pUserSchedule.SpecialtieId,
                 });
                 return DTOGenRes;
             }

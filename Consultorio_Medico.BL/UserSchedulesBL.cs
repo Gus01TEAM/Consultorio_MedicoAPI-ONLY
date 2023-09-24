@@ -27,6 +27,7 @@ namespace Consultorio_Medico.BL
             {
                 UserId = pUerChed.UserId,
                 SchedulesId = pUerChed.SchedulesId,
+                SpecialtieId = pUerChed.SpecialtieId,
             };
             _userScheduleDAL.Create(userSchedulesEN);
             return await _unitOfWork.SaveChangesAsync();
@@ -51,6 +52,8 @@ namespace Consultorio_Medico.BL
                 UserSchedulesId = userSchedulesEN.UserSchedulesId,
                 UserId = userSchedulesEN.UserId,
                 SchedulesId = userSchedulesEN.SchedulesId,
+                SpecialtieId = userSchedulesEN.SpecialtieId,
+
             };
         }
 
@@ -63,8 +66,13 @@ namespace Consultorio_Medico.BL
                 UserId = s.UserId,
                 UserSchedulesId = s.UserSchedulesId,
                 SchedulesId=s.SchedulesId,
+                SpecialtieId=s.SpecialtieId,
+                NumberHoursFree = s.NumberHoursFree,
+                NumberHoursUsed = s.NumberHoursUsed,
+                NumberOfHours = s.NumberOfHours,    
                 UserName=s.User.Name,
                 Schedule=s.Schedules.DayName+" "+s.Schedules.StartOfShift+" "+s.Schedules.EndOfShift,
+                Specialty=s.Specialties.Specialty,
             }));
             return list;
         }
@@ -76,6 +84,8 @@ namespace Consultorio_Medico.BL
                 UserChed.UserSchedulesId = pUserChed.UserScheduleId;
                 UserChed.UserId = pUserChed.UserId;
                 UserChed.SchedulesId = pUserChed.SchedulesId;
+                UserChed.SpecialtieId=pUserChed.SpecialtieId;
+
                 _userScheduleDAL.Update(UserChed);
                 return await _unitOfWork.SaveChangesAsync();
 
