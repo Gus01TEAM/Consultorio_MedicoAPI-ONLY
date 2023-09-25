@@ -34,7 +34,7 @@ namespace Consultorio_Medico.API.Controllers
 
             ScheduleSearchInputDTO schedule = new ScheduleSearchInputDTO();
             var Schedules = await _scheduleBL.Search(schedule);
-
+            
             var DTOGenResponse = ListDTOresponse.GetGenericResponse(true, "Obtencion de todos los registros", Schedules);
             _logger.LogInformation("---- FIN METODO GET SCHEDULE CONTROLLER ----");
             return DTOGenResponse;
@@ -68,7 +68,8 @@ namespace Consultorio_Medico.API.Controllers
                         SchedulesId = pSchedule.SchedulesId,
                         DayName = pSchedule.DayName,
                         StartOfShift = pSchedule.StartOfShift,
-                        EndOfShift = pSchedule.EndOfShift
+                        EndOfShift = pSchedule.EndOfShift,
+                        NumberOfHours = pSchedule.NumberOfHours,
                     });
                     _logger.LogInformation("---- FIN METODO POST SCHEDULES ----");
                     return pDTOGenResponse;
@@ -80,7 +81,8 @@ namespace Consultorio_Medico.API.Controllers
                         SchedulesId = pSchedule.SchedulesId,
                         DayName = pSchedule.DayName,
                         StartOfShift = pSchedule.StartOfShift,
-                        EndOfShift = pSchedule.EndOfShift
+                        EndOfShift = pSchedule.EndOfShift,
+                        NumberOfHours = pSchedule.NumberOfHours,
                     });
                     _logger.LogWarning("---- ERROR EN METODO POST SCHEDULES ----");
                     return pDTOGenResponse;
@@ -94,7 +96,8 @@ namespace Consultorio_Medico.API.Controllers
                     SchedulesId = pSchedule.SchedulesId,
                     DayName = pSchedule.DayName,
                     StartOfShift = pSchedule.StartOfShift,
-                    EndOfShift = pSchedule.EndOfShift
+                    EndOfShift = pSchedule.EndOfShift,
+                    NumberOfHours = pSchedule.NumberOfHours,
                 });
                 return DTOGenRes;
             }

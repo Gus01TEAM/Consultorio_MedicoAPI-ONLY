@@ -12,5 +12,6 @@ namespace Consultorio_Medico.BL.DTOs.ScheduleDTO
         public string DayName { get; set; }
         public decimal StartOfShift { get; set; }
         public decimal EndOfShift { get; set; }
+        public decimal NumberOfHours { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Consultorio_Medico.BL
                 DayName = Schedule.DayName,
                 StartOfShift = Schedule.StartOfShift,
                 EndOfShift = Schedule.EndOfShift,
-                                         
+                NumberOfHours = Schedule.NumberOfHours = Schedule.EndOfShift - Schedule.StartOfShift,
             };
             _scheduleDAL.Create(schedules);
             return await _unitOfWork.SaveChangesAsync();
@@ -57,9 +57,9 @@ namespace Consultorio_Medico.BL
             {
                SchedulesId= schedEN.SchedulesId,
                DayName= schedEN.DayName,
-                StartOfShift = schedEN.StartOfShift,
+               StartOfShift = schedEN.StartOfShift,
                EndOfShift= schedEN.EndOfShift,  
-
+               NumberOfHours= schedEN.NumberOfHours,    
             };
 
         }
@@ -74,6 +74,7 @@ namespace Consultorio_Medico.BL
                 DayName=s.DayName,
                 StartOfShift = s.StartOfShift,
                 EndOfShift = s.EndOfShift,
+                NumberOfHours= s.NumberOfHours,
             }));
             return list;
         
@@ -90,6 +91,7 @@ namespace Consultorio_Medico.BL
                 schedEN.DayName = Schedule.DayName;
                 schedEN.StartOfShift = Schedule.StartOfShift;
                 schedEN.EndOfShift = Schedule.EndOfShift;
+                schedEN.NumberOfHours= Schedule.NumberOfHours;
                 return await _unitOfWork.SaveChangesAsync();
 
             }

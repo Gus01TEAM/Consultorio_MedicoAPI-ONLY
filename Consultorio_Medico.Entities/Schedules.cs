@@ -11,6 +11,8 @@ namespace Consultorio_Medico.Entities
         public int SchedulesId { get; set; }
         public string DayName { get; set; }    
         public decimal StartOfShift { get; set; }   
-        public decimal EndOfShift { get; set; }  
+        public decimal EndOfShift { get; set; }
+        public decimal NumberOfHours { get; set; }
+
     }
 }

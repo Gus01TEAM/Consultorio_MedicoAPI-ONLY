@@ -18,7 +18,8 @@ CREATE TABLE [dbo].[Schedules](
 [SchedulesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 [DayName] [varchar] (50) NOT NULL,
 [StartOfShift] [decimal] (10,2) NOT NUll,
-[EndOfShift] [decimal] (10,2) NOT NULL
+[EndOfShift] [decimal] (10,2) NOT NULL,
+[NumberOfHours] [decimal] (10,2) NOT NULL
 )
 GO
 CREATE TABLE [dbo].[WorkPlaces](
@@ -59,7 +60,6 @@ CREATE TABLE [dbo].[UserSchedules](
 [SchedulesId] [int] NOT NULL,
 [NumberHoursFree] DECIMAL(10, 2) NOT NULL,
 [NumberHoursUsed] DECIMAL(10, 2) NOT NULL,
-[NumberOfHours] int NOT NULL,
 CONSTRAINT FK1_UserSchedules_Usuario FOREIGN KEY (UserId) REFERENCES Users (UserId),
 CONSTRAINT FK2_UserSchedules_Schedules FOREIGN KEY (SchedulesId) REFERENCES Schedules (SchedulesId),
 CONSTRAINT FK3_UserSchedules_Specialtie FOREIGN KEY (SpecialtieId) REFERENCES Specialties (SpecialtiesId)

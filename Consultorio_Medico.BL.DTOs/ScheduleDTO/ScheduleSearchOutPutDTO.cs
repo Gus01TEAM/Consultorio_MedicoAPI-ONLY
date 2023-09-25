@@ -17,5 +17,7 @@ namespace Consultorio_Medico.BL.DTOs.ScheduleDTO
         public decimal StartOfShift { get; set; }
         [DisplayName("Finalizar Jornada")]
         public decimal EndOfShift { get; set; }
+        [DisplayName("Numero de Horas")]
+        public decimal NumberOfHours { get; set; }
     }
 }
