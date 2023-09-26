@@ -20,7 +20,6 @@ namespace Consultorio_Medico.Entities
         public int SchedulesId { get; set; }
         public decimal NumberHoursFree { get; set; }
         public decimal NumberHoursUsed { get; set; }
-        public decimal NumberOfHours { get; set; }
 
         public Users User { get; set; }
 

@@ -26,15 +26,12 @@ namespace Consultorio_Medico.BL
             {
                 Appointment appointment = new Appointment()
                 {
-                    UserId = pAppointment.UserId,
-                    SpecialtieId = pAppointment.SpecialtieId,
+                    UserSchedulesId = pAppointment.UserSchedulesId,
                     PatientId = pAppointment.PatientId,
-                    Appointment_Name = pAppointment.Appointment_Name,
                     Reason = pAppointment.Reason,
                     Appointment_date = pAppointment.Appointment_date,
-                    Appointment_Hour = pAppointment.Appointment_Hour,
-                    Shift = pAppointment.Shift,
-                    Status = pAppointment.Status
+                    Status = pAppointment.Status,
+                    Cupos = pAppointment.Cupos, 
                 };
                 _appointment.Create(appointment);
                 return await _unitOfWork.SaveChangesAsync();
@@ -50,14 +47,10 @@ namespace Consultorio_Medico.BL
             {
                 var appointment = await _appointment.GetById(pAppointment.AppointmentId);
                 if (appointment != null) {
-                    appointment.UserId = pAppointment.UserId;
-                    appointment.SpecialtieId = pAppointment.SpecialtieId;
+                    appointment.UserSchedulesId = pAppointment.UserSchedulesId;
                     appointment.PatientId = pAppointment.PatientId;
-                    appointment.Appointment_Name = pAppointment.Appointment_Name;
                     appointment.Reason = pAppointment.Reason;
-                    appointment.Appointment_date = pAppointment.Appointment_date;
-                    appointment.Appointment_Hour = pAppointment.Appointment_Hour;
-                    appointment.Shift = pAppointment.Shift;
+                    appointment.Appointment_date = pAppointment.Appointment_date;            
                     appointment.Status = pAppointment.Status;
 
                     _appointment.Update(appointment);
@@ -92,17 +85,12 @@ namespace Consultorio_Medico.BL
                 AppointmentSearchOutputDTO pAppointment = new AppointmentSearchOutputDTO()
                 {
                     AppointmentId = appointment.AppointmentId,
-                    UserId = appointment.UserId,
-                    UserName = appointment.Users.Name + " " + appointment.Users.LastName,
-                    SpecialtieId = appointment.SpecialtieId,
-                    SpecialtieName = appointment.Specialties.Specialty,
+                    UserSchedulesId = appointment.UserSchedulesId,
+                    UserName = appointment.UserSchedules.User.Name + " " + appointment.UserSchedules.User.LastName +" "+appointment.UserSchedules.Specialties.Specialty,
                     PatientId = appointment.PatientId,
                     PatientName = appointment.Patient.Name + " " + appointment.Patient.LastName,
-                    Appointment_Name = appointment.Appointment_Name,
                     Reason = appointment.Reason,
-                    Appointment_date = appointment.Appointment_date,
-                    Appointment_Hour = appointment.Appointment_Hour,
-                    Shift = appointment.Shift,
+                    Appointment_date = appointment.Appointment_date,              
                     Status = appointment.Status,
                 };
                 return pAppointment;
@@ -121,17 +109,12 @@ namespace Consultorio_Medico.BL
                 appointments.ForEach(s => list.Add( new AppointmentSearchOutputDTO()
                 {
                     AppointmentId = s.AppointmentId,
-                    UserId = s.UserId,
-                    UserName = s.Users.Name + " " + s.Users.LastName,
-                    SpecialtieId= s.SpecialtieId,
-                    SpecialtieName = s.Specialties.Specialty,
+                    UserSchedulesId = s.UserSchedulesId,
+                    UserName = s.UserSchedules.User.Name + " " + s.UserSchedules.User.LastName + " " +s.UserSchedules.Specialties.Specialty,  
+   
                     PatientId= s.PatientId,
                     PatientName = s.Patient.Name + " " + s.Patient.LastName,
                     Reason= s.Reason,
-                    Appointment_Name = s.Appointment_Name,
-                    Appointment_date= s.Appointment_date,
-                    Appointment_Hour = s.Appointment_Hour,
-                    Shift = s.Shift,
                     Status = s.Status,
                 }));
                 return list;
@@ -147,29 +130,22 @@ namespace Consultorio_Medico.BL
             try
             {
                 var appointments = await _appointment.Search(new Appointment() {
-                    UserId = pAppointmentSearch.UserId,
-                    SpecialtieId = pAppointmentSearch.SpecialtieId,
+                    UserSchedulesId = pAppointmentSearch.UserSchedulesId,
+                   
                     PatientId = pAppointmentSearch.PatientId,
                     Appointment_Name = pAppointmentSearch.Appointment_Name,
                     Reason = pAppointmentSearch.Reason,
-                    Shift = pAppointmentSearch.Shift,
                     Status = pAppointmentSearch.Status,
                 });
 
                 appointments.ForEach(s => list.Add(new AppointmentSearchOutputDTO()
                 {
                     AppointmentId = s.AppointmentId,
-                    UserId = s.UserId,
-                    UserName = s.Users.Name + " " + s.Users.LastName,
-                    SpecialtieId = s.SpecialtieId,
-                    SpecialtieName = s.Specialties.Specialty,
+                    UserName = s.UserSchedules.User.Name + " " + s.UserSchedules.User.LastName + " " + s.UserSchedules.Specialties.Specialty,
+
                     PatientId = s.PatientId,
                     PatientName = s.Patient.Name + " " + s.Patient.LastName,
                     Reason = s.Reason,
-                    Appointment_Name = s.Appointment_Name,
-                    Appointment_date = s.Appointment_date,
-                    Appointment_Hour = s.Appointment_Hour,
-                    Shift = s.Shift,
                     Status = s.Status,
                 }));
                 return list;

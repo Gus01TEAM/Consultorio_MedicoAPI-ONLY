@@ -12,8 +12,8 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
     {
         [Key]
         public int AppointmentId { get; set; }
-        [ForeignKey("Users")]
-        public int UserId { get; set; }
+        [ForeignKey("UsersSchedules")]
+        public int UserSchedulesId { get; set; }
         public string UserName { get; set; }
 
         [ForeignKey("Specialties")]
@@ -25,7 +25,6 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
         public string Appointment_Name { get; set; }
         public string Reason { get; set; }
         
-        public bool? Shift { get; set; }
         public byte Status { get; set; }
     }
 }

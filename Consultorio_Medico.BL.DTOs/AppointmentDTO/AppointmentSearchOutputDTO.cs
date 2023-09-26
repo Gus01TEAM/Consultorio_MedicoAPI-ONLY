@@ -12,22 +12,16 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
     {
         [Key]
         public int AppointmentId { get; set; }
-        [ForeignKey("Users")]
-        public int UserId { get; set; }
+        [ForeignKey("UsersSchedules")]
+        public int UserSchedulesId { get; set; }
         public string UserName { get; set; }
-
-        [ForeignKey("Specialties")]
-        public int SpecialtieId { get; set; }
-        public string SpecialtieName { get; set; }
         [ForeignKey("Patient")]
         public int PatientId { get; set; }
         public string PatientName { get; set; }
-        public string Appointment_Name { get; set; }
         public string Reason { get; set; }
         public DateTime Appointment_date { get; set; }
-        public decimal Appointment_Hour { get; set; }
-        public bool? Shift { get; set; }
         public byte Status { get; set; }
+        public int Cupos { get; set; }
     }
     public enum Appointment_Status
     {
