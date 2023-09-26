@@ -32,8 +32,8 @@ namespace Consultorio_Medico.BL
               //  NumberHoursFree = pUerChed.NumberHoursFree = schedules.NumberOfHours
                
             };
-            var shedule = await scheduleBL.GetById(pUerChed.SchedulesId);
-            userSchedulesEN.NumberHoursFree = shedule.NumberOfHours;
+            var schedule = await scheduleBL.GetById(pUerChed.SchedulesId);
+            userSchedulesEN.NumberHoursFree = schedule.NumberOfHours;
             _userScheduleDAL.Create(userSchedulesEN);
             return await _unitOfWork.SaveChangesAsync();
         }
