@@ -20,7 +20,7 @@ namespace Consultorio_Medico.Entities
         public string Reason { get; set; }
         public DateTime Appointment_date { get; set; }
         public byte Status { get; set; }
-        public int Cupos { get; set; }
+        public decimal Cupos { get; set; }
         public UserSchedules UserSchedules { get; set; }
         public Patient Patient { get; set; }
     }

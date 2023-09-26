@@ -14,10 +14,12 @@ namespace Consultorio_Medico.BL
     {
         private readonly IAppointmentDAL _appointment;
         private readonly IUnitOfWork _unitOfWork;
-        public AppointmentBL (IUnitOfWork unitOfWork, IAppointmentDAL appointment)
+        private readonly IUserSchedulesBL _userSchedulesBL;
+        public AppointmentBL (IUnitOfWork unitOfWork, IAppointmentDAL appointment, IUserSchedulesBL userSchedulesBL)
         {
             _appointment = appointment;
             _unitOfWork = unitOfWork;
+            _userSchedulesBL = userSchedulesBL; 
         }
 
         public async Task<int> Create (AppointmentInputDTO pAppointment)
@@ -31,8 +33,11 @@ namespace Consultorio_Medico.BL
                     Reason = pAppointment.Reason,
                     Appointment_date = pAppointment.Appointment_date,
                     Status = pAppointment.Status,
-                    Cupos = pAppointment.Cupos, 
+          
                 };
+                var cupo = await _userSchedulesBL.GetById(pAppointment.UserSchedulesId);
+                    appointment.Cupos= appointment.UserSchedules.NumberHoursFree - appointment.UserSchedules.NumberHoursUsed;
+
                 _appointment.Create(appointment);
                 return await _unitOfWork.SaveChangesAsync();
             }
@@ -133,9 +138,11 @@ namespace Consultorio_Medico.BL
                     UserSchedulesId = pAppointmentSearch.UserSchedulesId,
                    
                     PatientId = pAppointmentSearch.PatientId,
-                    Appointment_Name = pAppointmentSearch.Appointment_Name,
+                   
                     Reason = pAppointmentSearch.Reason,
+
                     Status = pAppointmentSearch.Status,
+
                 });
 
                 appointments.ForEach(s => list.Add(new AppointmentSearchOutputDTO()

@@ -21,7 +21,7 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
         public string Reason { get; set; }
         public DateTime Appointment_date { get; set; }
         public byte Status { get; set; }
-        public int Cupos { get; set; }
+        public decimal Cupos { get; set; }
     }
     public enum Appointment_Status
     {
