@@ -58,6 +58,7 @@ namespace Consultorio_Medico.API.Controllers
         [HttpPost]
         public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Post(UserScheduleInputDTO pUserSchedule)
         {
+            Schedules schedules = new Schedules();
             try
             {
                 _logger.LogInformation("---- INICIO METODO POST USERSCHEDULE API CONTROLLER ----");
@@ -69,8 +70,12 @@ namespace Consultorio_Medico.API.Controllers
                     {
                         UserSchedulesId = pUserSchedule.SchedulesId,
                         UserId = pUserSchedule.UserId,
-                        SchedulesId = pUserSchedule.SchedulesId
-                        
+                        SchedulesId = pUserSchedule.SchedulesId,
+                        SpecialtieId = pUserSchedule.SpecialtieId,
+                        NumberHoursFree =pUserSchedule.NumberHoursFree,
+                        NumberHoursUsed=pUserSchedule.NumberHoursUsed
+
+
                     });
                     _logger.LogInformation("---- FIN METODO POST USERSCHEDULE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -83,6 +88,8 @@ namespace Consultorio_Medico.API.Controllers
                         UserId = pUserSchedule.UserId,
                         SchedulesId = pUserSchedule.SchedulesId,
                         SpecialtieId = pUserSchedule.SpecialtieId,
+                        NumberHoursFree = pUserSchedule.NumberHoursFree,
+                        NumberHoursUsed = pUserSchedule.NumberHoursUsed
 
                     });
                     _logger.LogWarning("---- ERROR EN METODO POST USERSCHEDULE API CONTROLLER ----");
@@ -98,6 +105,8 @@ namespace Consultorio_Medico.API.Controllers
                     UserId = pUserSchedule.UserId,
                     SchedulesId = pUserSchedule.SchedulesId,
                     SpecialtieId = pUserSchedule.SpecialtieId,
+                    NumberHoursFree = pUserSchedule.NumberHoursFree,
+                    NumberHoursUsed = pUserSchedule.NumberHoursUsed
                 });
                 return DTOGenRes;
             }
@@ -118,7 +127,10 @@ namespace Consultorio_Medico.API.Controllers
                     {
                         UserSchedulesId = pUserSchedule.SchedulesId,
                         UserId = pUserSchedule.UserId,
-                        SchedulesId = pUserSchedule.SchedulesId
+                        SchedulesId = pUserSchedule.SchedulesId,
+                        SpecialtieId = pUserSchedule.SpecialtieId,
+                        NumberHoursFree = pUserSchedule.NumberHoursFree,
+                        NumberHoursUsed = pUserSchedule.NumberHoursUsed
                     });
                     _logger.LogInformation("---- FIN METODO POST USERSCHEDULE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -129,7 +141,10 @@ namespace Consultorio_Medico.API.Controllers
                     {
                         UserSchedulesId = pUserSchedule.SchedulesId,
                         UserId = pUserSchedule.UserId,
-                        SchedulesId = pUserSchedule.SchedulesId
+                        SchedulesId = pUserSchedule.SchedulesId,
+                        SpecialtieId = pUserSchedule.SpecialtieId,
+                        NumberHoursFree = pUserSchedule.NumberHoursFree,
+                        NumberHoursUsed = pUserSchedule.NumberHoursUsed
                     });
                     _logger.LogWarning("---- ERROR EN METODO POST USERSCHEDULE API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -142,7 +157,10 @@ namespace Consultorio_Medico.API.Controllers
                 {
                     UserSchedulesId = pUserSchedule.SchedulesId,
                     UserId = pUserSchedule.UserId,
-                    SchedulesId = pUserSchedule.SchedulesId
+                    SchedulesId = pUserSchedule.SchedulesId,
+                    SpecialtieId = pUserSchedule.SpecialtieId,
+                    NumberHoursFree = pUserSchedule.NumberHoursFree,
+                    NumberHoursUsed = pUserSchedule.NumberHoursUsed
                 });
                 return DTOGenRes;
             }

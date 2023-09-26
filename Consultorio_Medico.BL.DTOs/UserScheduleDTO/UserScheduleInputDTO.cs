@@ -13,6 +13,7 @@ namespace Consultorio_Medico.BL.DTOs.UserSchedule
         public int SchedulesId { get; set; }
         public int SpecialtieId { get; set; }
         public decimal NumberHoursFree { get; set; }
+        public decimal NumberHoursUsed { get; set; }   
     
     }
 }

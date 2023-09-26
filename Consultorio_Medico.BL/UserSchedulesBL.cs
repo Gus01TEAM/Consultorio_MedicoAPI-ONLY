@@ -15,24 +15,25 @@ namespace Consultorio_Medico.BL
     {
         readonly IUserSchedulesDAL _userScheduleDAL;
         readonly IUnitOfWork _unitOfWork;
-
-        public UserSchedulesBL(IUserSchedulesDAL UserScheduleDAL, IUnitOfWork unitOfWork)
+        readonly IScheduleBL scheduleBL;
+        public UserSchedulesBL(IUserSchedulesDAL UserScheduleDAL, IUnitOfWork unitOfWork, IScheduleBL scheduleBL)
         {
             _userScheduleDAL = UserScheduleDAL;
             _unitOfWork = unitOfWork;
+            this.scheduleBL = scheduleBL;
         }
         public async Task<int> Create(UserScheduleInputDTO pUerChed)
         {
-
             UserSchedules userSchedulesEN = new UserSchedules()
             {
                 UserId = pUerChed.UserId,
                 SchedulesId = pUerChed.SchedulesId,
                 SpecialtieId = pUerChed.SpecialtieId,
-               // NumberHoursFree = ---------//,
+              //  NumberHoursFree = pUerChed.NumberHoursFree = schedules.NumberOfHours
                
             };
-       
+            var shedule = await scheduleBL.GetById(pUerChed.SchedulesId);
+            userSchedulesEN.NumberHoursFree = shedule.NumberOfHours;
             _userScheduleDAL.Create(userSchedulesEN);
             return await _unitOfWork.SaveChangesAsync();
         }

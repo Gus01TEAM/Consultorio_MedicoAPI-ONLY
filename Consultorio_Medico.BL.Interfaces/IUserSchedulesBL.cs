@@ -1,4 +1,5 @@
 ﻿using Consultorio_Medico.BL.DTOs.UserSchedule;
+using Consultorio_Medico.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
