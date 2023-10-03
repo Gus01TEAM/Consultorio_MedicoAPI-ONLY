@@ -36,7 +36,8 @@ namespace Consultorio_Medico.BL
           
                 };
                 var cupo = await _userSchedulesBL.GetById(pAppointment.UserSchedulesId);
-                var calculatedCupos = (cupo.NumberHoursFree * 60) - (cupo.NumberHoursUsed + 30);
+                var calculatedCupos = ((cupo.NumberHoursFree * 60) - (cupo.NumberHoursUsed + 30))/30;
+                
                 appointment.Cupo = (int)calculatedCupos;
 
                 DateTime currentTime = DateTime.Now;
@@ -45,6 +46,7 @@ namespace Consultorio_Medico.BL
 
                 appointment.EndOfAppoinmet = endOfAppointment;
 
+                
                 _appointment.Create(appointment);
                 return await _unitOfWork.SaveChangesAsync();
             }

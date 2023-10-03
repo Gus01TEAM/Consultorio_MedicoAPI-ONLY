@@ -51,8 +51,6 @@ CREATE TABLE [dbo].[Users] (
 	CONSTRAINT FK2_WorkPLace_Usuario FOREIGN KEY (WorkplaceId) REFERENCES WorkPlaces (WorkPlacesId)
 )
 GO
-
-
 CREATE TABLE [dbo].[UserSchedules](
 [UserSchedulesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 [UserId] [int] NOT NULL,
@@ -60,12 +58,12 @@ CREATE TABLE [dbo].[UserSchedules](
 [SchedulesId] [int] NOT NULL,
 [NumberHoursFree] DECIMAL(10, 2) NOT NULL,
 [NumberHoursUsed] DECIMAL(10, 2) NOT NULL,
+[Cupo] decimal(18, 2) NOT NULL,
 CONSTRAINT FK1_UserSchedules_Usuario FOREIGN KEY (UserId) REFERENCES Users (UserId),
 CONSTRAINT FK2_UserSchedules_Schedules FOREIGN KEY (SchedulesId) REFERENCES Schedules (SchedulesId),
 CONSTRAINT FK3_UserSchedules_Specialtie FOREIGN KEY (SpecialtieId) REFERENCES Specialties (SpecialtiesId)
 )
 GO
-
 
 CREATE TABLE [dbo].[DoctorSpecialties] (
 [DoctorSpecialtiesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
@@ -95,7 +93,6 @@ CREATE TABLE [dbo].[Appointment] (
 	[Appointment_date] datetime NOT NULL,
 	[EndOfAppoinmet] datetime NOT NULL,
 	[Status] [tinyint] NOT NULL,
-	[Cupo] [decimal(18, 2)] NOT NULL,
 	CONSTRAINT FK1_Appointment_Usuario FOREIGN KEY (UserSchedulesId) REFERENCES UserSchedules (UserSchedulesId),
 	CONSTRAINT FK2_Appointment_Patient FOREIGN KEY (PatientId) REFERENCES Patient (PatientId)
 )
