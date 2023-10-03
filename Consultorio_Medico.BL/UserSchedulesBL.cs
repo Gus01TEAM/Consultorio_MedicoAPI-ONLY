@@ -58,6 +58,7 @@ namespace Consultorio_Medico.BL
                 UserId = userSchedulesEN.UserId,
                 SchedulesId = userSchedulesEN.SchedulesId,
                 SpecialtieId = userSchedulesEN.SpecialtieId,
+                NumberHoursFree = userSchedulesEN.NumberHoursFree,
               
             };
         }

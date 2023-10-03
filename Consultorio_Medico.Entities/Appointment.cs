@@ -16,11 +16,12 @@ namespace Consultorio_Medico.Entities
         public int UserSchedulesId { get; set; }
         [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        public string Appointment_Name { get; set; }
+        //public string Appointment_Name { get; set; }
         public string Reason { get; set; }
         public DateTime Appointment_date { get; set; }
+        public DateTime EndOfAppoinmet { get; set; }
         public byte Status { get; set; }
-        public decimal Cupos { get; set; }
+        public decimal Cupo { get; set; }
         public UserSchedules UserSchedules { get; set; }
         public Patient Patient { get; set; }
     }

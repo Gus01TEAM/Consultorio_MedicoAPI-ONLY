@@ -73,7 +73,9 @@ namespace Consultorio_Medico.API.Controllers
                         Reason = pAppointment.Reason,
                         Appointment_date = pAppointment.Appointment_date,
                         Status = pAppointment.Status,
-                        Cupos = pAppointment.Cupos
+                        Cupo = pAppointment.Cupo,
+                        EndOfAppointmet = pAppointment.EndOfAppointmet,
+                    
                     });
                     _logger.LogInformation("---- FIN METODO POST APPOINTMENT API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -88,6 +90,8 @@ namespace Consultorio_Medico.API.Controllers
                         Reason = pAppointment.Reason,
                         Appointment_date = pAppointment.Appointment_date,
                         Status = pAppointment.Status,
+                        Cupo = pAppointment.Cupo,
+                        EndOfAppointmet = pAppointment.EndOfAppointmet,
                     });
                     _logger.LogWarning("---- ERROR EN METODO POST APPOINTMENT API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -104,6 +108,8 @@ namespace Consultorio_Medico.API.Controllers
                     Reason = pAppointment.Reason,
                     Appointment_date = pAppointment.Appointment_date,
                     Status = pAppointment.Status,
+                    Cupo = pAppointment.Cupo,
+                    EndOfAppointmet = pAppointment.EndOfAppointmet,
                 });
                 return DTOGenRes;
             }
