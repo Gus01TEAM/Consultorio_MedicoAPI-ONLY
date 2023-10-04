@@ -16,6 +16,7 @@ namespace Consultorio_Medico.BL.DTOs.UserSchedule
         public decimal NumberHoursUsed { get; set; }
         public string UserName { get; set; }
         public string Schedule { get; set; }
-        public string Specialty { get; set; }   
+        public string Specialty { get; set; }
+        public decimal Cupo { get; set; }
     }
 }

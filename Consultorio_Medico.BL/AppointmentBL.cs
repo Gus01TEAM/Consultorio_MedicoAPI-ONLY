@@ -1,10 +1,13 @@
 ﻿using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+using Consultorio_Medico.BL.DTOs.UserSchedule;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
 using Consultorio_Medico.Entities.Interfaces;
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +18,7 @@ namespace Consultorio_Medico.BL
         private readonly IAppointmentDAL _appointment;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserSchedulesBL _userSchedulesBL;
+
         public AppointmentBL (IUnitOfWork unitOfWork, IAppointmentDAL appointment, IUserSchedulesBL userSchedulesBL)
         {
             _appointment = appointment;
@@ -35,19 +39,39 @@ namespace Consultorio_Medico.BL
                     Status = pAppointment.Status,
           
                 };
-                var cupo = await _userSchedulesBL.GetById(pAppointment.UserSchedulesId);
-                var calculatedCupos = ((cupo.NumberHoursFree * 60) - (cupo.NumberHoursUsed + 30))/30;
-                
-                appointment.Cupo = (int)calculatedCupos;
 
+                var cupo = await _userSchedulesBL.GetById(pAppointment.UserSchedulesId);
+                //var cupo2 = await _appointment.GetById(pAppointment.AppointmentId);
+                //var calculatedCupos = ((cupo.NumberHoursFree * 60) - (cupo.NumberHoursUsed + 30))/30;
+
+                //appointment.Cupo = (int)calculatedCupos;
+
+                if (cupo.Cupo > 0) 
+                {
+                    cupo.Cupo = cupo.Cupo - 1;
+
+                    var userScheduleInputDTO = new UserScheduleInputDTO
+                    {
+                        UserScheduleId = pAppointment.UserSchedulesId,
+                        UserId = cupo.UserId,
+                        SchedulesId = cupo.SchedulesId,
+                        SpecialtieId = cupo.SpecialtieId,
+                        Cupo = cupo.Cupo,
+                    };
+
+                    await _userSchedulesBL.Update(userScheduleInputDTO);
+                }
+
+                //Detalle: 30 min deben agregarse a la hora en que se agende la cita
                 DateTime currentTime = DateTime.Now;
 
                 DateTime endOfAppointment = currentTime.AddMinutes(30);
 
                 appointment.EndOfAppoinmet = endOfAppointment;
 
-                
                 _appointment.Create(appointment);
+
+                
                 return await _unitOfWork.SaveChangesAsync();
             }
             catch (Exception e)

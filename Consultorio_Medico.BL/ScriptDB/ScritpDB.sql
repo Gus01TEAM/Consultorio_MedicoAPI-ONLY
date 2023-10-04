@@ -51,6 +51,7 @@ CREATE TABLE [dbo].[Users] (
 	CONSTRAINT FK2_WorkPLace_Usuario FOREIGN KEY (WorkplaceId) REFERENCES WorkPlaces (WorkPlacesId)
 )
 GO
+
 CREATE TABLE [dbo].[UserSchedules](
 [UserSchedulesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
 [UserId] [int] NOT NULL,

@@ -16,12 +16,14 @@ namespace Consultorio_Medico.BL
         readonly IUserSchedulesDAL _userScheduleDAL;
         readonly IUnitOfWork _unitOfWork;
         readonly IScheduleBL scheduleBL;
+
         public UserSchedulesBL(IUserSchedulesDAL UserScheduleDAL, IUnitOfWork unitOfWork, IScheduleBL scheduleBL)
         {
             _userScheduleDAL = UserScheduleDAL;
             _unitOfWork = unitOfWork;
             this.scheduleBL = scheduleBL;
         }
+
         public async Task<int> Create(UserScheduleInputDTO pUerChed)
         {
             UserSchedules userSchedulesEN = new UserSchedules()
@@ -30,10 +32,16 @@ namespace Consultorio_Medico.BL
                 SchedulesId = pUerChed.SchedulesId,
                 SpecialtieId = pUerChed.SpecialtieId,
               //  NumberHoursFree = pUerChed.NumberHoursFree = schedules.NumberOfHours
+                
                
             };
             var schedule = await scheduleBL.GetById(pUerChed.SchedulesId);
             userSchedulesEN.NumberHoursFree = schedule.NumberOfHours;
+
+            var calculatedCupos = ((userSchedulesEN.NumberHoursFree * 60) - (userSchedulesEN.NumberHoursUsed + 30)) / 30;
+
+            userSchedulesEN.Cupo = (int)calculatedCupos;
+
             _userScheduleDAL.Create(userSchedulesEN);
             return await _unitOfWork.SaveChangesAsync();
         }
@@ -59,7 +67,7 @@ namespace Consultorio_Medico.BL
                 SchedulesId = userSchedulesEN.SchedulesId,
                 SpecialtieId = userSchedulesEN.SpecialtieId,
                 NumberHoursFree = userSchedulesEN.NumberHoursFree,
-              
+                Cupo = userSchedulesEN.Cupo,
             };
         }
 
@@ -81,6 +89,7 @@ namespace Consultorio_Medico.BL
             }));
             return list;
         }
+
         public async Task<int> Update(UserScheduleInputDTO pUserChed)
         {
             UserSchedules UserChed = await _userScheduleDAL.GetById(pUserChed.UserScheduleId);
@@ -90,6 +99,7 @@ namespace Consultorio_Medico.BL
                 UserChed.UserId = pUserChed.UserId;
                 UserChed.SchedulesId = pUserChed.SchedulesId;
                 UserChed.SpecialtieId=pUserChed.SpecialtieId;
+                UserChed.Cupo = pUserChed.Cupo;
 
                 _userScheduleDAL.Update(UserChed);
                 return await _unitOfWork.SaveChangesAsync();

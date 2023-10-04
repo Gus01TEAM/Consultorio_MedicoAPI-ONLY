@@ -23,7 +23,7 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
         public DateTime Appointment_date { get; set; }
         public DateTime EndOfAppointmet { get; set; }
         public byte Status { get; set; }
-        public int Cupo { get; set; }
+      //  public int Cupo { get; set; }
 
     }
 }

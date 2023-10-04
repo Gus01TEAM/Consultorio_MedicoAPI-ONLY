@@ -106,7 +106,8 @@ namespace Consultorio_Medico.API.Controllers
                     SchedulesId = pUserSchedule.SchedulesId,
                     SpecialtieId = pUserSchedule.SpecialtieId,
                     NumberHoursFree = pUserSchedule.NumberHoursFree,
-                    NumberHoursUsed = pUserSchedule.NumberHoursUsed
+                    NumberHoursUsed = pUserSchedule.NumberHoursUsed,
+                    //Cupo = pUserSchedule.
                 });
                 return DTOGenRes;
             }

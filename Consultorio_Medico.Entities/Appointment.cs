@@ -21,7 +21,7 @@ namespace Consultorio_Medico.Entities
         public DateTime Appointment_date { get; set; }
         public DateTime EndOfAppoinmet { get; set; }
         public byte Status { get; set; }
-        public decimal Cupo { get; set; }
+        //public decimal Cupo { get; set; }
         public UserSchedules UserSchedules { get; set; }
         public Patient Patient { get; set; }
     }
