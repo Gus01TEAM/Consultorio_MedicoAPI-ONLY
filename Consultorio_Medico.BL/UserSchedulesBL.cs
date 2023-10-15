@@ -20,7 +20,7 @@ namespace Consultorio_Medico.BL
         public UserSchedulesBL(IUserSchedulesDAL UserScheduleDAL, IUnitOfWork unitOfWork, IScheduleBL scheduleBL)
         {
             _userScheduleDAL = UserScheduleDAL;
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork; 
             this.scheduleBL = scheduleBL;
         }
 
@@ -38,7 +38,7 @@ namespace Consultorio_Medico.BL
             var schedule = await scheduleBL.GetById(pUerChed.SchedulesId);
             userSchedulesEN.NumberHoursFree = schedule.NumberOfHours;
 
-            var calculatedCupos = ((userSchedulesEN.NumberHoursFree * 60) - (userSchedulesEN.NumberHoursUsed + 30)) / 30;
+            var calculatedCupos = ((userSchedulesEN.NumberHoursFree * 60) - (30)) / 30;
 
             userSchedulesEN.Cupo = (int)calculatedCupos;
 
