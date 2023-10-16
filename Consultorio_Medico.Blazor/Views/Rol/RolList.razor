@@ -1,0 +1,54 @@
+﻿@page "/roles"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.RolDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>Rol List</h3>
+
+<div class="row g-2">
+    <div class="col-md">
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInputGrid" placeholder="" value="">
+            <label for="floatingInputGrid">Nombre</label>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="form-floating">
+            <select class="form-select" id="floatingSelectGrid">
+                @foreach (var rol in roles)
+                {
+                    <option value="@rol.RolId">@rol.Name</option>
+                }
+            </select>
+            <label for="floatingSelectGrid">Rol de Usuario</label>
+        </div>
+    </div>
+</div>
+
+@*<select class="form-select" aria-label="Default select example">
+    <option selected>Seleccione Rol</option>
+    @foreach (var rol in roles)
+    {
+        <option value="@rol.RolId">@rol.Name</option>
+    }
+</select>*@
+
+
+@code {
+    private List<RolSearchingOutputDTO> roles = new List<RolSearchingOutputDTO>();
+
+    [Inject]
+    RolService rolService { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await rolService.GetAll();
+        if (response.Success)
+        {
+            roles = response.Data;
+        }
+    }
+}
