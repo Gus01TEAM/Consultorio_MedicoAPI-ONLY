@@ -13,7 +13,7 @@ namespace Consultorio_Medico.Blazor.Data
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
         }
 
-        public async Task<DTOGenericResponse<List<RolSearchingOutputDTO>>> GetAll()
+        public async Task<DTOGenericResponse<List<RolSearchingOutputDTO>>>Search()
         {
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<RolSearchingOutputDTO>>>("/api/Rol");
 

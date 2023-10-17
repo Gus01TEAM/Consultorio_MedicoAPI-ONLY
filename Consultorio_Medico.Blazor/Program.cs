@@ -12,7 +12,7 @@ builder.Services.AddSingleton<RolService>();
 
 builder.Services.AddHttpClient("MEDICOAPI", c =>
 {
-    c.BaseAddress = new Uri(builder.Configuration["UrlsAPI:API"]);
+    c.BaseAddress = new Uri(builder.Configuration["UrlsAPI:MEDICOAPI"]);
 });
 
 var app = builder.Build();

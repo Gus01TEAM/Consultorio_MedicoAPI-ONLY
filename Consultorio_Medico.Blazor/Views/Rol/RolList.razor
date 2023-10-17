@@ -6,6 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.RolDTO;
 @using Consultorio_Medico.Blazor.Data;
 
+
 <h3>Rol List</h3>
 
 <div class="row g-2">
@@ -28,6 +29,8 @@
     </div>
 </div>
 
+
+
 @*<select class="form-select" aria-label="Default select example">
     <option selected>Seleccione Rol</option>
     @foreach (var rol in roles)
@@ -35,6 +38,9 @@
         <option value="@rol.RolId">@rol.Name</option>
     }
 </select>*@
+
+
+
 
 
 @code {
@@ -45,7 +51,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await rolService.GetAll();
+        var response = await rolService.Search();
         if (response.Success)
         {
             roles = response.Data;
