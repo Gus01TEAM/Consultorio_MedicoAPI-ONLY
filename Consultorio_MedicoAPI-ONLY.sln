@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsultorioMedicoAPI-ONLY",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-AppWeb", "04-AppWeb", "{7AA738F7-DBA9-4BF5-B580-3919F90F7F61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consultorio_Medico.Blazor", "Consultorio_Medico.Blazor\Consultorio_Medico.Blazor.csproj", "{8A8C97E3-BB16-470F-B521-E0601E2307BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consultorio_Medico.Blazor", "Consultorio_Medico.Blazor\Consultorio_Medico.Blazor.csproj", "{8A8C97E3-BB16-470F-B521-E0601E2307BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

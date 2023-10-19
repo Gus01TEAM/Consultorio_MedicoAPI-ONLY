@@ -1,0 +1,45 @@
+﻿@page "/create-rol"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.RolDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+
+<h3>Crea un nuevo Rol</h3>
+
+<div class="input-group mb-3">
+    <span class="input-group-text" id="Name"></span>
+    <input type="text" class="form-control" placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<select class="form-select" aria-label="Status">
+    <option value="1">ACTIVO</option>
+    <option value="2">INACTIVO</option>
+</select>
+
+@code {
+    [Inject]
+    RolService rolService { get; set; }
+
+    RolInputDTO rolInput = new RolInputDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    private async Task Create()
+    {
+        var result = await rolService.Create(rolInput);
+        if (result.Success)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    private void GoCreate()
+    {
+        isSuccess = false;
+        isError = false;
+    }
+}

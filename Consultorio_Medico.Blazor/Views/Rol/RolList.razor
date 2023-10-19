@@ -8,11 +8,39 @@
 
 
 <h3>Rol List</h3>
+<div class="row-cols-6">
+    <span>Total Registros</span>
+</div>
+@*@if ( != null && searchResult.Data != null)
+{*@
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rol in roles)
+            {
+            <tr>
+                <td>@rol.Name</td>
+                <td>
+                    <button class="btn btn-dark" @onclick="() => GoEdit(rol.RolId)">Editar</button>
+                    <button class="btn btn-info" @onclick="() => GoDetails(rol.RolId)">Ver</button>
+                    <button class="btn btn-danger" @onclick="() => GoDelete(rol.RolId)">Eliminar</button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+<NavLink href="/create-rol" class="btn btn-outline-success">Crear nuevo Rol</NavLink>
 
-<div class="row g-2">
+
+
+@*<div class="row g-2">
     <div class="col-md">
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInputGrid" placeholder="" value="">
+            <input type="text" class="form-control" id="floatingInputGrid" placeholder="" value="">
             <label for="floatingInputGrid">Nombre</label>
         </div>
     </div>
@@ -28,7 +56,7 @@
         </div>
     </div>
 </div>
-
+*@
 
 
 @*<select class="form-select" aria-label="Default select example">
@@ -44,6 +72,8 @@
 
 
 @code {
+    NavigationManager navigation { get; set; }
+
     private List<RolSearchingOutputDTO> roles = new List<RolSearchingOutputDTO>();
 
     [Inject]
@@ -57,4 +87,20 @@
             roles = response.Data;
         }
     }
+
+    private void GoEdit(int personId)
+    {
+        //navigation.NavigateTo($"/edit-person/{personId}");
+    }
+
+    private void GoDetails(int personId)
+    {
+        //navigation.NavigateTo($"/person-details/{personId}");
+    }
+
+    private void GoDelete(int personId)
+    {
+        //navigation.NavigateTo($"/delete-person/{personId}");
+    }
+
 }
