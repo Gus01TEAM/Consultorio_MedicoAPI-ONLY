@@ -203,7 +203,7 @@ namespace Consultorio_Medico.API.Controllers
                 }
                 else
                 {
-                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", null);
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al eliminar", null);
                     _logger.LogWarning("---- ERROR EN METODO DELETE USER API CONTROLLER ----");
                     return pDTOGenResponse;
                 }
