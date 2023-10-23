@@ -1,0 +1,61 @@
+﻿@page "/delete-rol/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.Blazor.Data;
+@using Consultorio_Medico.BL.DTOs.RolDTO;
+
+<h3>¿Eliminar Rol?</h3>
+
+@if (isSuccess == false && isError == false)
+{
+
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="Name"></span>
+        <InputText class="form-control" id="Name" disabled @bind-Value="rol.Name" />
+    </div>
+
+    <select class="form-select" aria-label="Status" id="statusSelect" disabled>
+        <InputSelect class="form-control" id="Status" disabled @bind-Value="rol.Status" />
+        <option value="1">ACTIVO</option>
+        <option value="2">INACTIVO</option>
+    </select>
+
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" @onclick="async () => await Delete()">Eliminar</button>
+            <br>
+            <NavLink href="/roles" class="btn btn-secondary">Cancelar</NavLink>
+        </div>
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    RolService rolService { get; set; }
+
+    RolSearchingOutputDTO rol = new RolSearchingOutputDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rol = await rolService.GetById(Id);
+    }
+
+    private async Task Delete()
+    {
+        var result = await rolService.Delete(rol.RolId);
+
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+}

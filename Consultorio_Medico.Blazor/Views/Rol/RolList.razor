@@ -8,9 +8,6 @@
 
 
 <h3>Rol List</h3>
-<div class="row-cols-6">
-    <span>Total Registros</span>
-</div>
 @*@if ( != null && searchResult.Data != null)
 {*@
     <table class="table">
@@ -88,9 +85,9 @@
         }
     }
 
-    private void GoEdit(int personId)
+    private void GoEdit(int rolId)
     {
-        //navigation.NavigateTo($"/edit-person/{personId}");
+        //navigation.NavigateTo($"/edit-person/{rolId}");
     }
 
     private void GoDetails(int personId)
@@ -98,9 +95,9 @@
         //navigation.NavigateTo($"/person-details/{personId}");
     }
 
-    private void GoDelete(int personId)
+    private void GoDelete(int rolId)
     {
-        //navigation.NavigateTo($"/delete-person/{personId}");
+        navigation.NavigateTo($"/delete-rol/{rolId}");
     }
 
 }
