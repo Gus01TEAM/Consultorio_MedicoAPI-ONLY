@@ -22,11 +22,6 @@ CREATE TABLE [dbo].[Schedules](
 [NumberOfHours] [decimal] (10,2) NOT NULL
 )
 GO
-CREATE TABLE [dbo].[WorkPlaces](
-[WorkPlacesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
-[WorkPlaces] [varchar] (50) NOT NULL 
-)
-GO
 
 CREATE TABLE [dbo].[Specialties](
 [SpecialtiesId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
@@ -37,7 +32,6 @@ GO
 CREATE TABLE [dbo].[Users] (
 	[UserId] [int] Primary key Identity(1,1) NOT NULL,
 	[RolId] [int] NOT NULL,
-	[WorkplaceId] [int] NOT NULL,
 	[Name] [varchar](50) NOT NULL,
 	[LastName] [varchar](50) NOT NULL,
 	[PhoneNumber] [varchar](10) NOT NULL,
@@ -48,7 +42,6 @@ CREATE TABLE [dbo].[Users] (
 	[Status] [TinyInt] NOT NULL,
 	[FechaRegistro] [DateTime] NOT NULL
 	CONSTRAINT FK1_Rol_Usuario FOREIGN KEY (RolId) REFERENCES Rol (RolId),
-	CONSTRAINT FK2_WorkPLace_Usuario FOREIGN KEY (WorkplaceId) REFERENCES WorkPlaces (WorkPlacesId)
 )
 GO
 

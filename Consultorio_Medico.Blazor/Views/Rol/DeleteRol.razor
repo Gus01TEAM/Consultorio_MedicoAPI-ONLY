@@ -35,7 +35,7 @@
 @code {
 
     [Parameter]
-    public int RolId { get; set; }
+    public int Id { get; set; }
 
     [Inject]
     RolService rolService { get; set; }
@@ -47,7 +47,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var rol = await rolService.GetById(RolId);
+        var rol = await rolService.GetById(Id);
     }
 
     private async Task Delete()

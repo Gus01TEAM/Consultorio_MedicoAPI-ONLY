@@ -44,7 +44,7 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
             _logger.LogInformation("---- INICIO METODO GET BY ID ROL CONTROLLER ----");
             var rol = await _rolBL.GetById(Id);
 
-            var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Obteniendo Schedule by Id", rol);
+            var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Obteniendo el Rol por Id", rol);
             _logger.LogInformation("---- FIN METODO GET BY ID ROL CONTROLLER ----");
             return pDTOGenResponse;
         }
@@ -157,7 +157,7 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
                 }
                 else
                 {
-                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", null);
+                    var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al Eliminar", null);
                     _logger.LogWarning("---- ERROR EN METODO DELETE ROL ----");
                     return pDTOGenResponse;
                 }

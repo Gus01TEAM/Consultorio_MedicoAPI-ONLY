@@ -10,41 +10,42 @@
 <h3>Rol List</h3>
 @*@if ( != null && searchResult.Data != null)
 {*@
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-            </tr>
+<table class="table">
+    <thead>
         <tr>
+            <th scope="col">Name</th>
             <th scope="col">Status</th>
         </tr>
-        </thead>
-    
-        <tbody>
-            @foreach (var rol in roles)
-            {
+    </thead>
+
+    <tbody>
+        @foreach (var rol in roles)
+        {
             <tr>
                 <td>@rol.Name</td>
-               
-                    @if(rol.Status==1){
 
-                        <td>Inactive</td>
+                @if (rol.Status == 1)
+                {
 
-                    }else if (rol.Status==2){
+                    <td>Inactive</td>
 
-                       <td>Active</td>
-                    }
-              
+                }
+                else if (rol.Status == 2)
+                {
+
+                    <td>Active</td>
+                }
+
                 <td>
                     <button class="btn btn-dark" @onclick="() => GoEdit(rol.RolId)">Editar</button>
                     <button class="btn btn-info" @onclick="() => GoDetails(rol.RolId)">Ver</button>
                     <button class="btn btn-danger" @onclick="() => GoDelete(rol.RolId)">Eliminar</button>
                 </td>
             </tr>
-            }
-        </tbody>
-    </table>
-<NavLink href="/create-rol" class="btn btn-outline-success">Crear nuevo Rol</NavLink>
+        }
+    </tbody>
+</table>
+<NavLink href="/create-rol" class="btn btn-outline-success">Create New Rol</NavLink>
 
 
 
@@ -99,7 +100,7 @@
         }
     }
 
-    private void GoEdit(int rolId)
+    private void GoEdit(int id)
     {
         //navigation.NavigateTo($"/edit-person/{rolId}");
     }
@@ -109,9 +110,9 @@
         //navigation.NavigateTo($"/person-details/{personId}");
     }
 
-    private void GoDelete(int RolId)
+    private void GoDelete(int id)
     {
-        navigation.NavigateTo($"/delete-rol/{RolId}");
+        navigation.NavigateTo($"/delete-rol/{id}");
     }
 
 }
