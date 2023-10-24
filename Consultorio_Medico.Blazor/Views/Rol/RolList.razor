@@ -15,12 +15,26 @@
             <tr>
                 <th scope="col">Name</th>
             </tr>
+        <tr>
+            <th scope="col">Status</th>
+        </tr>
         </thead>
+    
         <tbody>
             @foreach (var rol in roles)
             {
             <tr>
                 <td>@rol.Name</td>
+               
+                    @if(rol.Status==1){
+
+                        <td>Inactive</td>
+
+                    }else if (rol.Status==2){
+
+                       <td>Active</td>
+                    }
+              
                 <td>
                     <button class="btn btn-dark" @onclick="() => GoEdit(rol.RolId)">Editar</button>
                     <button class="btn btn-info" @onclick="() => GoDetails(rol.RolId)">Ver</button>
@@ -95,9 +109,9 @@
         //navigation.NavigateTo($"/person-details/{personId}");
     }
 
-    private void GoDelete(int rolId)
+    private void GoDelete(int RolId)
     {
-        navigation.NavigateTo($"/delete-rol/{rolId}");
+        navigation.NavigateTo($"/delete-rol/{RolId}");
     }
 
 }
