@@ -10,11 +10,12 @@
 <h3>Rol List</h3>
 @*@if ( != null && searchResult.Data != null)
 {*@
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Status</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
 
@@ -46,7 +47,7 @@
     </tbody>
 </table>
 <NavLink href="/create-rol" class="btn btn-outline-success">Create New Rol</NavLink>
-
+*@
 
 
 @*<div class="row g-2">
@@ -81,12 +82,37 @@
 
 
 
+<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+    AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Data="@roles" TItem="RolSearchingOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+    IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+    <Columns>
+      
+        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
+        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Status" Title="Status" Width="160px" />
+    </Columns>
+</RadzenDataGrid>
+
+
 
 
 @code {
+    IQueryable<RolSearchingOutputDTO> data;
+
+    bool isLoading = false;
+
+    async Task ShowLoading()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        isLoading = false;
+    }
+
     NavigationManager navigation { get; set; }
 
-    private List<RolSearchingOutputDTO> roles = new List<RolSearchingOutputDTO>();
+    List<RolSearchingOutputDTO> roles = new List<RolSearchingOutputDTO>();
 
     [Inject]
     RolService rolService { get; set; }

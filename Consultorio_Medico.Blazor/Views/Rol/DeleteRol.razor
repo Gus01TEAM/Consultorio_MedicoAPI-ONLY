@@ -1,4 +1,4 @@
-﻿@page "/delete-rol/{RolId:int}"
+﻿@page "/delete-rol/{Id:int}"
 
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Forms;
@@ -8,19 +8,27 @@
 
 <h3>¿Eliminar Rol?</h3>
 
-@if (isSuccess == false && isError == false)
+@*@if (isSuccess == false && isError == false)
 {
 
     <div class="input-group mb-3">
-        <span class="input-group-text" id="Name"></span>
-        <InputText class="form-control" id="Name" disabled @bind-Value="rol.Name" />
+        <span class="form-group" id="Name"></span>
+        <input type="text "class="form-control" disabled @bind="rol.Name" />
     </div>
 
-    <select class="form-select" aria-label="Status" id="statusSelect" disabled>
-        <InputSelect class="form-control" id="Status" disabled @bind-Value="rol.Status" />
-        <option value="1">ACTIVO</option>
-        <option value="2">INACTIVO</option>
-    </select>
+    <div class aria-label="Status" disabled>
+        @if (rol.Status == 1)
+        {
+
+            <label for="Activo">Activo</label>
+
+        }
+        else if (rol.Status == 2)
+        {
+
+            <label for="Inactivo">Inactivo</label>
+        }
+    </div>
 
     <div class="row">
         <div class="col-12">
@@ -30,7 +38,52 @@
             <NavLink href="/roles" class="btn btn-secondary">Cancelar</NavLink>
         </div>
     </div>
+}*@
+
+@*@if (isSuccess == false && isError == false)
+{
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label for="Name">Name:</label>
+                <input type="text" class="form-control" disabled @bind="rol.Name" />
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="Status">Status:</label>
+
+                <input type="text" class="form-control" disabled @bind="rol.Status" />
+            </div>
+        </div>
+       
+        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" @onclick="async () => await Delete()">Eliminar</button>
+            <br>
+            <NavLink href="/roles" class="btn btn-secondary">Cancelar</NavLink>
+        </div>
+    </div>
 }
+else if (isSuccess)
+{
+    <p class="alert alert-success">El Rol se elimino con exito.</p>
+    <NavLink href="/roles" class="btn btn-primary">Aceptar</NavLink>
+}
+else if (isError)
+{
+    <p class="alert alert-error">Sucedio un error al intentar eliminar</p>
+    <NavLink herf="/roles" class="btn btn-primary">Aceptar</NavLink>
+}
+
+
+*@
+
+
+
 
 @code {
 
@@ -47,7 +100,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var rol = await rolService.GetById(Id);
+        var rolResult = await rolService.GetById(Id);
+        rol = rolResult.Data;
     }
 
     private async Task Delete()
