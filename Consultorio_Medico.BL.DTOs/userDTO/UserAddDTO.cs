@@ -21,9 +21,6 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         [Display(Name = "Rol")]
         public int RolId { get; set; }
       
-        [Required(ErrorMessage = "El lugar de trabajo es obligatorio.")]
-        [Display(Name = "WorkPlace")]
-        public int WorkplaceId { get; set; }
 
         [Required(ErrorMessage = "Nombre es obligatorio.")]
         [StringLength(50, ErrorMessage = "Maximo 50 caracteres")]

@@ -47,15 +47,19 @@ namespace Consultorio_Medico.DAL
         public async Task<List<Users>> Search(Users pUser)
         {
             var query = DbContext.Users.AsQueryable();
+
             if (!string.IsNullOrWhiteSpace(pUser.PhoneNumber))
                 query = query.Where(s => s.PhoneNumber == pUser.PhoneNumber);
+
             if (!string.IsNullOrWhiteSpace(pUser.Name))
                 query = query.Where(s => s.Name == pUser.Name);
+
             if (!string.IsNullOrWhiteSpace(pUser.Name))
                 query = query.Where(s => s.Name == pUser.Name);
+
             query = query.OrderByDescending(s => s.UserId).AsQueryable();
             query = query.Include(s => s.Rol).AsQueryable();
-            query = query.Include(s => s.WorkPlace).AsQueryable();
+     
 
             return await query.ToListAsync();
         }

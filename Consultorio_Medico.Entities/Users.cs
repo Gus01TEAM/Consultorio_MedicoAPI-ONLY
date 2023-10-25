@@ -13,8 +13,6 @@ namespace Consultorio_Medico.Entities
         public int UserId { get; set; }
         [ForeignKey("Rol")]
         public int RolId { get; set; }
-        [ForeignKey("WorkPlace")]
-        public int WorkplaceId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
@@ -26,7 +24,6 @@ namespace Consultorio_Medico.Entities
         public DateTime FechaRegistro { get; set; }
 
        public Rol Rol { get; set; }
-      public  WorkPlace WorkPlace { get; set; }
       
     }
 

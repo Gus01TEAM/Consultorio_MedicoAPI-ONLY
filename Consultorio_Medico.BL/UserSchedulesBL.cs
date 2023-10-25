@@ -86,6 +86,7 @@ namespace Consultorio_Medico.BL
                 UserName=s.User.Name,
                 Schedule=s.Schedules.DayName+" "+s.Schedules.StartOfShift+" "+s.Schedules.EndOfShift,
                 Specialty=s.Specialties.Specialty,
+                Cupo=s.Cupo,
             }));
             return list;
         }
