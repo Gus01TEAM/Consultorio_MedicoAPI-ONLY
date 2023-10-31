@@ -80,7 +80,6 @@
     }
 </select>*@
 
-
 @if(isOcultarGrid){
 <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
     AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
@@ -149,7 +148,13 @@
 
     private void GoDelete(RolSearchingOutputDTO rol)
     {
-        isOcultarGrid=false;
+        if(rol==null || rol.RolId==0){
+i             isOcultarGrid=false;
+        }
+        else{
+           isOcultarGrid=true;
+        }
+        
          //navigation.NavigateTo($"/delete-rol/{rol.RolId}");
     }
    
