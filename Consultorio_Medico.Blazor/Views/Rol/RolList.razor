@@ -93,9 +93,9 @@
         <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Status" Title="Status" Width="160px" />
 
         <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="roles" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
-            <Template Context="rolSearchingOutputDTO">
+            <Template Context="roles">
                 <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
-                              Click="@(args => GoDelete(rolSearchingOutputDTO))" @onclick:stopPropagation="true">
+                              Click="@(args => GoDelete(roles))" @onclick:stopPropagation="true">
                 </RadzenButton>
             </Template>
         </RadzenDataGridColumn>
