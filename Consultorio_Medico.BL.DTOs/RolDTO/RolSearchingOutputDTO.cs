@@ -12,7 +12,18 @@ namespace Consultorio_Medico.BL.DTOs.RolDTO
         public string Name { get; set; }
 
         public byte  Status { get; set; }
-
+        string strStatus="";
+        public String StrStatus{
+            get{
+                if(Status==1){
+                    strStatus="ACTIVO";
+                }
+                else{
+                    strStatus="INACTIVO";
+                }
+                return strStatus;
+            }
+        } 
     }
 
     }
