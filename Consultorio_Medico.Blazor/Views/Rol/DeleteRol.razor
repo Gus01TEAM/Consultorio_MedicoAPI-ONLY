@@ -8,7 +8,7 @@
 
 <h3>¿Eliminar Rol?</h3>
 
-@*@if (isSuccess == false && isError == false)
+*@if (isSuccess == false && isError == false)
 {
 
     <div class="input-group mb-3">
@@ -38,36 +38,9 @@
             <NavLink href="/roles" class="btn btn-secondary">Cancelar</NavLink>
         </div>
     </div>
-}*@
-
-@*@if (isSuccess == false && isError == false)
-{
-    <div class="row">
-        <div class="col-4">
-            <div class="form-group">
-                <label for="Name">Name:</label>
-                <input type="text" class="form-control" disabled @bind="rol.Name" />
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="form-group">
-                <label for="Status">Status:</label>
-
-                <input type="text" class="form-control" disabled @bind="rol.Status" />
-            </div>
-        </div>
-       
-        
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-12">
-            <button class="btn btn-primary" @onclick="async () => await Delete()">Eliminar</button>
-            <br>
-            <NavLink href="/roles" class="btn btn-secondary">Cancelar</NavLink>
-        </div>
-    </div>
 }
+
+
 else if (isSuccess)
 {
     <p class="alert alert-success">El Rol se elimino con exito.</p>
@@ -80,7 +53,6 @@ else if (isError)
 }
 
 
-*@
 
 
 

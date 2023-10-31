@@ -93,7 +93,7 @@
 
         <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="rol" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
             <Template Context="rol">
-                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => GoDelete(rol))" @onclick:stopPropagation="true">
                 </RadzenButton>
             </Template>
@@ -101,7 +101,7 @@
     </Columns>
 </RadzenDataGrid>
 }
-
+<RadzenButton href="/create-rol">Add new</RadzenButton>
 
 @code {
     [Inject]
