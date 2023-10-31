@@ -84,15 +84,23 @@
 
 <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
     AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
-                Data="@roles" TItem="RolSearchingOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+    Data="@roles" TItem="RolSearchingOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
     IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
     <Columns>
       
         <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
+      
         <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Status" Title="Status" Width="160px" />
+
+        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="roles" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+            <Template Context="rolSearchingOutputDTO">
+                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDelete(rolSearchingOutputDTO))" @onclick:stopPropagation="true">
+                </RadzenButton>
+            </Template>
+        </RadzenDataGridColumn>
     </Columns>
 </RadzenDataGrid>
-
 
 
 
@@ -109,6 +117,9 @@
 
         isLoading = false;
     }
+       
+
+   RadzenDataGrid<RolSearchingOutputDTO> grid;
 
     NavigationManager navigation { get; set; }
 
@@ -128,17 +139,17 @@
 
     private void GoEdit(int id)
     {
-        //navigation.NavigateTo($"/edit-person/{rolId}");
+        //navigation.NavigateTo($"/edit-person/{id}");
     }
 
-    private void GoDetails(int personId)
+    private void GoDetails(int id)
     {
-        //navigation.NavigateTo($"/person-details/{personId}");
+        //navigation.NavigateTo($"/person-details/{id}");
     }
 
-    private void GoDelete(int id)
+    private void GoDelete(RolSearchingOutputDTO rol)
     {
-        navigation.NavigateTo($"/delete-rol/{id}");
+        navigation.NavigateTo("/");
     }
-
+    //navigation.NavigateTo($"/delete-rol/{rol.RolId}");
 }
