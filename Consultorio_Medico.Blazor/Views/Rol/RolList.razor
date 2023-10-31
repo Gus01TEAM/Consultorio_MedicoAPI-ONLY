@@ -81,7 +81,7 @@
 </select>*@
 
 
-
+@if(isOcultarGrid){
 <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
     AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
     Data="@roles" TItem="RolSearchingOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
@@ -92,23 +92,23 @@
       
         <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Status" Title="Status" Width="160px" />
 
-        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="roles" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
-            <Template Context="roles">
+        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="rol" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+            <Template Context="rol">
                 <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
-                              Click="@(args => GoDelete(roles))" @onclick:stopPropagation="true">
+                              Click="@(args => GoDelete(rol))" @onclick:stopPropagation="true">
                 </RadzenButton>
             </Template>
         </RadzenDataGridColumn>
     </Columns>
 </RadzenDataGrid>
-
+}
 
 
 @code {
     IQueryable<RolSearchingOutputDTO> data;
 
     bool isLoading = false;
-
+    bool isOcultarGrid=true;
     async Task ShowLoading()
     {
         isLoading = true;
@@ -149,7 +149,8 @@
 
     private void GoDelete(RolSearchingOutputDTO rol)
     {
-        navigation.NavigateTo("/");
+        isOcultarGrid=false;
+         //navigation.NavigateTo($"/delete-rol/{rol.RolId}");
     }
-    //navigation.NavigateTo($"/delete-rol/{rol.RolId}");
+   
 }
