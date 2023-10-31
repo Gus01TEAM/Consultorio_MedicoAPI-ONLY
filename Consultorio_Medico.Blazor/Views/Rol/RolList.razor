@@ -104,6 +104,8 @@
 
 
 @code {
+    [Inject]
+     NavigationManager navigation { get; set; }
     IQueryable<RolSearchingOutputDTO> data;
 
     bool isLoading = false;
@@ -120,7 +122,7 @@
 
    RadzenDataGrid<RolSearchingOutputDTO> grid;
 
-    NavigationManager navigation { get; set; }
+   
 
     List<RolSearchingOutputDTO> roles = new List<RolSearchingOutputDTO>();
 
