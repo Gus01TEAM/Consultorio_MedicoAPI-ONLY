@@ -150,14 +150,15 @@
 
     private void GoDelete(RolSearchingOutputDTO rol)
     {
-        if(rol==null || rol.RolId==0){
+        navigation.NavigateTo($"/delete-rol/{rol.RolId}");
+        /*if(rol==null || rol.RolId==0){
              isOcultarGrid=false;
         }
         else{
            isOcultarGrid=true;
         }
         
-         navigation.NavigateTo("/delete-rol/1");
+         navigation.NavigateTo("/delete-rol/1");*/
     }
    
 }
