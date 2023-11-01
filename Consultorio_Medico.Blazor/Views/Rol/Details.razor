@@ -1,5 +1,56 @@
-﻿<h3>Details</h3>
+﻿@page "/rol-details/{Id:int}"
+
+@using Consultorio_Medico.Blazor.Data;
+@using Consultorio_Medico.BL.DTOs.RolDTO;
+
+<h3>ROLE DETAILS</h3>
+
+    <div class="row">
+    <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+        <RadzenTextBox @bind-Value="rol.Name" ReadOnly="true" />
+        </RadzenFormField>
+    </div>
+    <br>
+    <RadzenDropDown Placeholder="Status" @bind-Value="rol.Status" Data="GetStatusOptions()" Disabled="@disabled" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+    </RadzenDropDown>
+
+    <div class="row">
+        <div class="col-12">
+        <RadzenButton Text="Return to Roles" Icon="refresh" Style="margin-top: 10px" ButtonStyle="ButtonStyle.Light" Click="@Cancel"></RadzenButton>
+        </div>
+    </div>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    RolService rolService { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    RolSearchingOutputDTO rol = new RolSearchingOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool disabled = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rolResult = await rolService.GetById(Id);
+        rol = rolResult.Data;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/roles");
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "ACTIVO", Value = (byte)1 };
+        yield return new { Text = "INACTIVO", Value = (byte)2 };
+    }
 
 }

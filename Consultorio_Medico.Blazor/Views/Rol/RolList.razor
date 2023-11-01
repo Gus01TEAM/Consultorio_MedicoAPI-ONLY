@@ -80,39 +80,43 @@
     }
 </select>*@
 
-@if(isOcultarGrid){
-<RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
-    AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
-    Data="@roles" TItem="RolSearchingOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
-    IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
-    <Columns>
-      
-        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
-      
-        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="StrStatus" Title="Status" Width="160px" />
+@if (isOcultarGrid)
+{
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Data="@roles" TItem="RolSearchingOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+                IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+        <Columns>
 
-        <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="rol" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
-            <Template Context="rol">
-                <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+            <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="StrStatus" Title="Status" Width="160px" />
+
+            <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="rol" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+                <Template Context="rol">
+                    <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => GoDelete(rol))" @onclick:stopPropagation="true">
-                </RadzenButton>
-            </Template>
-        </RadzenDataGridColumn>
-    </Columns>
-</RadzenDataGrid>
+                    </RadzenButton>
+                    <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDetails(rol))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
 }
 
- <br>
+<br>
 <RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 
 @code {
     [Inject]
-     NavigationManager navigation { get; set; }
+    NavigationManager navigation { get; set; }
     IQueryable<RolSearchingOutputDTO> data;
 
     bool isLoading = false;
-    bool isOcultarGrid=true;
+    bool isOcultarGrid = true;
     async Task ShowLoading()
     {
         isLoading = true;
@@ -121,11 +125,11 @@
 
         isLoading = false;
     }
-       
 
-   RadzenDataGrid<RolSearchingOutputDTO> grid;
 
-   
+    RadzenDataGrid<RolSearchingOutputDTO> grid;
+
+
 
     List<RolSearchingOutputDTO> roles = new List<RolSearchingOutputDTO>();
 
@@ -150,9 +154,9 @@
         navigation.NavigateTo($"/create-rol");
     }
 
-    private void GoDetails(int id)
+    private void GoDetails(RolSearchingOutputDTO rol)
     {
-        //navigation.NavigateTo($"/person-details/{id}");
+        navigation.NavigateTo($"/rol-details/{rol.RolId}");
     }
 
     private void GoDelete(RolSearchingOutputDTO rol)
@@ -164,8 +168,8 @@
         else{
            isOcultarGrid=true;
         }
-        
+
          navigation.NavigateTo("/delete-rol/1");*/
     }
-   
+
 }
