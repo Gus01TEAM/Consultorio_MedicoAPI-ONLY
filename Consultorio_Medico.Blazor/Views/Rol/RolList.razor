@@ -101,7 +101,10 @@
     </Columns>
 </RadzenDataGrid>
 }
-<RadzenButton href="/create-rol">Add new</RadzenButton>
+
+ <br>
+<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+
 
 @code {
     [Inject]
@@ -141,6 +144,10 @@
     private void GoEdit(int id)
     {
         //navigation.NavigateTo($"/edit-person/{id}");
+    }
+    private void GoCreate()
+    {
+        navigation.NavigateTo($"/create-rol");
     }
 
     private void GoDetails(int id)
