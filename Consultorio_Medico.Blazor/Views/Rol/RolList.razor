@@ -100,6 +100,9 @@
                     <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => GoDetails(rol))" @onclick:stopPropagation="true">
                     </RadzenButton>
+                    <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoEdit(rol))" @onclick:stopPropagation="true">
+                    </RadzenButton>
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -145,9 +148,9 @@
         }
     }
 
-    private void GoEdit(int id)
+    private void GoEdit(RolSearchingOutputDTO rol)
     {
-        //navigation.NavigateTo($"/edit-person/{id}");
+        navigation.NavigateTo($"/edit-rol/{rol.RolId}");
     }
     private void GoCreate()
     {

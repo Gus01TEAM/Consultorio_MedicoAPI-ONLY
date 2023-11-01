@@ -56,9 +56,9 @@ namespace Consultorio_Medico.Blazor.Data
             }
         }
 
-        public async Task<DTOGenericResponse<RolSearchingOutputDTO>> Edit(int id, RolInputDTO editRolDTO)
+        public async Task<DTOGenericResponse<RolSearchingOutputDTO>> Edit(int id, RolInputDTO rolInput)
         {
-            var response = await _httpClientAPI.PutAsJsonAsync($"/api/Rol/{id}", editRolDTO);
+            var response = await _httpClientAPI.PutAsJsonAsync($"/api/Rol/{id}", rolInput);
 
             if (response.IsSuccessStatusCode)
             {
@@ -67,7 +67,8 @@ namespace Consultorio_Medico.Blazor.Data
             }
             else
             {
-                throw new Exception("La solicitud PUT no fue exitosa.");
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception($"La solicitud PUT no fue exitosa. Código de estado: {response.StatusCode}. Mensaje de error: {errorMessage}");
             }
         }
 

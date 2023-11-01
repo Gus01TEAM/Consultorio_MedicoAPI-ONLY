@@ -1,0 +1,101 @@
+﻿@page "/edit-rol/{Id:int}"
+
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.RolDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+
+<h3>EditRol</h3>
+
+@if (isSuccess == false && isError == false)
+{
+
+    <EditForm Model="rolInput" OnValidSubmit="@Edit">
+        <h3>CREATE NEW ROLE</h3>
+
+        <div class="row">
+            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="rolInput.Name" />
+                <ValidationMessage For="() => rolInput.Name" />
+            </RadzenFormField>
+        </div>
+        <br>
+        <RadzenDropDown Placeholder="Status" @bind-Value="rolInput.Status" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+            <ValidationMessage For="() => rolInput.Status" />
+        </RadzenDropDown>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Rol" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+
+}
+else if (isSuccess)
+{
+    rolInput = new RolInputDTO();
+
+    isError = false;
+    <p class="alert alert-success">Rol Editado con éxito.</p>
+    <button type="button" @onclick="Cancel" class="btn btn-primary">Ir a Crear</button>
+    <NavLink href="/roles" class="btn btn-primary">Return to List</NavLink>
+}
+else if (isError)
+{
+    <p class="alert alert-success">Sucedio un error al intentar Editar</p>
+    <NavLink href="/roles" class="btn btn-primary">Aceptar</NavLink>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    RolService rolService { get; set; }
+
+
+    RolSearchingOutputDTO rolOut = new RolSearchingOutputDTO();
+    RolInputDTO rolInput = new RolInputDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    Variant variant = Variant.Outlined;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rolResult = await rolService.GetById(Id);
+        rolOut = rolResult.Data;
+        rolInput = new RolInputDTO(rolOut);
+    }
+
+    private async Task Edit()
+    {
+        var result = await rolService.Edit(Id, rolInput);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "ACTIVO", Value = (byte)1 };
+        yield return new { Text = "INACTIVO", Value = (byte)2 };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/roles");
+    }
+}
