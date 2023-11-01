@@ -8,39 +8,32 @@
 
 @if (isSuccess == false && isError == false)
 {
-    <!DOCTYPE html>
-    <EditForm Model="rolInput" OnValidSubmit="Create">
-        <html>
-        <body>
-            <h3>Crea un nuevo Rol</h3>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="Name"></span>
-                <InputText class="form-control" id="Name" @bind-Value="rolInput.Name" />
+    <EditForm Model="rolInput" OnValidSubmit="@Create">
+        <h3>CREATE NEW ROLE</h3>
+
+        <div class="row">
+            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="rolInput.Name" />
+            </RadzenFormField>
+        </div>
+        <br>
+        <RadzenDropDown Placeholder="Status" @bind-Value="rolInput.Status" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+        </RadzenDropDown>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Rol" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
+        </div>
 
-            <select class="form-select" aria-label="Status" id="statusSelect" @onchange="HandleSelectChange">
-                <option value="1">ACTIVO</option>
-                <option value="2">INACTIVO</option>
-            </select>
-
-            <div class="row">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-outline-primary">Guardar</button>
-                </div>
-                <br>
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="col-12">
-                        <NavLink href="/roles" class="btn btn-outline-secondary">Cancelar</NavLink>
-                    </div>
-                </div>
-            </div>
-        </body>
-    </html>
+        </div>
     </EditForm>
+
 }
 else if (isSuccess)
 {
@@ -60,6 +53,8 @@ else if (isError)
 
 
 @code {
+    [Inject]
+    NavigationManager navigation { get; set; }
 
     [Inject]
     RolService rolService { get; set; }
@@ -68,6 +63,8 @@ else if (isError)
 
     bool isSuccess = false;
     bool isError = false;
+
+    Variant variant = Variant.Outlined;
 
     private async Task Create()
     {
@@ -89,6 +86,17 @@ else if (isError)
     private void HandleSelectChange(ChangeEventArgs e)
     {
         rolInput.Status = Convert.ToByte(e.Value.ToString());
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "ACTIVO", Value = (byte)1 };
+        yield return new { Text = "INACTIVO", Value = (byte)2 };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/roles");
     }
 
 }
