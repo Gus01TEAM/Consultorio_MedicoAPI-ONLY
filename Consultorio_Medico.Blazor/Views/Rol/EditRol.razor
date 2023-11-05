@@ -11,7 +11,7 @@
 {
 
     <EditForm Model="rolInput" OnValidSubmit="@Edit">
-        <h3>CREATE NEW ROLE</h3>
+        <h3>Edit Role</h3>
 
         <div class="row">
             <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
@@ -43,13 +43,13 @@ else if (isSuccess)
     rolInput = new RolInputDTO();
 
     isError = false;
-    <p class="alert alert-success">Rol Editado con éxito.</p>
-    <button type="button" @onclick="Cancel" class="btn btn-primary">Ir a Crear</button>
+    <p class="alert alert-success">Sucessfully updated.</p>
+    <button type="button" @onclick="Cancel" class="btn btn-primary">Go create</button>
     <NavLink href="/roles" class="btn btn-primary">Return to List</NavLink>
 }
 else if (isError)
 {
-    <p class="alert alert-success">Sucedio un error al intentar Editar</p>
+    <p class="alert alert-success">An error ocurred when updating role.</p>
     <NavLink href="/roles" class="btn btn-primary">Aceptar</NavLink>
 }
 
