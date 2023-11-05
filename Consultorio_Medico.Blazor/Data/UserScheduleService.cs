@@ -40,7 +40,7 @@ namespace Consultorio_Medico.Blazor.Data
                 throw new Exception("La solicitud GET no fue exitosa.");
             }
         }
-        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Create(UserScheduleSearchInpuntDTO createUserSchedule)
+        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Create(UserScheduleInputDTO createUserSchedule)
         {
             var response = await _httpClientAPI.PostAsJsonAsync("/api/UserSchedule", createUserSchedule);
 
@@ -52,6 +52,36 @@ namespace Consultorio_Medico.Blazor.Data
             else
             {
                 throw new Exception("La solicitud POST no fue exitosa.");
+            }
+        }
+
+        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Edit(int id, UserScheduleInputDTO createUserSchedule)
+        {
+            var response = await _httpClientAPI.PutAsJsonAsync($"/api/UserSchedule/{id}", createUserSchedule);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<DTOGenericResponse<UserScheduleSearchOutputDTO>>(responseBody);
+            }
+            else
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception($"La solicitud PUT no fue exitosa. Código de estado: {response.StatusCode}. Mensaje de error: {errorMessage}");
+            }
+        }
+        public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Delete(int id)
+        {
+            var response = await _httpClientAPI.DeleteAsync($"/api/UserSchedule/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<DTOGenericResponse<UserScheduleSearchOutputDTO>>(responseBody);
+            }
+            else
+            {
+                throw new Exception("La solicitud DELETE no fue exitosa.");
             }
         }
     }
