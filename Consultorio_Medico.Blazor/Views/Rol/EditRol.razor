@@ -5,14 +5,12 @@
 @using Consultorio_Medico.Blazor.Data;
 
 
-<h3>EditRol</h3>
+<h3>Edit Role</h3>
 
 @if (isSuccess == false && isError == false)
 {
 
     <EditForm Model="rolInput" OnValidSubmit="@Edit">
-        <h3>Edit Role</h3>
-
         <div class="row">
             <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="rolInput.Name" />
