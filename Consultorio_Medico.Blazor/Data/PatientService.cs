@@ -29,6 +29,7 @@ namespace Consultorio_Medico.Blazor.Data
 
 
         }
+
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> GetById(int id)
         {
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<patientSearchOutputDTO>>($"/api/patient/{id}");
@@ -41,9 +42,8 @@ namespace Consultorio_Medico.Blazor.Data
             {
                 throw new Exception("La solicitud GetById no fue exitosa.");
             }
-
-
         }
+
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> Create(patientAddDTO createPatient)
         {
             var response = await _httpClientAPI.PostAsJsonAsync("/api/Patient", createPatient);
@@ -57,8 +57,8 @@ namespace Consultorio_Medico.Blazor.Data
             {
                 throw new Exception("La solicitud POST no fue exitosa.");
             }
-
         }
+
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> Edit(int id, patientAddDTO patientInput)
         {
             var response = await _httpClientAPI.PutAsJsonAsync($"/api/Patient/{id}", patientInput);
@@ -74,6 +74,7 @@ namespace Consultorio_Medico.Blazor.Data
                 throw new Exception($"La solicitud PUT no fue exitosa. Código de estado: {response.StatusCode}. Mensaje de error: {errorMessage}");
             }
         }
+
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> Delete(int id)
         {
             var response = await _httpClientAPI.DeleteAsync($"/api/Patient/{id}");
