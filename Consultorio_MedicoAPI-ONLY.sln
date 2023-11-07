@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-AppWeb", "04-AppWeb", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consultorio_Medico.Blazor", "Consultorio_Medico.Blazor\Consultorio_Medico.Blazor.csproj", "{8A8C97E3-BB16-470F-B521-E0601E2307BF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CONSULTORIO_MEDICO.PRUEBAMSTEST", "CONSULTORIO_MEDICO.PRUEBAMSTEST\CONSULTORIO_MEDICO.PRUEBAMSTEST.csproj", "{174DD30D-E496-4938-BE8E-1C2D5AA65F7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{8A8C97E3-BB16-470F-B521-E0601E2307BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A8C97E3-BB16-470F-B521-E0601E2307BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A8C97E3-BB16-470F-B521-E0601E2307BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174DD30D-E496-4938-BE8E-1C2D5AA65F7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174DD30D-E496-4938-BE8E-1C2D5AA65F7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174DD30D-E496-4938-BE8E-1C2D5AA65F7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174DD30D-E496-4938-BE8E-1C2D5AA65F7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

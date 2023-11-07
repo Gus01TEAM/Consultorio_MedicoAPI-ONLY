@@ -7,12 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Patient\PatientList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Radzen.Blazor" Version="4.18.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ConsultorioMedicoAPI-ONLY\ConsultorioMedicoAPI-ONLY.csproj" />
     <ProjectReference Include="..\Consultorio_Medico.BL.DTOs\Consultorio_Medico.BL.DTOs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Patient\PatientList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Patient\PatientList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Patient\PatientList.razor" />
   </ItemGroup>
 
 </Project>
