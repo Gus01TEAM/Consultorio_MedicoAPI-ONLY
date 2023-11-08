@@ -73,22 +73,23 @@
         }
     }
 
-    private void GoEdit(ScheduleSearchOutPutDTO sche)
-    {
-        navigation.NavigateTo($"/edit-rol/{sche.SchedulesId}");
-    }
     private void GoCreate()
     {
-        navigation.NavigateTo($"/create-rol");
+        navigation.NavigateTo($"/create-sched");
+    }
+
+    private void GoEdit(ScheduleSearchOutPutDTO sche)
+    {
+        navigation.NavigateTo($"/edit-sched/{sche.SchedulesId}");
     }
 
     private void GoDetails(ScheduleSearchOutPutDTO sche)
     {
-        navigation.NavigateTo($"/rol-details/{sche.SchedulesId}");
+        navigation.NavigateTo($"/sched-details/{sche.SchedulesId}");
     }
 
     private void GoDelete(ScheduleSearchOutPutDTO sche)
     {
-        navigation.NavigateTo($"/delete-rol/{sche.SchedulesId}");
+        navigation.NavigateTo($"/delete-sched/{sche.SchedulesId}");
     }
 }

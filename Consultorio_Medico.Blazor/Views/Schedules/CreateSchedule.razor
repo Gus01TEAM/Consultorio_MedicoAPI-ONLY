@@ -1,0 +1,109 @@
+﻿@page "/create-sched"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.ScheduleDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>CREATE NEW SCHEDULE</h3>
+
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="schedule" OnValidSubmit="@Create">
+        <div class="row">
+            <RadzenFormField Text="Day Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="schedule.DayName" />
+            </RadzenFormField>
+        </div>
+
+        <RadzenRow Style="margin-top: 10px;">
+        <RadzenDropDown Placeholder="Start Of Shift" @bind-Value="schedule.StartOfShift" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+        </RadzenDropDown>
+        </RadzenRow>
+
+        <RadzenRow Style="margin-top: 10px;">
+        <RadzenDropDown Placeholder="End Of Shift" @bind-Value="schedule.EndOfShift" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+        </RadzenDropDown>
+        </RadzenRow>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Schedule" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    schedule = new ScheduleInputDTO();
+
+    isError = false;
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        Schedule created successfully!
+    </RadzenAlert>
+    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to register.
+    </RadzenAlert>
+    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+@code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    ScheduleService scheduleService { get; set; }
+
+    ScheduleInputDTO schedule = new ScheduleInputDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    Variant variant = Variant.Outlined;
+
+    private async Task Create()
+    {
+        var result = await scheduleService.Create(schedule);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    private void GoCreate()
+    {
+        isSuccess = false;
+        isError = false;
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "8:00 A.M", Value = (decimal)8 };
+        yield return new { Text = "9:00 A.M", Value = (decimal)9 };
+        yield return new { Text = "10:00 A.M", Value = (decimal)10 };
+        yield return new { Text = "11:00 A.M", Value = (decimal)11 };
+        yield return new { Text = "1:00 P.M", Value = (decimal)13 };
+        yield return new { Text = "2:00 P.M", Value = (decimal)14 };
+        yield return new { Text = "3:00 P.M", Value = (decimal)15 };
+        yield return new { Text = "4:00 P.M", Value = (decimal)16 };
+        yield return new { Text = "5:00 P.M", Value = (decimal)17 };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/schedules");
+    }
+}
