@@ -1,0 +1,94 @@
+﻿@page "/schedules"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.ScheduleDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>SCHEDULES LIST</h3>
+@if (isOcultarGrid)
+{
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Data="@schedules" TItem="ScheduleSearchOutPutDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+                IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+        <Columns>
+
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="DayName" Title="Day Name" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="StartOfShift" Title="Star tOf Shift" Width="160px" />
+
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="EndOfShift" Title="End Of Shift" Width="160px" />
+
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="NumberOfHours" Title="Number Of Hours" Width="160px" />
+
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Context="sche" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+                <Template Context="sche">
+                    <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDelete(sche))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDetails(sche))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoEdit(sche))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+
+<br>
+<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+
+@code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    ScheduleService scheduleService { get; set; }
+
+    List<ScheduleSearchOutPutDTO> schedules = new List<ScheduleSearchOutPutDTO>();
+
+    bool isLoading = false;
+    bool isOcultarGrid = true;
+    async Task ShowLoading()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        isLoading = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await scheduleService.Search();
+        if (response.Success)
+        {
+            schedules = response.Data;
+        }
+    }
+
+    private void GoEdit(ScheduleSearchOutPutDTO sche)
+    {
+        navigation.NavigateTo($"/edit-rol/{sche.SchedulesId}");
+    }
+    private void GoCreate()
+    {
+        navigation.NavigateTo($"/create-rol");
+    }
+
+    private void GoDetails(ScheduleSearchOutPutDTO sche)
+    {
+        navigation.NavigateTo($"/rol-details/{sche.SchedulesId}");
+    }
+
+    private void GoDelete(ScheduleSearchOutPutDTO sche)
+    {
+        navigation.NavigateTo($"/delete-rol/{sche.SchedulesId}");
+    }
+}

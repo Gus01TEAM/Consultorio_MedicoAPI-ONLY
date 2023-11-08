@@ -15,7 +15,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<List<ScheduleSearchOutPutDTO>>> Search()
         {
-            var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<ScheduleSearchOutPutDTO>>>("/api/Schedule");
+            var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<ScheduleSearchOutPutDTO>>>("/api/Schedules");
 
             if (response != null)
             {
@@ -28,7 +28,7 @@ namespace Consultorio_Medico.Blazor.Data
         }
         public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> GetById(int id)
         {
-            var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<ScheduleSearchOutPutDTO>>($"/api/Schedule/{id}");
+            var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<ScheduleSearchOutPutDTO>>($"/api/Schedules/{id}");
 
             if (response != null)
             {
@@ -41,7 +41,7 @@ namespace Consultorio_Medico.Blazor.Data
         }
         public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> Create(ScheduleInputDTO createSchedule)
         {
-            var response = await _httpClientAPI.PostAsJsonAsync("/api/Schedule", createSchedule);
+            var response = await _httpClientAPI.PostAsJsonAsync("/api/Schedules", createSchedule);
 
             if (response.IsSuccessStatusCode)
             {
@@ -55,7 +55,7 @@ namespace Consultorio_Medico.Blazor.Data
         }
         public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> Edit(int id, ScheduleInputDTO createSchedule)
         {
-            var response = await _httpClientAPI.PutAsJsonAsync($"/api/Schedule/{id}", createSchedule);
+            var response = await _httpClientAPI.PutAsJsonAsync($"/api/Schedules/{id}", createSchedule);
 
             if (response.IsSuccessStatusCode)
             {
@@ -71,7 +71,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> Delete(int id)
         {
-            var response = await _httpClientAPI.DeleteAsync($"/api/Schedule/{id}");
+            var response = await _httpClientAPI.DeleteAsync($"/api/Schedules/{id}");
 
             if (response.IsSuccessStatusCode)
             {
