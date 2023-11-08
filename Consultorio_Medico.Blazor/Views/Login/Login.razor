@@ -1,6 +1,7 @@
 ﻿@page "/Login"
 
 @using Consultorio_Medico.Blazor.Data;
+@using ConsultorioMedicoAPI_ONLY.Controllers;
 @using Consultorio_Medico.BL.DTOs.userDTO;
 
     <RadzenRow Gap="0" Class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
@@ -16,27 +17,52 @@
                 <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" Class="rz-mb-6">
                     Login
                 </RadzenText>
-                <RadzenTemplateForm Data=@(login)  @onsubmit="Post">
-                    <RadzenLogin Username="login" Password="password" AllowRegister="true" AllowResetPassword="false" />
+            <RadzenTemplateForm Data=@(login) @onsubmit="@Post">
+               
+                <RadzenFormField Text="Account" Variant="@variant">
+                    <Start>
+                        <RadzenIcon Icon="account_circle" />
+                    </Start>
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value=@(login.login) />
+                    </ChildContent>
+                </RadzenFormField>
+                <br />
+                <RadzenFormField Text="Password" Variant="@variant">
+                    <Start>
+                        <RadzenIcon Icon="security" />
+                    </Start>
+                    <ChildContent>
+                        <RadzenTextBox @bind-Value=@(login.password)  />
+                        @*<RadzenPassword @bind-Value=@(login.password) Visible=()/>*@
+                    </ChildContent>
+                </RadzenFormField>
+                <br />
+                <RadzenButton Text="Login" ButtonStyle="ButtonStyle.Primary" Click="@Post" />
                 </RadzenTemplateForm>
             </RadzenCard>
         </RadzenColumn>
     </RadzenRow>
 
-<label>@login.login</label>
-<label>@login.password</label>
 @code {
+
     [Inject]
     NavigationManager navigation { get; set; }
 
     [Inject]
     SecurityService securityService { get; set; }
 
-
-
     bool isSuccess = false;
     bool isError = false;
-    LoginDTO login = new LoginDTO {login="Hola", password="12345" };
+
+    LoginDTO login = new LoginDTO();
+
+    //private async Task OnLogin(LoginArgs args)
+    //{
+    //    login.login = args.Username; // Aquí asignas el valor ingresado por el usuario a tu DTO
+    //    login.password = args.Password; // Aquí asignas el valor ingresado por el usuario a tu DTO
+    //}
+
     private async Task Post()
     {
         var result = await securityService.post(login);
@@ -46,9 +72,20 @@
             isError = true;
         isError = false;
     }
+
     private void loggedIn()
     {
         navigation.NavigateTo("/");
     }
 
+    string value = "";
+    bool password;
+
+
+    Variant variant = Variant.Outlined;
+
+    void TogglePassword()
+    {
+        password = !password;
+    }
 }

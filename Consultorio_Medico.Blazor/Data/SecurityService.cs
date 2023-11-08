@@ -1,6 +1,7 @@
 ﻿using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.Interfaces;
 using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
+using Microsoft.Identity.Client;
 using System.Text.Json;
 
 namespace Consultorio_Medico.Blazor.Data
@@ -18,7 +19,6 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<securityDTO>> post(LoginDTO login)
         {
-         
             var response = await _httpClientAPI.PostAsJsonAsync("/api/Security",login);
 
             if (response.IsSuccessStatusCode)

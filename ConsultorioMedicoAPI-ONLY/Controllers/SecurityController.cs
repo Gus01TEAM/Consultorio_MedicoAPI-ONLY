@@ -24,13 +24,13 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
 
         // POST api/<SecurityController>
         [HttpPost]
-        public DTOGenericResponse<securityDTO> Post(string Login, string Password)
+        public DTOGenericResponse<securityDTO> Post(LoginDTO login)
         {
             try
             {
                 _logger.LogInformation("---- INICIO METODO POST LOGIN POST API CONTROLLER ----");
 
-                var security = _securityBL.Login(Login, Password);
+                var security = _securityBL.Login(login.login,login.password);
                 if (security.userId > 0)
                 {
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Logeo correcto", security);
