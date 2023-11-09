@@ -1,0 +1,117 @@
+﻿@page "/edit-sched/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.ScheduleDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>ScheduleEdit</h3>
+
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="scheduleI" OnValidSubmit="@Edit">
+        <div class="row">
+            <RadzenFormField Text="Day Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="scheduleI.DayName" />
+                <ValidationMessage For="() => scheduleI.DayName" />
+            </RadzenFormField>
+        </div>
+
+        <RadzenRow Style="margin-top: 10px;">
+            <RadzenDropDown Placeholder="Start Of Shift" @bind-Value="scheduleI.StartOfShift" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+                <ValidationMessage For="() => scheduleI.StartOfShift" />
+            </RadzenDropDown>
+        </RadzenRow>
+
+        <RadzenRow Style="margin-top: 10px;">
+            <RadzenDropDown Placeholder="End Of Shift" @bind-Value="scheduleI.EndOfShift" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+                <ValidationMessage For="() => scheduleI.EndOfShift" />
+            </RadzenDropDown>
+        </RadzenRow>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Edit Schedule" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    scheduleI = new ScheduleInputDTO();
+    isError = false;
+
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        The schedule was successfully updating!
+    </RadzenAlert>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to updating sechedule.
+        </RadzenAlert>
+        <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    ScheduleService scheduleService { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    ScheduleInputDTO scheduleI = new ScheduleInputDTO();
+    ScheduleSearchOutPutDTO schedOut = new ScheduleSearchOutPutDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    Variant variant = Variant.Outlined;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rolResult = await scheduleService.GetById(Id);
+        schedOut = rolResult.Data;
+        scheduleI = new ScheduleInputDTO(schedOut);
+    }
+
+    private async Task Edit()
+    {
+        var result = await scheduleService.Edit(Id, scheduleI);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "8:00 A.M", Value = (decimal)8 };
+        yield return new { Text = "9:00 A.M", Value = (decimal)9 };
+        yield return new { Text = "10:00 A.M", Value = (decimal)10 };
+        yield return new { Text = "11:00 A.M", Value = (decimal)11 };
+        yield return new { Text = "1:00 P.M", Value = (decimal)13 };
+        yield return new { Text = "2:00 P.M", Value = (decimal)14 };
+        yield return new { Text = "3:00 P.M", Value = (decimal)15 };
+        yield return new { Text = "4:00 P.M", Value = (decimal)16 };
+        yield return new { Text = "5:00 P.M", Value = (decimal)17 };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/schedules");
+    }
+}
