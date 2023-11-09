@@ -1,0 +1,73 @@
+﻿@page "/sched-details/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.ScheduleDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+
+<h3>ScheduleDetails</h3>
+<div class="row">
+    <RadzenFormField Text="Day Name" Style="width: 50%" Variant="@variant">
+        <RadzenTextBox @bind-Value="schedule.DayName" ReadOnly="true" />
+    </RadzenFormField>
+</div>
+
+<RadzenRow Style="margin-top: 10px;">
+    <RadzenDropDown Placeholder="Start Of Shift" @bind-Value="schedule.StartOfShift" Disabled="@disabled" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+    </RadzenDropDown>
+</RadzenRow>
+
+<RadzenRow Style="margin-top: 10px;">
+    <RadzenDropDown Placeholder="End Of Shift" @bind-Value="schedule.EndOfShift" Disabled="@disabled" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+    </RadzenDropDown>
+</RadzenRow>
+
+<div class="row">
+    <div class="col-12">
+        <RadzenButton Text="Return" ButtonStyle="ButtonStyle.Warning" Icon="info" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    ScheduleService scheduleService { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    ScheduleSearchOutPutDTO schedule = new ScheduleSearchOutPutDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool disabled = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rolResult = await scheduleService.GetById(Id);
+        schedule = rolResult.Data;
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "8:00 A.M", Value = (decimal)8 };
+        yield return new { Text = "9:00 A.M", Value = (decimal)9 };
+        yield return new { Text = "10:00 A.M", Value = (decimal)10 };
+        yield return new { Text = "11:00 A.M", Value = (decimal)11 };
+        yield return new { Text = "1:00 P.M", Value = (decimal)13 };
+        yield return new { Text = "2:00 P.M", Value = (decimal)14 };
+        yield return new { Text = "3:00 P.M", Value = (decimal)15 };
+        yield return new { Text = "4:00 P.M", Value = (decimal)16 };
+        yield return new { Text = "5:00 P.M", Value = (decimal)17 };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/schedules");
+    }
+}
