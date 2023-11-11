@@ -1,0 +1,105 @@
+﻿@page "/edit-patient/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.PatientDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>EditPatient</h3>
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="patientI" OnValidSubmit="@Edit">
+        <div class="row">
+            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patientI.Name" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patientI.LastName" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patientI.Telefono" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patientI.DUI" />
+            </RadzenFormField>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Uodate Patient" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    patientI = new patientAddDTO();
+    isError = false;
+
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        The patient was successfully updating!
+    </RadzenAlert>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to updating patient.
+    </RadzenAlert>
+    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    PatientService patientService { get; set; }
+
+    patientAddDTO patientI = new patientAddDTO();
+    patientSearchOutputDTO patientO = new patientSearchOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rolResult = await patientService.GetById(Id);
+        patientO = rolResult.Data;
+        patientI = new patientAddDTO(patientO);
+    }
+
+    private async Task Edit()
+    {
+        var result = await patientService.Edit(Id, patientI);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/patients");
+    }
+}
