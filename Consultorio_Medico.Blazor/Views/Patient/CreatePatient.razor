@@ -1,0 +1,101 @@
+﻿@page "/create-patient"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.PatientDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>CreatePatient</h3>
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="patient" OnValidSubmit="@Create">
+        <div class="row">
+            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patient.Name" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patient.LastName" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patient.Telefono" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="patient.DUI" />
+            </RadzenFormField>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Patient" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm> 
+}
+else if (isSuccess)
+{
+    patient = new patientAddDTO();
+
+    isError = false;
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        Schedule created successfully!
+    </RadzenAlert>
+    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to register.
+    </RadzenAlert>
+    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+
+@code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    PatientService patientService { get; set; }
+
+    patientAddDTO patient = new patientAddDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    Variant variant = Variant.Outlined;
+
+    private async Task Create()
+    {
+        var result = await patientService.Create(patient);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    private void GoCreate()
+    {
+        isSuccess = false;
+        isError = false;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/patients");
+    }
+}
