@@ -1,0 +1,69 @@
+﻿@page "/patient-details/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.PatientDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>PatientDetails</h3>
+<div class="row">
+    <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+        <RadzenTextBox @bind-Value="patient.Name" ReadOnly="true" />
+    </RadzenFormField>
+</div>
+<br />
+<div class="row">
+    <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+        <RadzenTextBox @bind-Value="patient.LastName" ReadOnly="true" />
+    </RadzenFormField>
+</div>
+<br />
+<div class="row">
+    <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
+        <RadzenTextBox @bind-Value="patient.Telefono" ReadOnly="true" />
+    </RadzenFormField>
+</div>
+<br />
+<div class="row">
+    <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
+        <RadzenTextBox @bind-Value="patient.DUI" ReadOnly="true" />
+    </RadzenFormField>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation {get; set;}
+
+    [Inject]
+    PatientService patientService { get; set; }
+
+    patientSearchOutputDTO patient = new patientSearchOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool disabled = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rolResult = await patientService.GetById(Id);
+        patient = rolResult.Data;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/patients");
+    }
+
+}
