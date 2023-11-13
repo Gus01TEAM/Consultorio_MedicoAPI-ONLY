@@ -1,0 +1,51 @@
+﻿@page "/specialty-details/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>SpecialtyDetails</h3>
+<div class="row">
+    <RadzenFormField Text="Specialty" Style="width: 50%" Variant="@variant">
+        <RadzenTextBox @bind-Value="specialties.Specialty" ReadOnly="true" />
+    </RadzenFormField>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <RadzenButton Text="Return" ButtonStyle="ButtonStyle.Warning" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    SpecialtyService specialtyService { get; set; }
+
+    SpecialtiesOutputDTO specialties = new SpecialtiesOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool disabled = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var rolResult = await specialtyService.GetById(Id);
+        specialties = rolResult.Data;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/specialties");
+    }
+
+}
