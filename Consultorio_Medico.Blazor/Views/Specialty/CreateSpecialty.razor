@@ -1,0 +1,85 @@
+﻿@page "/create-specialty"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>CreateSpecialty</h3>
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="specialties" OnValidSubmit="@Create">
+        <div class="row">
+            <RadzenFormField Text="Specialty" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="specialties.Specialty" />
+            </RadzenFormField>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Specialty" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    specialties = new SpecialtiesInputDTO();
+
+    isError = false;
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        Specialty created successfully!
+    </RadzenAlert>
+    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to register.
+    </RadzenAlert>
+    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+
+@code {
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    SpecialtyService specialtyService { get; set; }
+
+    SpecialtiesInputDTO specialties = new SpecialtiesInputDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    Variant variant = Variant.Outlined;
+
+    private async Task Create()
+    {
+        var result = await specialtyService.Create(specialties);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    private void GoCreate()
+    {
+        isSuccess = false;
+        isError = false;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/specialties");
+    }
+}

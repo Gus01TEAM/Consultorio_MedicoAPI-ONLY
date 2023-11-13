@@ -1,0 +1,89 @@
+﻿@page "/specialties"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>SpecialtyList</h3>
+@if (isOcultarGrid)
+{
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Data="@specialties" TItem="SpecialtiesOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+                IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+        <Columns>
+
+            <RadzenDataGridColumn TItem="SpecialtiesOutputDTO" Property="Specialty" Title="Specialty" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="SpecialtiesOutputDTO" Context="specialty" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+                <Template Context="specialty">
+                    <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDelete(specialty))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDetails(specialty))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoEdit(specialty))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+
+<br>
+<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+
+
+@code {
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    SpecialtyService specialtyService { get; set; }
+
+    List<SpecialtiesOutputDTO> specialties = new List<SpecialtiesOutputDTO>();
+
+    bool isLoading = false;
+    bool isOcultarGrid = true;
+    async Task ShowLoading()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        isLoading = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await specialtyService.Search();
+        if (response.Success)
+        {
+            specialties = response.Data;
+        }
+    }
+
+    private void GoCreate()
+    {
+        navigation.NavigateTo($"/create-specialty");
+    }
+
+    private void GoEdit(SpecialtiesOutputDTO specialty)
+    {
+        navigation.NavigateTo($"/edit-specialty/{specialty.Id}");
+    }
+
+    private void GoDetails(SpecialtiesOutputDTO specialty)
+    {
+        navigation.NavigateTo($"/specialty-details/{specialty.Id}");
+    }
+
+    private void GoDelete(SpecialtiesOutputDTO specialty)
+    {
+        navigation.NavigateTo($"/delete-specialty/{specialty.Id}");
+    }
+}

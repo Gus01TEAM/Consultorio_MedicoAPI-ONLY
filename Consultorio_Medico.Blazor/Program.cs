@@ -13,6 +13,7 @@ builder.Services.AddSingleton<RolService>();
 builder.Services.AddSingleton<SecurityService>();
 builder.Services.AddSingleton<ScheduleService>();
 builder.Services.AddSingleton<PatientService>();
+builder.Services.AddSingleton<SpecialtyService>();
 //builder.Services.AddScoped<ISecurityBL>();
 
 builder.Services.AddHttpClient("MEDICOAPI", c =>
