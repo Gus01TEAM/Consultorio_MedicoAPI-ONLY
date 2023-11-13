@@ -1,40 +1,21 @@
-﻿@page "/edit-patient/{Id:int}"
+﻿@page "/edit-specialty/{Id:int}"
 
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Forms;
 @using System.ComponentModel.DataAnnotations;
-@using Consultorio_Medico.BL.DTOs.PatientDTO;
+@using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>EditPatient</h3>
+<h3>EditSpecialty</h3>
 @if (isSuccess == false && isError == false)
 {
-    <EditForm Model="patientI" OnValidSubmit="@Edit">
+    <EditForm Model="specialtyIn" OnValidSubmit="@Edit">
         <div class="row">
             <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
-                <RadzenTextBox @bind-Value="patientI.Name" />
-                <ValidationMessage For="() => patientI.Name" />
-            </RadzenFormField>            
-        </div>
-        <div class="row">
-            <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
-                <RadzenTextBox @bind-Value="patientI.LastName" />
-                <ValidationMessage For="() => patientI.LastName" />
+                <RadzenTextBox @bind-Value="specialtyIn.Specialty" />
+                <ValidationMessage For="() => specialtyIn.Specialty" />
             </RadzenFormField>
         </div>
-        <div class="row">
-            <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
-                <RadzenTextBox @bind-Value="patientI.Telefono" />
-                <ValidationMessage For="() => patientI.Telefono" />
-            </RadzenFormField>
-        </div>
-        <div class="row">
-            <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
-                <RadzenTextBox @bind-Value="patientI.DUI" />
-                <ValidationMessage For="() => patientI.DUI" />
-            </RadzenFormField>
-        </div>
-
         <div class="row">
             <div class="col-12">
                 <RadzenButton ButtonType="ButtonType.Submit" Text="Uodate Patient" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
@@ -50,22 +31,21 @@
 }
 else if (isSuccess)
 {
-    patientI = new patientAddDTO();
+    specialtyIn = new SpecialtiesInputDTO();
     isError = false;
 
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        The patient was successfully updating!
+        The specialty was successfully updating!
     </RadzenAlert>
     <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to updating patient.
+        An error occurred while trying to updating specialty.
     </RadzenAlert>
     <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
-
 
 @code {
 
@@ -76,10 +56,10 @@ else if (isError)
     NavigationManager navigation { get; set; }
 
     [Inject]
-    PatientService patientService { get; set; }
+    SpecialtyService specialtyService { get; set; }
 
-    patientAddDTO patientI = new patientAddDTO();
-    patientSearchOutputDTO patientO = new patientSearchOutputDTO();
+    SpecialtiesInputDTO specialtyIn = new SpecialtiesInputDTO();
+    SpecialtiesOutputDTO specialtyOu = new SpecialtiesOutputDTO();
 
     Variant variant = Variant.Outlined;
 
@@ -88,14 +68,14 @@ else if (isError)
 
     protected override async Task OnInitializedAsync()
     {
-        var rolResult = await patientService.GetById(Id);
-        patientO = rolResult.Data;
-        patientI = new patientAddDTO(patientO);
+        var rolResult = await specialtyService.GetById(Id);
+        specialtyOu = rolResult.Data;
+        specialtyIn = new SpecialtiesInputDTO(specialtyOu);
     }
 
     private async Task Edit()
     {
-        var result = await patientService.Edit(Id, patientI);
+        var result = await specialtyService.Edit(Id, specialtyIn);
         if (result != null)
             isSuccess = true;
         else
