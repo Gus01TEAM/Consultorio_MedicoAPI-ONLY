@@ -1,0 +1,160 @@
+﻿@page "/create-userSched"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.UserSchedule;
+@using Consultorio_Medico.BL.DTOs.userDTO;
+@using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
+@using Consultorio_Medico.BL.DTOs.ScheduleDTO;
+@using Consultorio_Medico.Blazor.Data;
+@using System.Linq;
+
+<h3>CreateUserSchedule</h3>
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="userSchedulesIn" OnValidSubmit="@Create">
+
+
+        <RadzenRow Style="margin-top: 10px;">
+            <RadzenDropDown @bind-Value="userSchedulesIn.UserId" Data=@users TextProperty="Name" ValueProperty="UserId" Placeholder="--Select User--" Style="width: 100%; max-width: 400px;" />
+        </RadzenRow>
+        <br>
+        <RadzenRow Style="margin-top: 10px;">
+            <RadzenDropDown @bind-Value="userSchedulesIn.SchedulesId" Data=@userSchedulesOu TextProperty="Schedule" ValueProperty="SchedulesId" Placeholder="--Select Schedule--" Style="width: 100%; max-width: 400px;" />
+        </RadzenRow>
+        <br>
+        <RadzenRow Style="margin-top: 10px;">
+            <RadzenDropDown @bind-Value="userSchedulesIn.SpecialtieId" Data=@specialties TextProperty="Specialty" ValueProperty="Id" Placeholder="--Select Specialty--" Style="width: 100%; max-width: 400px;" />
+        </RadzenRow>
+        <br>
+        <div class="row">
+            <RadzenFormField Text="Number Hour Used" Style="width: 50%" Variant="@variant">
+                <RadzenNumeric @bind-Value="userSchedulesIn.NumberHoursUsed" />
+            </RadzenFormField>
+        </div>
+        <br>
+        <div class="row">
+            <RadzenFormField Text="Number Hours Free" Style="width: 50%" Variant="@variant">
+                <RadzenNumeric @bind-Value="userSchedulesIn.NumberHoursFree" />
+            </RadzenFormField>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Save User Schedule" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+
+}
+else if (isSuccess)
+{
+    userSchedulesIn = new UserScheduleInputDTO();
+
+    isError = false;
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        User Schedule created successfully!
+    </RadzenAlert>
+    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to register.
+    </RadzenAlert>
+    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+@code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    UserScheduleService userSchedule { get; set; }
+
+    [Inject]
+    SpecialtyService specialtyService { get; set; }
+
+    [Inject]
+    ScheduleService scheduleService { get; set; }
+
+    [Inject]
+    UserService userService { get; set; }
+
+    List<userSearchOutputDTO> users = new List<userSearchOutputDTO>();
+    List<SpecialtiesOutputDTO> specialties = new List<SpecialtiesOutputDTO>();
+
+    //DETALLE: Aun hay que mostrar los horarios traidos de ScheduleService
+    List<ScheduleSearchOutPutDTO> schedules = new List<ScheduleSearchOutPutDTO>();
+
+    List<UserScheduleSearchOutputDTO> userSchedulesOu = new List<UserScheduleSearchOutputDTO>();
+    UserScheduleInputDTO userSchedulesIn = new UserScheduleInputDTO();
+
+    string valorEspecifico = "ValorEspecifico";
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    Variant variant = Variant.Outlined;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //Data traida desde UserSchedule
+        var response = await userSchedule.Search();
+        if (response.Success)
+        {
+            userSchedulesOu = response.Data;
+        }
+
+        //Data traida desde Users
+        var userResponse = await userService.Search();
+        if (userResponse.Success)
+        {
+            users = userResponse.Data;
+        }
+
+        //Data traida desde Specialties
+        var speResponse = await specialtyService.Search();
+        if (speResponse.Success)
+        {
+            specialties = speResponse.Data;
+        }
+
+        //Data traida desde Schedule
+        var schedResponse = await scheduleService.Search();
+        if (schedResponse.Success)
+        {
+            schedules = schedResponse.Data;
+        }
+    }
+
+    private async Task Create()
+    {
+        var result = await userSchedule.Create(userSchedulesIn);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    private void GoCreate()
+    {
+        isSuccess = false;
+        isError = false;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/userSched");
+    }
+
+}

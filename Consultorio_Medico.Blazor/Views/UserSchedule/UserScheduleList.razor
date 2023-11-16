@@ -1,0 +1,101 @@
+﻿@page "/userSched"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.UserSchedule;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>UserScheduleList</h3>
+@if (isOcultarGrid)
+{
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Data="@userSchedules" TItem="UserScheduleSearchOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+                IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+        <Columns>
+
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="UserName" Title="Usuario" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Schedule" Title="Schedule" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Specialty" Title="Specialty" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="NumberHoursFree" Title="Number Hours Free" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="NumberHoursUsed" Title="Number Hours Used" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Cupo" Title="Cupo" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Context="userSched" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+                <Template Context="userSched">
+                    <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDelete(userSched))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDetails(userSched))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoEdit(userSched))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+
+<br>
+<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+
+
+@code {
+
+    [Inject]
+    NavigationManager navigation {get;set;}
+
+    [Inject]
+    UserScheduleService userSchedule { get; set; }
+
+    List<UserScheduleSearchOutputDTO> userSchedules = new List<UserScheduleSearchOutputDTO>();
+    UserScheduleInputDTO u = new UserScheduleInputDTO();
+
+    bool isLoading = false;
+    bool isOcultarGrid = true;
+    async Task ShowLoading()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        isLoading = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await userSchedule.Search();
+        if (response.Success)
+        {
+            userSchedules = response.Data;
+        }
+    }
+
+    private void GoCreate()
+    {
+        navigation.NavigateTo($"/create-userSched");
+    }
+
+    private void GoEdit(UserScheduleSearchOutputDTO userSchedule)
+    {
+        navigation.NavigateTo($"/edit-userSched/{userSchedule.UserSchedulesId}");
+    }
+
+    private void GoDetails(UserScheduleSearchOutputDTO specialty)
+    {
+        navigation.NavigateTo($"/userSched-details/{specialty.UserSchedulesId}");
+    }
+
+    private void GoDelete(UserScheduleSearchOutputDTO specialty)
+    {
+        navigation.NavigateTo($"/delete-userSched/{specialty.UserSchedulesId}");
+    }
+}
