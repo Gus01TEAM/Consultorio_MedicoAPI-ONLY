@@ -70,7 +70,7 @@ else if (isError)
 
     private async Task Delete()
     {
-        var result = await specialtyService.Delete(specialties.Id);
+        var result = await specialtyService.Delete(Id);
 
         if (result != null)
             isSuccess = true;
