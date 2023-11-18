@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.UserSchedule;
 @using Consultorio_Medico.BL.DTOs.userDTO;
 @using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
-@using Consultorio_Medico.BL.DTOs.ScheduleDTO;
+@using Consultorio_Medico.BL.DTOs.ScheduleDTO;vv
 @using Consultorio_Medico.Blazor.Data;
 @using System.Linq;
 
@@ -108,28 +108,28 @@ else if (isError)
 
     protected override async Task OnInitializedAsync()
     {
-        //Data traida desde UserSchedule
+        //Datos traida desde UserSchedule
         var response = await userSchedule.Search();
         if (response.Success)
         {
             userSchedulesOu = response.Data;
         }
 
-        //Data traida desde Users
+        //Datos traida desde Users
         var userResponse = await userService.Search();
         if (userResponse.Success)
         {
             users = userResponse.Data;
         }
 
-        //Data traida desde Specialties
+        //Datos traida desde Specialties
         var speResponse = await specialtyService.Search();
         if (speResponse.Success)
         {
             specialties = speResponse.Data;
         }
 
-        //Data traida desde Schedule
+        //Datos traida desde Schedule
         var schedResponse = await scheduleService.Search();
         if (schedResponse.Success)
         {
