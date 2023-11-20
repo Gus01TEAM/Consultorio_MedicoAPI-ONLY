@@ -39,16 +39,19 @@
 else if (isSuccess)
 {
     rolInput = new RolInputDTO();
-
     isError = false;
-    <p class="alert alert-success">Sucessfully updated.</p>
-    <button type="button" @onclick="Cancel" class="btn btn-primary">Go create</button>
-    <NavLink href="/roles" class="btn btn-primary">Return to List</NavLink>
+
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        Role was successfully updating!
+    </RadzenAlert>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
-    <p class="alert alert-success">An error ocurred when updating role.</p>
-    <NavLink href="/roles" class="btn btn-primary">Aceptar</NavLink>
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to updating role.
+    </RadzenAlert>
+    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 @code {

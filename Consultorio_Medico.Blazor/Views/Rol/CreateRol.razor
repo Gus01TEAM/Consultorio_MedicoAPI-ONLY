@@ -40,14 +40,18 @@ else if (isSuccess)
     rolInput = new RolInputDTO();
 
     isError = false;
-    <p class="alert alert-success">Rol creado con éxito.</p>
-    <button type="button" @onclick="GoCreate" class="btn btn-primary">Ir a Crear</button>
-    <NavLink href="/roles" class="btn btn-primary">Ir a buscar personas</NavLink>
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        Role created successfully!
+    </RadzenAlert>
+    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
-    <p class="alert alert-success">Sucedio un error al intentar registrar</p>
-    <NavLink href="/roles" class="btn btn-primary">Aceptar</NavLink>
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        An error occurred while trying to register.
+    </RadzenAlert>
+    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 
