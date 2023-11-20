@@ -1,0 +1,99 @@
+﻿@page "/appointList"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>AppointmentList</h3>
+@if (isOcultarGrid)
+{
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Data="@appointments" TItem="AppointmentSearchOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+                IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+        <Columns>
+
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="UserName" Title="User" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="PatientName" Title="Patient Name" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Reason" Title="Reason" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Appointment_date" Title="Appointment Date" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="EndOfAppointmet" Title="End Of Appointment" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Status" Title="Status" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Context="appoint" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+                <Template Context="appoint">
+                    <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDelete(appoint))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDetails(appoint))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoEdit(appoint))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+
+<br>
+<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+
+@code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    AppointmentService appointmentService { get; set; }
+
+    List<AppointmentSearchOutputDTO> appointments = new List<AppointmentSearchOutputDTO>();
+
+    bool isLoading = false;
+    bool isOcultarGrid = true;
+    async Task ShowLoading()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        isLoading = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await appointmentService.Search();
+        if (response.Success)
+        {
+            appointments = response.Data;
+        }
+    }
+
+    private void GoCreate()
+    {
+        navigation.NavigateTo($"/create-appoint");
+    }
+
+    private void GoEdit(AppointmentSearchOutputDTO appointment)
+    {
+        navigation.NavigateTo($"/edit-appoint/{appointment.AppointmentId}");
+    }
+
+    private void GoDetails(AppointmentSearchOutputDTO appointment)
+    {
+        navigation.NavigateTo($"/appoint-details/{appointment.AppointmentId}");
+    }
+
+    private void GoDelete(AppointmentSearchOutputDTO appointment)
+    {
+        navigation.NavigateTo($"/delete-appoint/{appointment.AppointmentId}");
+    }
+}
