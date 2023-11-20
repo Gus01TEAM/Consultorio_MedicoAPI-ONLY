@@ -1,4 +1,4 @@
-﻿@page "/create-userSched"
+﻿@page "/edit-userSched/{Id:int}"
 
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Forms;
@@ -10,10 +10,10 @@
 @using Consultorio_Medico.Blazor.Data;
 @using System.Linq;
 
-<h3>CreateUserSchedule</h3>
+<h3>EditUserSchedule</h3>
 @if (isSuccess == false && isError == false)
 {
-    <EditForm Model="userSchedulesIn" OnValidSubmit="@Create">
+    <EditForm Model="userSchedulesIn" OnValidSubmit="@Edit">
 
 
         <RadzenRow Style="margin-top: 10px;">
@@ -21,7 +21,7 @@
         </RadzenRow>
         <br>
         <RadzenRow Style="margin-top: 10px;">
-            <RadzenDropDown @bind-Value="userSchedulesIn.SchedulesId" Data=@userSchedulesOu TextProperty="Schedule" ValueProperty="SchedulesId" Placeholder="--Select Schedule--" Style="width: 100%; max-width: 400px;" />
+            <RadzenDropDown @bind-Value="userSchedulesIn.SchedulesId" Data=@listSched TextProperty="Schedule" ValueProperty="SchedulesId" Placeholder="--Select Schedule--" Style="width: 100%; max-width: 400px;" />
         </RadzenRow>
         <br>
         <RadzenRow Style="margin-top: 10px;">
@@ -42,7 +42,7 @@
         <br>
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Save User Schedule" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Update User Shedule" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
@@ -52,28 +52,29 @@
             </div>
         </div>
     </EditForm>
-
 }
 else if (isSuccess)
 {
     userSchedulesIn = new UserScheduleInputDTO();
-
     isError = false;
+
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        User Schedule created successfully!
+        The user schedule was successfully updating!
     </RadzenAlert>
-    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to register.
+        An error occurred while trying to updating the user schedule.
     </RadzenAlert>
     <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 @code {
+
+    [Parameter]
+    public int Id { get; set; }
 
     [Inject]
     NavigationManager navigation { get; set; }
@@ -91,12 +92,16 @@ else if (isError)
     UserService userService { get; set; }
 
     List<userSearchOutputDTO> users = new List<userSearchOutputDTO>();
+
+
     List<SpecialtiesOutputDTO> specialties = new List<SpecialtiesOutputDTO>();
 
     //DETALLE: Aun hay que mostrar los horarios traidos de ScheduleService
     List<ScheduleSearchOutPutDTO> schedules = new List<ScheduleSearchOutPutDTO>();
 
-    List<UserScheduleSearchOutputDTO> userSchedulesOu = new List<UserScheduleSearchOutputDTO>();
+    UserScheduleSearchOutputDTO userSchedulesOu = new UserScheduleSearchOutputDTO();
+    List<UserScheduleSearchOutputDTO> listSched = new List<UserScheduleSearchOutputDTO>();
+
     UserScheduleInputDTO userSchedulesIn = new UserScheduleInputDTO();
 
     string valorEspecifico = "ValorEspecifico";
@@ -108,53 +113,37 @@ else if (isError)
 
     protected override async Task OnInitializedAsync()
     {
-        //Datos traida desde UserSchedule
-        var response = await userSchedule.Search();
+        var userSchedResult = await userSchedule.GetById(Id);
+        userSchedulesOu = userSchedResult.Data;
+        userSchedulesIn = new UserScheduleInputDTO(userSchedulesOu);
+
+        var schedlist = await userSchedule.Search();
+        listSched = schedlist.Data;
+
+        var response = await scheduleService.Search();
         if (response.Success)
         {
-            userSchedulesOu = response.Data;
+            schedules = response.Data;
         }
 
-        //Datos traida desde Users
-        var userResponse = await userService.Search();
-        if (userResponse.Success)
-        {
-            users = userResponse.Data;
-        }
+        var spResult = await specialtyService.Search();
+        specialties = spResult.Data;
 
-        //Datos traida desde Specialties
-        var speResponse = await specialtyService.Search();
-        if (speResponse.Success)
-        {
-            specialties = speResponse.Data;
-        }
-
-        //Datos traida desde Schedule
-        var schedResponse = await scheduleService.Search();
-        if (schedResponse.Success)
-        {
-            schedules = schedResponse.Data;
-        }
+        var userResult = await userService.Search();
+        users = userResult.Data;
     }
 
-    private async Task Create()
+    private async Task Edit()
     {
-        var result = await userSchedule.Create(userSchedulesIn);
+        var result = await userSchedule.Edit(Id, userSchedulesIn);
         if (result != null)
             isSuccess = true;
         else
             isError = true;
     }
 
-    private void GoCreate()
-    {
-        isSuccess = false;
-        isError = false;
-    }
-
     private void Cancel()
     {
         navigation.NavigateTo("/userSched");
     }
-
 }
