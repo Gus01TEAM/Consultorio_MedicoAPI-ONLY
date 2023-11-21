@@ -1,0 +1,102 @@
+﻿@page "/userList"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.userDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>UserList</h3>
+@if (isOcultarGrid)
+{
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Style="border-radius: 10px"
+                Data="@users" TItem="userSearchOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+                IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+        <Columns>
+
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="LastName" Title="Last Name" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="RolName" Title="Role Name" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Dui" Title="DUI" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Email" Title="Email" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="PhoneNumber" Title="Phone Number" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Context="user" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+                <Template Context="user">
+                    <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDelete(user))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDetails(user))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoEdit(user))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+
+<br>
+<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+
+
+
+@code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    UserService userService { get; set; }
+
+    List<userSearchOutputDTO> users = new List<userSearchOutputDTO>();
+
+    bool isLoading = false;
+    bool isOcultarGrid = true;
+    async Task ShowLoading()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        isLoading = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await userService.Search();
+        if (response.Success)
+        {
+            users = response.Data;
+        }
+    }
+
+    private void GoCreate()
+    {
+        navigation.NavigateTo($"/create-specialty");
+    }
+
+    private void GoEdit(userSearchOutputDTO user)
+    {
+        navigation.NavigateTo($"/edit-specialty/{user.UserId}");
+    }
+
+    private void GoDetails(userSearchOutputDTO user)
+    {
+        navigation.NavigateTo($"/specialty-details/{user.UserId}");
+    }
+
+    private void GoDelete(userSearchOutputDTO user)
+    {
+        navigation.NavigateTo($"/delete-specialty/{user.UserId}");
+    }
+}
