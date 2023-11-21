@@ -21,14 +21,15 @@
         </RadzenRow>
 
 
-        <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+       <RadzenRow>
+        <RadzenFormField Text="Name" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
             <RadzenTextBox @bind-Value="userAdd.Name" />
         </RadzenFormField>
 
-        <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+        <RadzenFormField Text="Last Name" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
             <RadzenTextBox @bind-Value="userAdd.LastName" />
         </RadzenFormField>
-
+        </RadzenRow>
 
 
         <RadzenFormField Text="Phone Number" Style="width: 50%" Variant="@variant">
@@ -45,19 +46,19 @@
 
 
         <RadzenFormField Text="User Name" Style="width: 50%" Variant="@variant">
-            <RadzenTextBox @bind-Value="userAdd.Login" />
+            <RadzenTextBox Placeholder="User Name" @bind-Value="userAdd.Login" />
         </RadzenFormField>
 
-        <RadzenFormField Text="Date" Style="width: 50%" Variant="@variant">
-            <RadzenDatePicker @bind-Value="userAdd.FechaRegistro" />
+        <RadzenFormField Style="width: 50%" Variant="@variant">
+            <RadzenDatePicker Placeholder="Date" @bind-Value="userAdd.FechaRegistro" />
         </RadzenFormField>
 
-        <RadzenFormField Text="Confirmar Password" Style="width: 50%" Variant="@variant">
-            <RadzenPassword @bind-Value="userAdd.Password" />
+        <RadzenFormField Text="Password" Style="width: 50%" Variant="@variant">
+            <RadzenPassword Placeholder="Password" @bind-Value="userAdd.Password" />
         </RadzenFormField>
 
-        <RadzenFormField Placeholder="Confirm Password" Style="width: 50%" Variant="@variant">
-            <RadzenPassword @bind-Value="userAdd.ConfirmarPassword_aux" />
+        <RadzenFormField Text="Confirm Password" Style="width: 50%" Variant="@variant">
+            <RadzenPassword Placeholder="Confirm Password" @bind-Value="userAdd.ConfirmarPassword_aux" />
         </RadzenFormField>
 
 
