@@ -150,7 +150,7 @@ namespace Consultorio_Medico.BL
                 appointments.ForEach(s => list.Add(new AppointmentSearchOutputDTO()
                 {
                     AppointmentId = s.AppointmentId,
-                    UserName = s.UserSchedules.User.Name + " " + s.UserSchedules.User.LastName +s.UserSchedules.Specialties.Specialty,
+                    UserName = s.UserSchedules.User.Name + " " + s.UserSchedules.User.LastName ,
                     PatientId = s.PatientId,
                     PatientName = s.Patient.Name + " " + s.Patient.LastName,
                     Reason = s.Reason,

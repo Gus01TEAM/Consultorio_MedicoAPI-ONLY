@@ -63,9 +63,9 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         [NotMapped]
         public string ConfirmarPassword_aux { get; set; }
 
-        public List<DoctorSpecialtiesInputDTO> DoctorSpecialtie { get; set; }
+        //public List<DoctorSpecialtiesInputDTO> DoctorSpecialtie { get; set; }
 
-        public List<UserScheduleSearchInpuntDTO> UserSchedules { get; set; }
+        //public List<UserScheduleSearchInpuntDTO> UserSchedules { get; set; }
 
     }
    

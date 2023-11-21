@@ -82,21 +82,21 @@
 
     private void GoCreate()
     {
-        navigation.NavigateTo($"/create-specialty");
+        navigation.NavigateTo($"/create-user");
     }
 
     private void GoEdit(userSearchOutputDTO user)
     {
-        navigation.NavigateTo($"/edit-specialty/{user.UserId}");
+        navigation.NavigateTo($"/edit-user/{user.UserId}");
     }
 
     private void GoDetails(userSearchOutputDTO user)
     {
-        navigation.NavigateTo($"/specialty-details/{user.UserId}");
+        navigation.NavigateTo($"/user-details/{user.UserId}");
     }
 
     private void GoDelete(userSearchOutputDTO user)
     {
-        navigation.NavigateTo($"/delete-specialty/{user.UserId}");
+        navigation.NavigateTo($"/delete-user/{user.UserId}");
     }
 }
