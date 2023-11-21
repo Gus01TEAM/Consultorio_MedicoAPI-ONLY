@@ -59,7 +59,7 @@ namespace Consultorio_Medico.DAL
             query = query.OrderByDescending(s => s.AppointmentId).AsQueryable();
 
             //query = query.Include(s => s.UserSchedules)//.ThenInclude(s=> s.User)
-            //  //  .Include(s=> s.UserSchedules).ThenInclude(s=> s.Specialties)
+            //  .Include(s=> s.UserSchedules).ThenInclude(s=> s.Specialties)
             //    .AsQueryable();
 
 
