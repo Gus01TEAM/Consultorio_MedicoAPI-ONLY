@@ -86,7 +86,9 @@ CREATE TABLE [dbo].[Appointment] (
 	[Reason] [varchar](200) NOT NULL,
 	[Appointment_date] datetime NOT NULL,
 	[EndOfAppoinmet] datetime NOT NULL,
+	[Appointment_Hour] decimal NOT NULL,
 	[Status] [tinyint] NOT NULL,
+	[Shift] [bit] NOT NULL,
 	CONSTRAINT FK1_Appointment_Usuario FOREIGN KEY (UserSchedulesId) REFERENCES UserSchedules (UserSchedulesId),
 	CONSTRAINT FK2_Appointment_Patient FOREIGN KEY (PatientId) REFERENCES Patient (PatientId)
 )

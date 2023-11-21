@@ -20,9 +20,10 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
         public string PatientName { get; set; }
         public string Reason { get; set; }
         public DateTime Appointment_date { get; set; }
-        public DateTime EndOfAppointmet { get; set; } 
+        public decimal Appointment_Hour { get; set; }
         public byte Status { get; set; }
-       // public decimal Cupo { get; set; }
+        public bool? Shift { get; set; }
+        // public decimal Cupo { get; set; }
     }
     public enum Appointment_Status
     {

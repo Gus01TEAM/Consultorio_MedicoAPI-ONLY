@@ -54,7 +54,7 @@ namespace Consultorio_Medico.API.Controllers
             return pDTOGenResponse;
         }
 
-        // POST api/<AppointmentController>
+        //POST api/<AppointmentController>
         [HttpPost]
         public async Task<DTOGenericResponse<AppointmentSearchOutputDTO>> Post(AppointmentInputDTO pAppointment)
         {
@@ -68,14 +68,14 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Creacion correcta", new AppointmentSearchOutputDTO()
                     {
                         AppointmentId = pAppointment.AppointmentId,
-                        UserSchedulesId = pAppointment.UserSchedulesId,                     
+   
                         PatientId = pAppointment.PatientId,
                         Reason = pAppointment.Reason,
                         Appointment_date = pAppointment.Appointment_date,
+                        Appointment_Hour = pAppointment.Appointment_Hour,
+                        Shift = pAppointment.Shift,
                         Status = pAppointment.Status,
-                        //Cupo = pAppointment.Cupo,
-                        EndOfAppointmet = pAppointment.EndOfAppointmet,
-                    
+
                     });
                     _logger.LogInformation("---- FIN METODO POST APPOINTMENT API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -85,13 +85,12 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al crear", new AppointmentSearchOutputDTO()
                     {
                         AppointmentId = pAppointment.AppointmentId,
-                        UserSchedulesId = pAppointment.UserSchedulesId,                       
                         PatientId = pAppointment.PatientId,
                         Reason = pAppointment.Reason,
                         Appointment_date = pAppointment.Appointment_date,
+                        Appointment_Hour = pAppointment.Appointment_Hour,
+                        Shift = pAppointment.Shift,
                         Status = pAppointment.Status,
-                        //Cupo = pAppointment.Cupo,
-                        EndOfAppointmet = pAppointment.EndOfAppointmet,
                     });
                     _logger.LogWarning("---- ERROR EN METODO POST APPOINTMENT API CONTROLLER ----");
                     return pDTOGenResponse;
@@ -103,13 +102,12 @@ namespace Consultorio_Medico.API.Controllers
                 var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new AppointmentSearchOutputDTO()
                 {
                     AppointmentId = pAppointment.AppointmentId,
-                    UserSchedulesId = pAppointment.UserSchedulesId,
                     PatientId = pAppointment.PatientId,
                     Reason = pAppointment.Reason,
                     Appointment_date = pAppointment.Appointment_date,
+                    Appointment_Hour = pAppointment.Appointment_Hour,
+                    Shift = pAppointment.Shift,
                     Status = pAppointment.Status,
-                   // Cupo = pAppointment.Cupo,
-                    EndOfAppointmet = pAppointment.EndOfAppointmet,
                 });
                 return DTOGenRes;
             }
@@ -129,10 +127,11 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(true, "Modificacion correcta", new AppointmentSearchOutputDTO()
                     {
                         AppointmentId = pAppointment.AppointmentId,
-                        UserSchedulesId = pAppointment.UserSchedulesId,
                         PatientId = pAppointment.PatientId,
                         Reason = pAppointment.Reason,
                         Appointment_date = pAppointment.Appointment_date,
+                        Appointment_Hour = pAppointment.Appointment_Hour,
+                        Shift = pAppointment.Shift,
                         Status = pAppointment.Status,
 
                     });
@@ -144,10 +143,11 @@ namespace Consultorio_Medico.API.Controllers
                     var pDTOGenResponse = DTOGenResponse.GetGenericResponse(false, "Error al Modificacion", new AppointmentSearchOutputDTO()
                     {
                         AppointmentId = pAppointment.AppointmentId,
-                        UserSchedulesId = pAppointment.UserSchedulesId,
                         PatientId = pAppointment.PatientId,
                         Reason = pAppointment.Reason,
                         Appointment_date = pAppointment.Appointment_date,
+                        Appointment_Hour = pAppointment.Appointment_Hour,
+                        Shift = pAppointment.Shift,
                         Status = pAppointment.Status,
                     });
                     _logger.LogWarning("---- ERROR EN METODO PUT APPOINTMENT API CONTROLLER ----");
@@ -160,10 +160,11 @@ namespace Consultorio_Medico.API.Controllers
                 var DTOGenRes = DTOGenResponse.GetGenericResponse(false, "Error : " + ex.Message, new AppointmentSearchOutputDTO()
                 {
                     AppointmentId = pAppointment.AppointmentId,
-                    UserSchedulesId = pAppointment.UserSchedulesId,
                     PatientId = pAppointment.PatientId,
                     Reason = pAppointment.Reason,
                     Appointment_date = pAppointment.Appointment_date,
+                    Appointment_Hour = pAppointment.Appointment_Hour,
+                    Shift = pAppointment.Shift,
                     Status = pAppointment.Status,
                 });
                 return DTOGenRes;

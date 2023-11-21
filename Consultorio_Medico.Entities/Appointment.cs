@@ -19,9 +19,10 @@ namespace Consultorio_Medico.Entities
         //public string Appointment_Name { get; set; }
         public string Reason { get; set; }
         public DateTime Appointment_date { get; set; }
-        public DateTime EndOfAppoinmet { get; set; }
+        public decimal Appointment_Hour { get; set; }
         public byte Status { get; set; }
         //public decimal Cupo { get; set; }
+        public bool? Shift { get; set; }
         public UserSchedules UserSchedules { get; set; }
         public Patient Patient { get; set; }
     }
