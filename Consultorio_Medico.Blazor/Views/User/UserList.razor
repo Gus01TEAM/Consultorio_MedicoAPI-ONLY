@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.userDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>UserList</h3>
+<h3>@language.Traduction("Lista de Usuarios", "User List")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -16,17 +16,17 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
 
-            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Name" Title="@(language.Traduction("Nombre","Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="LastName" Title="Last Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="LastName" Title="@(language.Traduction("Apellido","Last Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="RolName" Title="Role Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="RolName" Title="@(language.Traduction("Rol","Role"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Dui" Title="DUI" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Email" Title="Email" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="PhoneNumber" Title="Phone Number" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="PhoneNumber" Title="@(language.Traduction("Telefono","Phone Number"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="userSearchOutputDTO" Context="user" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
                 <Template Context="user">
@@ -46,7 +46,7 @@
 }
 
 <br>
-<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar","Add New"))" Style="margin-top: 10px" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 
 
@@ -57,6 +57,9 @@
 
     [Inject]
     UserService userService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<userSearchOutputDTO> users = new List<userSearchOutputDTO>();
 

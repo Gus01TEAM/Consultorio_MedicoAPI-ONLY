@@ -8,56 +8,60 @@
 @using Consultorio_Medico.BL.DTOs.UserSchedule;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>CreateUser</h3>
+<h3>@language.Traduction("Crear Nuevo Usuario", "Create New User")</h3>
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="userAdd" OnValidSubmit="@Create">
 
-
+        <div class="row">
         <RadzenRow Style="margin-top: 10px; width: 100%">
-            <RadzenDropDown @bind-Value="userAdd.RolId" Data=@rols TextProperty="Name" ValueProperty="RolId" Placeholder="--Select Rol--" Style="width: 50%; max-width: 400px;" />
+                <RadzenDropDown @bind-Value="userAdd.RolId" Data=@rols TextProperty="Name" ValueProperty="RolId" Placeholder="@(language.Traduction("-Seleccione un Rol-","-Select rol-"))" Style="width: 50%; max-width: 400px;" />
 
-            <RadzenDropDown @bind-Value="userAdd.Status" Data="GetStatusOptions()" Placeholder="--Select Status--" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+            <RadzenDropDown @bind-Value="userAdd.Status" Data="GetStatusOptions()" Placeholder="@(language.Traduction("-Seleccione Status-","-Slect Status-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
         </RadzenRow>
+        </div>
 
-
-       <RadzenRow>
-        <RadzenFormField Text="Name" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+        <div class="row">
+            <RadzenFormField Text="@(language.Traduction("Nombre","Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
             <RadzenTextBox @bind-Value="userAdd.Name" />
         </RadzenFormField>
 
-        <RadzenFormField Text="Last Name" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+         <RadzenFormField Text="@(language.Traduction("Apellido","Last Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
             <RadzenTextBox @bind-Value="userAdd.LastName" />
         </RadzenFormField>
-        </RadzenRow>
+        </div>
 
-
-        <RadzenFormField Text="Phone Number" Style="width: 50%" Variant="@variant">
+        <div class="row">
+        <RadzenFormField Text="@(language.Traduction("Telefono","Phone Number"))" Style="width: 50%" Variant="@variant">
             <RadzenTextBox @bind-Value="userAdd.PhoneNumber" />
         </RadzenFormField>
 
         <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
             <RadzenTextBox @bind-Value="userAdd.Dui" />
         </RadzenFormField>
+        </div>
 
+        <div class="row">
         <RadzenFormField Text="Email" Style="width: 50%" Variant="@variant">
             <RadzenTextBox @bind-Value="userAdd.Email" />
         </RadzenFormField>
 
-
-        <RadzenFormField Text="User Name" Style="width: 50%" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Nombre de Usuario","User Name"))" Style="width: 50%" Variant="@variant">
             <RadzenTextBox Placeholder="User Name" @bind-Value="userAdd.Login" />
         </RadzenFormField>
+        </div>
 
+        <div class="row">
         <RadzenFormField Style="width: 50%" Variant="@variant">
-            <RadzenDatePicker Placeholder="Date" @bind-Value="userAdd.FechaRegistro" />
+            <RadzenDatePicker Placeholder="@(language.Traduction("Fecha de Registro","Registration Date"))" @bind-Value="userAdd.FechaRegistro" />
         </RadzenFormField>
 
         <RadzenFormField Text="Password" Style="width: 50%" Variant="@variant">
             <RadzenPassword Placeholder="Password" @bind-Value="userAdd.Password" />
         </RadzenFormField>
+        </div>
 
-        <RadzenFormField Text="Confirm Password" Style="width: 50%" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Confirmar Contraseña","Confirm Password"))" Style="width: 50%" Variant="@variant">
             <RadzenPassword Placeholder="Confirm Password" @bind-Value="userAdd.ConfirmarPassword_aux" />
         </RadzenFormField>
 
@@ -68,13 +72,13 @@
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Save User" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Guardar Usuario","Save User"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar","Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
@@ -111,6 +115,9 @@ else if (isError)
 
     [Inject]
     UserScheduleService userSchedule { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<UserScheduleSearchOutputDTO> userSchedules = new List<UserScheduleSearchOutputDTO>();
     List<RolSearchingOutputDTO> rols = new List<RolSearchingOutputDTO>();

@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.UserSchedule;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>UserScheduleList</h3>
+<h3>@language.Traduction("Horarios de Usario", "User Schedules")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -15,15 +15,15 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
 
-            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="UserName" Title="User" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="UserName" Title="@(language.Traduction("Usuario","User Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Schedule" Title="Schedule" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Schedule" Title="@(language.Traduction("Horario","Schedule"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Specialty" Title="Specialty" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Specialty" Title="@(language.Traduction("Especialidad","Specialty"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="NumberHoursFree" Title="Number Hours Free" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="NumberHoursFree" Title="@(language.Traduction("Horas Libre","Number Hours Free"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="NumberHoursUsed" Title="Number Hours Used" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="NumberHoursUsed" Title="@(language.Traduction("Horas en Cargo","Number Hours Used"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Cupo" Title="Cupo" Frozen="true" Width="160px" />
 
@@ -45,7 +45,7 @@
 }
 
 <br>
-<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar","Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 
 @code {
@@ -55,6 +55,9 @@
 
     [Inject]
     UserScheduleService userSchedule { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<UserScheduleSearchOutputDTO> userSchedules = new List<UserScheduleSearchOutputDTO>();
     UserScheduleInputDTO u = new UserScheduleInputDTO();

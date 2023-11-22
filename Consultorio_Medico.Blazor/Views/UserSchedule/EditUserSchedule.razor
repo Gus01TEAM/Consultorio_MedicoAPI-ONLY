@@ -10,45 +10,33 @@
 @using Consultorio_Medico.Blazor.Data;
 @using System.Linq;
 
-<h3>EditUserSchedule</h3>
+<h3>@language.Traduction("Editar Horario de Usuario", "Edit User Schedule")</h3>
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="userSchedulesIn" OnValidSubmit="@Edit">
 
 
         <RadzenRow Style="margin-top: 10px;">
-            <RadzenDropDown @bind-Value="userSchedulesIn.UserId" Data=@users TextProperty="Name" ValueProperty="UserId" Placeholder="--Select User--" Style="width: 100%; max-width: 400px;" />
+            <RadzenDropDown @bind-Value="userSchedulesIn.UserId" Data=@users TextProperty="Name" ValueProperty="UserId" Placeholder="@(language.Traduction("-Seleccione un Usuario-","-Select User-"))" Style="width: 100%; max-width: 400px;" />
         </RadzenRow>
         <br>
         <RadzenRow Style="margin-top: 10px;">
-            <RadzenDropDown @bind-Value="userSchedulesIn.SchedulesId" Data=@listSched TextProperty="Schedule" ValueProperty="SchedulesId" Placeholder="--Select Schedule--" Style="width: 100%; max-width: 400px;" />
+            <RadzenDropDown @bind-Value="userSchedulesIn.SchedulesId" Data=@listSched TextProperty="Schedule" ValueProperty="SchedulesId" Placeholder="@(language.Traduction("-Seleccione un Horario-","-Select Schedule-"))" Style="width: 100%; max-width: 400px;" />
         </RadzenRow>
         <br>
         <RadzenRow Style="margin-top: 10px;">
-            <RadzenDropDown @bind-Value="userSchedulesIn.SpecialtieId" Data=@specialties TextProperty="Specialty" ValueProperty="Id" Placeholder="--Select Specialty--" Style="width: 100%; max-width: 400px;" />
+            <RadzenDropDown @bind-Value="userSchedulesIn.SpecialtieId" Data=@specialties TextProperty="Specialty" ValueProperty="Id" Placeholder="@(language.Traduction("-Seleccione una Especialidad-","-Select Specialty-"))" Style="width: 100%; max-width: 400px;" />
         </RadzenRow>
-        <br>
-        <div class="row">
-            <RadzenFormField Text="Number Hour Used" Style="width: 50%" Variant="@variant">
-                <RadzenNumeric @bind-Value="userSchedulesIn.NumberHoursUsed" />
-            </RadzenFormField>
-        </div>
-        <br>
-        <div class="row">
-            <RadzenFormField Text="Number Hours Free" Style="width: 50%" Variant="@variant">
-                <RadzenNumeric @bind-Value="userSchedulesIn.NumberHoursFree" />
-            </RadzenFormField>
-        </div>
-        <br>
+
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Update User Shedule" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Actualizar","Update"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar","Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
@@ -59,16 +47,16 @@ else if (isSuccess)
     isError = false;
 
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        The user schedule was successfully updating!
+        @(language.Traduction("¡El Horario fue actualizado con éxito!", "The user schedule was successfully updating!"))
     </RadzenAlert>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Volver a la Lista","Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to updating the user schedule.
-    </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+        @(language.Traduction("Ocurrió un error al actualizar.", "An error occurred while trying to updating the user schedule."))
+        </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Aceptar","Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 @code {
@@ -90,6 +78,9 @@ else if (isError)
 
     [Inject]
     UserService userService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<userSearchOutputDTO> users = new List<userSearchOutputDTO>();
 

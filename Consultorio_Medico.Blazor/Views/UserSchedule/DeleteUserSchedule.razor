@@ -10,30 +10,30 @@
 @using Consultorio_Medico.Blazor.Data;
 @using System.Linq;
 
-<h3>DeleteUserSchedule</h3>
+<h3>@language.Traduction("¿Eliminar Horario de Usuario?", "Delete User Schedule?")</h3>
 @if (isSuccess == false && isError == false)
 {
     <div class="row">
-        <RadzenFormField Text="User" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Nombre","Name"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
             <RadzenTextBox @bind-Value="user.Name" ReadOnly="true" />
         </RadzenFormField>
 
-        <RadzenFormField Text="Specialty" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Especialidad","Specialty"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
             <RadzenTextBox @bind-Value="specialties.Specialty" ReadOnly="true" />
         </RadzenFormField>
     </div>
     <div class="row">
-        <RadzenFormField Text="Day Name" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Dia","Day Name"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
             <RadzenTextBox @bind-Value="sched.DayName" ReadOnly="true" />
         </RadzenFormField>
 
-        <RadzenFormField Text="Start Of Shift" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Inicio del Turno","Start Of Shift"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
             <RadzenNumeric @bind-Value="sched.StartOfShift" ReadOnly="true" />
         </RadzenFormField>
 
     </div>
     <div class="row">
-        <RadzenFormField Text="End Of Shift" Style="width: 50%;margin-bottom: 10px;" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Fin del Turno","End Of Shift"))" Style="width: 50%;margin-bottom: 10px;" Variant="@variant">
             <RadzenNumeric @bind-Value="sched.EndOfShift" ReadOnly="true" />
         </RadzenFormField>
 
@@ -43,24 +43,20 @@
     </div>
 
     <div class="row">
-        <RadzenFormField Text="Number Hour Used" Style="width: 50%; margin-top: 5px;" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Numero de Horas","Number Of Hours"))" Style="width: 50%; margin-top: 5px;" Variant="@variant">
             <RadzenNumeric @bind-Value="userSchedulesOu.NumberHoursUsed" ReadOnly="true" />
-        </RadzenFormField>
-
-        <RadzenFormField Text="Number Hours Free" Style="width: 50%; margin-top: 5px;" Variant="@variant">
-            <RadzenNumeric @bind-Value="userSchedulesOu.NumberHoursFree" ReadOnly="true" />
         </RadzenFormField>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <RadzenButton Text="Delete User Shedule" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
+            <RadzenButton Text="@(language.Traduction("Eliminar","Delete"))" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            <RadzenButton Text="@(language.Traduction("Cancelar","Cancel"))" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
         </div>
     </div>
 
@@ -68,16 +64,16 @@
 else if (isSuccess)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        The User Schedule was successfully deleted!
+        @(language.Traduction("El Horario se elimino con éxito", "The User Schedule was successfully deleted!"))
     </RadzenAlert>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Volver a la Lista","Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to delete.
+        @(language.Traduction("Ocurrió un error al eliminar el registro.", "An error occurred while trying to delete."))
     </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar","Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 @code {
@@ -99,6 +95,9 @@ else if (isError)
 
     [Inject]
     UserService userService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     //Instancias de DTO
     userSearchOutputDTO user = new userSearchOutputDTO();

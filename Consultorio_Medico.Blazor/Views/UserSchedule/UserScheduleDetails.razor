@@ -10,48 +10,34 @@
 @using Consultorio_Medico.Blazor.Data;
 @using System.Linq;
 
-<h3>UserScheduleDetails</h3>
+<h3>@language.Traduction("Detalle del Horario", "User Schedule Details")</h3>
 <div class="row">
-    <RadzenFormField Text="User" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Usuario","User"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
         <RadzenTextBox @bind-Value="user.Name" ReadOnly="true" />
     </RadzenFormField>
 
-    <RadzenFormField Text="Specialty" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Especialidad","Specialty"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
         <RadzenTextBox @bind-Value="specialties.Specialty" ReadOnly="true" />
     </RadzenFormField>
 </div>
 <div class="row">
-    <RadzenFormField Text="Day Name" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Dia","Dayname"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
         <RadzenTextBox @bind-Value="sched.DayName" ReadOnly="true" />
     </RadzenFormField>
     
-    <RadzenFormField Text="Start Of Shift" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Inicio Del Turno","Start Of Shift"))" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
         <RadzenNumeric @bind-Value="sched.StartOfShift" ReadOnly="true" />
     </RadzenFormField> 
 </div>
 <div class="row">
-    <RadzenFormField Text="End Of Shift" Style="width: 50%;margin-bottom: 10px;" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Fin Del Turno","End Of Shift"))" Style="width: 50%;margin-bottom: 10px;" Variant="@variant">
         <RadzenNumeric @bind-Value="sched.EndOfShift" ReadOnly="true" />
-    </RadzenFormField>
-   
-    <RadzenFormField Text="Number Of Hours" Style="width: 50%; margin-bottom: 10px;" Variant="@variant">
-        <RadzenNumeric @bind-Value="sched.NumberOfHours" ReadOnly="true" />
-    </RadzenFormField>
-</div>
-
-<div class="row">
-    <RadzenFormField Text="Number Hour Used" Style="width: 50%; margin-top: 5px;" Variant="@variant">
-        <RadzenNumeric @bind-Value="userSchedulesOu.NumberHoursUsed" ReadOnly="true" />
-    </RadzenFormField>
-    
-    <RadzenFormField Text="Number Hours Free" Style="width: 50%; margin-top: 5px;" Variant="@variant">
-        <RadzenNumeric @bind-Value="userSchedulesOu.NumberHoursFree" ReadOnly="true" />
     </RadzenFormField>
 </div>
 
 <div class="row">
     <div class="col-12">
-        <RadzenButton Text="Return" ButtonStyle="ButtonStyle.Warning" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+        <RadzenButton Text="@(language.Traduction("Volver a Lista","Return To List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
     </div>
 </div>
 
@@ -74,6 +60,9 @@
 
     [Inject]
     UserService userService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     //Instancias de DTO
     userSearchOutputDTO user = new userSearchOutputDTO();
