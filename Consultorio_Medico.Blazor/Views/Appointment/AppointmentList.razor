@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.AppointmentDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>AppointmentList</h3>
+<h3>@language.Traduction("Appointment List", "Lista de Citas")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -15,17 +15,17 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="UserName" Title="User" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="UserName" Title="@(language.Traduction("Nombre", "Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="PatientName" Title="Patient Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="PatientName" Title="@(language.Traduction("Nombre del Paciente", "Patient Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Reason" Title="Reason" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Reason" Title="@(language.Traduction("Razon", "Reason"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Appointment_date" Title="Appointment Date" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Appointment_date" Title="@(language.Traduction("Fecha de la Cita", "Appointment Date"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="EndOfAppointmet" Title="End Of Appointment" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="EndOfAppointmet" Title="@(language.Traduction("Fin de la Cita", "End of Appointment"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Status" Title="Status" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Status" Title="@(language.Traduction("Estado", "Status"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Context="appoint" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
                 <Template Context="appoint">
@@ -45,7 +45,7 @@
 }
 
 <br>
-<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 @code {
 
@@ -54,6 +54,9 @@
 
     [Inject]
     AppointmentService appointmentService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<AppointmentSearchOutputDTO> appointments = new List<AppointmentSearchOutputDTO>();
 

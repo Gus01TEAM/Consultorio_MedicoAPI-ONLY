@@ -6,23 +6,23 @@
 @using Consultorio_Medico.BL.DTOs.PatientDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>DeletePatient</h3>
+<h3>@language.Traduction("Editar Paciente", " Edit Patient")</h3>
 @if (isSuccess == false && isError == false)
 {
     <div class="row">
-        <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
             <RadzenTextBox @bind-Value="patient.Name" ReadOnly="true" />
         </RadzenFormField>
     </div>
     <br />
     <div class="row">
-        <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%" Variant="@variant">
             <RadzenTextBox @bind-Value="patient.LastName" ReadOnly="true" />
         </RadzenFormField>
     </div>
     <br />
     <div class="row">
-        <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%" Variant="@variant">
             <RadzenTextBox @bind-Value="patient.Telefono" ReadOnly="true" />
         </RadzenFormField>
     </div>
@@ -35,13 +35,13 @@
 
     <div class="row">
         <div class="col-12">
-            <RadzenButton Text="Delete Patient" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
+            <RadzenButton Text="@(language.Traduction("Eliminar", "Delete"))" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
         </div>
     </div>
 
@@ -49,16 +49,16 @@
 else if (isSuccess)
 {
         <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-            The patient was successfully deleted!
+        @(language.Traduction("¡El paciente se eliminó con éxito!", "The patient was successfully deleted!"))          
         </RadzenAlert>
-        <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
         <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-            An error occurred while trying to delete.
+        @(language.Traduction("Nombre", "An error occurred while trying to delete."))           
         </RadzenAlert>
-        <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 @code {
@@ -71,6 +71,9 @@ else if (isError)
 
     [Inject]
     PatientService patientService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     patientSearchOutputDTO patient = new patientSearchOutputDTO();
 

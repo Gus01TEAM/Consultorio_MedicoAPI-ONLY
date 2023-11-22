@@ -6,22 +6,22 @@
 @using Consultorio_Medico.BL.DTOs.PatientDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>CreatePatient</h3>
+<h3>@language.Traduction("Crear Nuevo Paciente", " Create Patient")</h3>
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="patient" OnValidSubmit="@Create">
         <div class="row">
-            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="patient.Name" />
             </RadzenFormField>
         </div>
         <div class="row">
-            <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="patient.LastName" />
             </RadzenFormField>
         </div>
         <div class="row">
-            <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="patient.Telefono" />
             </RadzenFormField>
         </div>
@@ -33,13 +33,13 @@
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Patient" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Guardar", "Save"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm> 
@@ -50,17 +50,17 @@ else if (isSuccess)
 
     isError = false;
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        Schedule created successfully!
+        @(language.Traduction("¡El Paciente se creó con éxito!", "Patient created successfully!"))      
     </RadzenAlert>
-    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Seguir Creando", "Go to Create"))" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to register.
+        @(language.Traduction("Ocurrió un error al intentar crear el registro.", "An error occurred while trying to register."))     
     </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 
@@ -71,6 +71,9 @@ else if (isError)
 
     [Inject]
     PatientService patientService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     patientAddDTO patient = new patientAddDTO();
 

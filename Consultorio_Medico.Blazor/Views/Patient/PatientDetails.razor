@@ -6,21 +6,21 @@
 @using Consultorio_Medico.BL.DTOs.PatientDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>PatientDetails</h3>
+<h3>@language.Traduction("Detalles del Paciente", "Patient Details")</h3>
 <div class="row">
-    <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
         <RadzenTextBox @bind-Value="patient.Name" ReadOnly="true" />
     </RadzenFormField>
 </div>
 <br />
 <div class="row">
-    <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%" Variant="@variant">
         <RadzenTextBox @bind-Value="patient.LastName" ReadOnly="true" />
     </RadzenFormField>
 </div>
 <br />
 <div class="row">
-    <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%" Variant="@variant">
         <RadzenTextBox @bind-Value="patient.Telefono" ReadOnly="true" />
     </RadzenFormField>
 </div>
@@ -33,7 +33,7 @@
 
 <div class="row">
     <div class="col-12">
-        <RadzenButton Text="Return" ButtonStyle="ButtonStyle.Warning" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+        <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Warning" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
     </div>
 </div>
 
@@ -48,6 +48,9 @@
 
     [Inject]
     PatientService patientService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     patientSearchOutputDTO patient = new patientSearchOutputDTO();
 

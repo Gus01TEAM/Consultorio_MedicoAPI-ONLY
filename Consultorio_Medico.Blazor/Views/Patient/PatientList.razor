@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.PatientDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>PATIENTS LIST</h3>
+<h3>@language.Traduction("Lista de Pacientes", "Patient List")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -15,11 +15,11 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
 
-            <RadzenDataGridColumn TItem="patientSearchOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="patientSearchOutputDTO" Property="Name" Title="@(language.Traduction("Nombre", "Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="patientSearchOutputDTO" Property="LastName" Title="Last Name" Width="160px" />
+            <RadzenDataGridColumn TItem="patientSearchOutputDTO" Property="LastName" Title="@(language.Traduction("Apellido", "Last Name"))" Width="160px" />
 
-            <RadzenDataGridColumn TItem="patientSearchOutputDTO" Property="Telefono" Title="Telefono" Width="160px" />
+            <RadzenDataGridColumn TItem="patientSearchOutputDTO" Property="Telefono" Title="@(language.Traduction("Télefono", "Phone Number"))" Width="160px" />
 
             <RadzenDataGridColumn TItem="patientSearchOutputDTO" Property="DUI" Title="DUI" Width="160px" />
 
@@ -41,7 +41,7 @@
 }
 
 <br>
-<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 @code {
     [Inject]
@@ -49,6 +49,9 @@
 
     [Inject]
     PatientService patientService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<patientSearchOutputDTO> patients = new List<patientSearchOutputDTO>();
 

@@ -6,24 +6,24 @@
 @using Consultorio_Medico.BL.DTOs.PatientDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>EditPatient</h3>
+<h3>@language.Traduction("Editar Paciente", " Edit Patient")</h3>
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="patientI" OnValidSubmit="@Edit">
         <div class="row">
-            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="patientI.Name" />
                 <ValidationMessage For="() => patientI.Name" />
             </RadzenFormField>            
         </div>
         <div class="row">
-            <RadzenFormField Text="Last Name" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="patientI.LastName" />
                 <ValidationMessage For="() => patientI.LastName" />
             </RadzenFormField>
         </div>
         <div class="row">
-            <RadzenFormField Text="Phone" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="patientI.Telefono" />
                 <ValidationMessage For="() => patientI.Telefono" />
             </RadzenFormField>
@@ -37,13 +37,13 @@
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Update Patient" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Actualizar", "Update"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
@@ -54,16 +54,16 @@ else if (isSuccess)
     isError = false;
 
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        The patient was successfully updating!
+        @(language.Traduction("¡El paciente se actualizo con éxito!", "The patient was successfully updating!"))
     </RadzenAlert>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to updating patient.
+        @(language.Traduction("Ocurrió un error al intentar actualizar el paciente", "An error occurred while trying to updating patient."))
     </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 
@@ -77,6 +77,9 @@ else if (isError)
 
     [Inject]
     PatientService patientService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     patientAddDTO patientI = new patientAddDTO();
     patientSearchOutputDTO patientO = new patientSearchOutputDTO();
