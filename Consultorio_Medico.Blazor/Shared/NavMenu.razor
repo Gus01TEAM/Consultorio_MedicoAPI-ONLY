@@ -30,32 +30,32 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="schedules" style="padding-right: 10px;">
-                <span class="oi oi-calendar" aria-hidden="true"></span> Schedules
+                <span class="oi oi-calendar" aria-hidden="true"></span> @(language.Traduction("Horarios", "Schedules"))
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="patients" style="padding-right: 10px;">
-                <span class="oi oi-people" aria-hidden="true"></span> Patients
+                <span class="oi oi-people" aria-hidden="true"></span> @(language.Traduction("Pacientes","Patients"))
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="specialties" style="padding-right: 10px;">
-                <span class="oi oi-star" aria-hidden="true"></span> Specialties
+                <span class="oi oi-star" aria-hidden="true"></span> @(language.Traduction("Especialidades","Specialties"))
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="userSched" style="padding-right: 10px;">
-                <span class="oi oi-bell" aria-hidden="true"></span> User Schedule
+                <span class="oi oi-bell" aria-hidden="true"></span> @(language.Traduction("Horarios de Usuario","User Schedules"))
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="appointList" style="padding-right: 10px;">
-                <span class="oi oi-plus" aria-hidden="true"></span> Appointment
+                <span class="oi oi-plus" aria-hidden="true"></span> @(language.Traduction("Citas","Appointments"))
             </NavLink>
         </div>
          <div class="nav-item px-3">
            <NavLink class="nav-link" href="userList" style="padding-right: 10px;">
-                <span class="oi oi-people" aria-hidden="true"></span> Users
+                <span class="oi oi-people" aria-hidden="true"></span> @(language.Traduction("Usuarios","Users"))
             </NavLink>
         </div>
     </nav>
@@ -72,14 +72,14 @@
     }
 
     [Inject]
-    LanguageService languaje { get; set; }
+    LanguageService language { get; set; }
 
     [Inject]
     NavigationManager navigation { get; set; }
 
     private void CambiarIdioma()
     {
-        languaje.Language = languaje.Language == 0 ? 1 : 0;
+        language.Language = language.Language == 0 ? 1 : 0;
 
         navigation.NavigateTo(navigation.Uri, forceLoad: true);
     }

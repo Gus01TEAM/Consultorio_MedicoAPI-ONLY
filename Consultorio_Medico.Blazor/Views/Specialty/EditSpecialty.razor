@@ -6,25 +6,25 @@
 @using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>EditSpecialty</h3>
+<h3>@language.Traduction("Editar Especialidad", "Edit Specialty")</h3>
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="specialtyIn" OnValidSubmit="@Edit">
         <div class="row">
-            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Especialidad", "Specialty"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="specialtyIn.Specialty" />
                 <ValidationMessage For="() => specialtyIn.Specialty" />
             </RadzenFormField>
         </div>
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Update Specialty" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Actualizar", "Update"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
@@ -35,16 +35,16 @@ else if (isSuccess)
     isError = false;
 
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        The specialty was successfully updating!
+        @(language.Traduction("¡La Especialidad se actualizó con éxito!", "The specialty was successfully updating!"))
     </RadzenAlert>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Volver a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to updating specialty.
+        @(language.Traduction("Ocurrió un error al intentar actualizar el registro.", "An error occurred while trying to updating specialty."))
     </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 @code {
@@ -57,6 +57,9 @@ else if (isError)
 
     [Inject]
     SpecialtyService specialtyService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     SpecialtiesInputDTO specialtyIn = new SpecialtiesInputDTO();
     SpecialtiesOutputDTO specialtyOu = new SpecialtiesOutputDTO();

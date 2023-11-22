@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>SpecialtyList</h3>
+<h3>@language.Traduction("Listado de Especialidades", "Specialty List")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -15,7 +15,7 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
 
-            <RadzenDataGridColumn TItem="SpecialtiesOutputDTO" Property="Specialty" Title="Specialty" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="SpecialtiesOutputDTO" Property="Specialty" Title="@(language.Traduction("Especialidad", "Specialty"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="SpecialtiesOutputDTO" Context="specialty" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
                 <Template Context="specialty">
@@ -35,7 +35,7 @@
 }
 
 <br>
-<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 
 @code {
@@ -44,6 +44,9 @@
 
     [Inject]
     SpecialtyService specialtyService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<SpecialtiesOutputDTO> specialties = new List<SpecialtiesOutputDTO>();
 

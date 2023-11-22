@@ -6,16 +6,16 @@
 @using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>SpecialtyDetails</h3>
+<h3>@language.Traduction("Detalle de Especialidad", "Specialty Details")</h3>
 <div class="row">
-    <RadzenFormField Text="Specialty" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Especialidad", "Specialty"))" Style="width: 50%" Variant="@variant">
         <RadzenTextBox @bind-Value="specialties.Specialty" ReadOnly="true" />
     </RadzenFormField>
 </div>
 
 <div class="row">
     <div class="col-12">
-        <RadzenButton Text="Return" ButtonStyle="ButtonStyle.Warning" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+        <RadzenButton Text="@(language.Traduction("Volver a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
     </div>
 </div>
 
@@ -30,6 +30,9 @@
 
     [Inject]
     SpecialtyService specialtyService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     SpecialtiesOutputDTO specialties = new SpecialtiesOutputDTO();
 

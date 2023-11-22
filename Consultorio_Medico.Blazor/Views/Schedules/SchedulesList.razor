@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.ScheduleDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>SCHEDULES LIST</h3>
+<h3>@language.Traduction("Lista de Horarios", "Schedule List")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -15,13 +15,13 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
 
-            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="DayName" Title="Day Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="DayName" Title="@(language.Traduction("Dia", "Day Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="StartOfShift" Title="Star tOf Shift" Width="160px" />
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="StartOfShift" Title="@(language.Traduction("Inicio del Turno", "Star tOf Shift"))" Width="160px" />
 
-            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="EndOfShift" Title="End Of Shift" Width="160px" />
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="EndOfShift" Title="@(language.Traduction("Fin del Turno", "End Of Shift"))" Width="160px" />
 
-            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="NumberOfHours" Title="Number Of Hours" Width="160px" />
+            <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Property="NumberOfHours" Title="@(language.Traduction("Número de Horas", "Number Of Hours"))" Width="160px" />
 
             <RadzenDataGridColumn TItem="ScheduleSearchOutPutDTO" Context="sche" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
                 <Template Context="sche">
@@ -41,7 +41,7 @@
 }
 
 <br>
-<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 @code {
 
@@ -50,6 +50,9 @@
 
     [Inject]
     ScheduleService scheduleService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     List<ScheduleSearchOutPutDTO> schedules = new List<ScheduleSearchOutPutDTO>();
 

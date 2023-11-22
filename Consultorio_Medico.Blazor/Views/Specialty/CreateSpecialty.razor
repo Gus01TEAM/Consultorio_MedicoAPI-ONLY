@@ -6,25 +6,25 @@
 @using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>CreateSpecialty</h3>
+<h3>@language.Traduction("Crear Nueva Especialidad", "Create Specialty")</h3>
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="specialties" OnValidSubmit="@Create">
         <div class="row">
-            <RadzenFormField Text="Specialty" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Especialidad", "Specialty"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="specialties.Specialty" />
             </RadzenFormField>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Specialty" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Guardar", "Save"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
@@ -35,17 +35,18 @@ else if (isSuccess)
 
     isError = false;
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        Specialty created successfully!
+        @(language.Traduction("¡La especialidad se creo con éxito!", "Specialty created successfully!"))        
     </RadzenAlert>
-    <RadzenButton Text="Go to Create" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Seguir Creando", "Go to Create"))" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to register.
+        @(language.Traduction("Ocurrió un error al intentar registrar.", "An error occurred while trying to register.")
+       
     </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 
@@ -55,6 +56,9 @@ else if (isError)
 
     [Inject]
     SpecialtyService specialtyService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     SpecialtiesInputDTO specialties = new SpecialtiesInputDTO();
 
