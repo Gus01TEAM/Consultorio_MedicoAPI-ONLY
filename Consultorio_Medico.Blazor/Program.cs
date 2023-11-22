@@ -2,13 +2,14 @@ using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Blazor.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-
+builder.Services.AddRadzenComponents();
 builder.Services.AddSingleton<RolService>();
 builder.Services.AddSingleton<SecurityService>();
 builder.Services.AddSingleton<ScheduleService>();
@@ -18,6 +19,7 @@ builder.Services.AddSingleton<UserScheduleService>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<AppointmentService>();
 builder.Services.AddSingleton<LanguageService>();
+builder.Services.AddScoped<Radzen.NotificationService>();
 //builder.Services.AddScoped<ISecurityBL>();
 
 builder.Services.AddHttpClient("MEDICOAPI", c =>
