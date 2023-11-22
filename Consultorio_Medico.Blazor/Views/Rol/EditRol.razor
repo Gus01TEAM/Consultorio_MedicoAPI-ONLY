@@ -4,33 +4,31 @@
 @using Consultorio_Medico.BL.DTOs.RolDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-
-<h3>Edit Role</h3>
-
+<h3>@language.Traduction("Lista de Roles", "Edit Role")</h3>
 @if (isSuccess == false && isError == false)
 {
 
     <EditForm Model="rolInput" OnValidSubmit="@Edit">
         <div class="row">
-            <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
                 <RadzenTextBox @bind-Value="rolInput.Name" />
                 <ValidationMessage For="() => rolInput.Name" />
             </RadzenFormField>
         </div>
         <br>
-        <RadzenDropDown Placeholder="Status" @bind-Value="rolInput.Status" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+        <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rolInput.Status" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
             <ValidationMessage For="() => rolInput.Status" />
         </RadzenDropDown>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Save Rol" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Guardar", "Save"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="Cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
@@ -42,16 +40,16 @@ else if (isSuccess)
     isError = false;
 
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        Role was successfully updating!
+        @(language.Traduction("¡El rol se actualizó con éxito!", "Role was successfully updating!"))        
     </RadzenAlert>
     <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to updating role.
+        @(language.Traduction("Ocurrió un error al intentar actualizar el rol.", "An error occurred while trying to updating role."))        
     </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 @code {
@@ -63,6 +61,9 @@ else if (isError)
 
     [Inject]
     RolService rolService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
 
     RolSearchingOutputDTO rolOut = new RolSearchingOutputDTO();

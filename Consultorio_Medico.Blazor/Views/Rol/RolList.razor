@@ -6,80 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.RolDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-
-<h3>Rol List</h3>
-@*@if ( != null && searchResult.Data != null)
-{*@
-@*<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Status</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var rol in roles)
-        {
-            <tr>
-                <td>@rol.Name</td>
-
-                @if (rol.Status == 1)
-                {
-
-                    <td>Active</td>
-
-                }
-                else if (rol.Status == 2)
-                {
-
-                    <td>Inactive</td>
-                }
-
-                <td>
-                    <button class="btn btn-dark" @onclick="() => GoEdit(rol.RolId)">Editar</button>
-                    <button class="btn btn-info" @onclick="() => GoDetails(rol.RolId)">Ver</button>
-                    <button class="btn btn-danger" @onclick="() => GoDelete(rol.RolId)">Eliminar</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<NavLink href="/create-rol" class="btn btn-outline-success">Create New Rol</NavLink>
-*@
-
-
-@*<div class="row g-2">
-    <div class="col-md">
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInputGrid" placeholder="" value="">
-            <label for="floatingInputGrid">Nombre</label>
-        </div>
-    </div>
-    <div class="col-md">
-        <div class="form-floating">
-            <select class="form-select" id="floatingSelectGrid">
-                @foreach (var rol in roles)
-                {
-                    <option value="@rol.RolId">@rol.Name</option>
-                }
-            </select>
-            <label for="floatingSelectGrid">Rol de Usuario</label>
-        </div>
-    </div>
-</div>
-*@
-
-
-@*<select class="form-select" aria-label="Default select example">
-    <option selected>Seleccione Rol</option>
-    @foreach (var rol in roles)
-    {
-        <option value="@rol.RolId">@rol.Name</option>
-    }
-</select>*@
-
+<h3>@language.Traduction("Lista de Roles", "Rol List")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -89,9 +16,9 @@
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
 
-            <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Name" Title="Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="Name" Title="@(language.Traduction("Nombre", "Name"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="StrStatus" Title="Status" Width="160px" />
+            <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Property="StrStatus" Title="@(language.Traduction("Estado", "Status"))" Width="160px" />
 
             <RadzenDataGridColumn TItem="RolSearchingOutputDTO" Context="rol" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
                 <Template Context="rol">
@@ -112,13 +39,16 @@
 }
 
 <br>
-<RadzenButton Click=GoCreate Text="Add New" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 
 @code {
     [Inject]
     NavigationManager navigation { get; set; }
     IQueryable<RolSearchingOutputDTO> data;
+
+    [Inject]
+    LanguageService language { get; set; }
 
     bool isLoading = false;
     bool isOcultarGrid = true;
@@ -167,14 +97,6 @@
     private void GoDelete(RolSearchingOutputDTO rol)
     {
         navigation.NavigateTo($"/delete-rol/{rol.RolId}");
-        /*if(rol==null || rol.RolId==0){
-             isOcultarGrid=false;
-        }
-        else{
-           isOcultarGrid=true;
-        }
-
-         navigation.NavigateTo("/delete-rol/1");*/
     }
 
 }

@@ -6,31 +6,31 @@
 @using Consultorio_Medico.Blazor.Data;
 @using Consultorio_Medico.BL.DTOs.RolDTO;
 
-<h3>¿Eliminar Rol?</h3>
 
+<h3>@language.Traduction("¿Eliminar Rol?", "Delete Role?")</h3>
 *@if (isSuccess == false && isError == false)
 {
 
     <div class="row">
-        <RadzenFormField Text="Name" Style="width: 50%" Variant="@variant">
+        <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
             <RadzenTextBox @bind-Value="rol.Name" ReadOnly="true" />
         </RadzenFormField>
     </div>
 
     <br>
-    <RadzenDropDown Placeholder="Status" @bind-Value="rol.Status" Data="GetStatusOptions()" Disabled="@disabled" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+    <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rol.Status" Data="GetStatusOptions()" Disabled="@disabled" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
     </RadzenDropDown>
 
 
     <div class="row">
         <div class="col-12">
-            <RadzenButton Text="Delete Patient" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
+            <RadzenButton Text="@(language.Traduction("Eliminar", "Delete"))" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12">
-            <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
         </div>
     </div>
 }
@@ -39,16 +39,18 @@
 else if (isSuccess)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        Role was successfully deleted!
+        @(language.Traduction("¡El Rol eliminado con éxito!", "Role was successfully deleted!"))
+        
     </RadzenAlert>
-    <RadzenButton Text="Return to List" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 else if (isError)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
-        An error occurred while trying to delete.
+        @(language.Traduction("Ocurrió un error al intentar eliminar el rol.", "An error occurred while trying to delete."))
+        
     </RadzenAlert>
-    <RadzenButton Text="Accept" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }
 
 
@@ -66,6 +68,9 @@ else if (isError)
 
     [Inject]
     RolService rolService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     RolSearchingOutputDTO rol = new RolSearchingOutputDTO();
 
