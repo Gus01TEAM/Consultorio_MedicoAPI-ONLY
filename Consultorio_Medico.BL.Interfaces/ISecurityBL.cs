@@ -11,6 +11,6 @@ namespace Consultorio_Medico.BL.Interfaces
     public interface ISecurityBL
     {
         public Users ChangePassword(Users users, string PasswordAnt);
-        public securityDTO Login(string Login, string Password);
+        public securityDTO Login(LoginDTO login); //string Login, string Password);
     }
 }

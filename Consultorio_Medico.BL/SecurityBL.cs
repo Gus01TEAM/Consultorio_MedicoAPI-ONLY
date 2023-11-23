@@ -26,14 +26,14 @@ namespace Consultorio_Medico.BL
             throw new NotImplementedException();
         }
 
-        public securityDTO Login(string Login, string Password)
+        public securityDTO Login(LoginDTO login)
         {
             try
             {
-                string pass = Password;
+                string pass = login.password;
                // Password = _securityDAL.EncriptarSHA256(pass);
 
-                var User = _securityDAL.Login(Login, Password);
+                var User = _securityDAL.Login(login.login,login.password);
                 securityDTO secDTO = new securityDTO()
                 {
                     userId = User.UserId,
