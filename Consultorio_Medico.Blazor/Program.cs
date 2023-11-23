@@ -19,7 +19,7 @@ builder.Services.AddSingleton<UserScheduleService>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<AppointmentService>();
 builder.Services.AddSingleton<LanguageService>();
-builder.Services.AddScoped<Radzen.NotificationService>();
+builder.Services.AddScoped<NotificationService>();
 //builder.Services.AddScoped<ISecurityBL>();
 
 builder.Services.AddHttpClient("MEDICOAPI", c =>
