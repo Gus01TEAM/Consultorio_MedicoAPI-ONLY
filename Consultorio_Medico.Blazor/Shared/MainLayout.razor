@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using Consultorio_Medico.Blazor.Data;
+@using System.Timers
 
 <PageTitle>Consultorio_Medico.Blazor</PageTitle>
 
@@ -9,7 +11,7 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <RadzenButton Click="@(() => OnClick())" Style="justify-items: legacy left" Text="@(language.Traduction("Change Language", "Cambiar Idioma"))" Icon="refresh" ButtonStyle="ButtonStyle.Light" />
         </div>
 
         <article class="content px-4">
@@ -17,3 +19,36 @@
         </article>
     </main>
 </div>
+
+@code{
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
+
+    [Inject]
+    NotificationService NotificationService { get; set; }
+
+    public void OnClick()
+    {
+        CambiarIdioma();
+        //MostrarNotificacion(text);
+    }
+
+    //public void MostrarNotificacion(string text)
+    //{
+    //    if(language.Language == 1)
+    //    {
+    //        NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "Cambio a Español", Detail = text, Duration = 4000 });
+    //    }
+    //}
+
+    private void CambiarIdioma()
+    {
+        language.Language = language.Language == 0 ? 1 : 0;
+
+        navigation.NavigateTo(navigation.Uri, forceLoad: true);
+    }
+}

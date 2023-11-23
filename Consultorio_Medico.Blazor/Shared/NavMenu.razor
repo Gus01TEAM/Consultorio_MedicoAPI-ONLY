@@ -7,13 +7,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <RadzenButton Click="@CambiarIdioma" Text="Refresh" Icon="refresh" ButtonStyle="ButtonStyle.Dark" />
+        
     </div>
    
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
@@ -81,12 +82,18 @@
     [Inject]
     NotificationService notification { get; set; }
 
-    private void OnClick(string text)
+    public void OnClick(string text)
     {
-        notification.Notify(new NotificationMessage { Severity = NotificationSeverity.Info, Summary = "Español", Detail = text });
+        CambiarIdioma();
+        MostrarNotificacion(text);
     }
 
-    private void CambiarIdioma(MouseEventArgs args)
+    public void MostrarNotificacion(string text)
+    {
+        notification.Notify(new NotificationMessage { Severity = NotificationSeverity.Info, Summary = language.Traduction("Cambio de Idioma: Español","Change Language: English"), Detail = text });
+    }
+
+    private void CambiarIdioma()
     {
         language.Language = language.Language == 0 ? 1 : 0;
 
