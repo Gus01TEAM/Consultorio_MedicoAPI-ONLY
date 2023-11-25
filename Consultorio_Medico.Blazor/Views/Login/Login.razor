@@ -1,4 +1,5 @@
-﻿@page "/Login"
+﻿@page "/"
+
 
 @using Consultorio_Medico.Blazor.Data;
 @using ConsultorioMedicoAPI_ONLY.Controllers;
@@ -46,37 +47,42 @@
 
 @code {
 
-        [Inject]
-        NavigationManager navigation { get; set; }
+    [Inject]
+    NavigationManager navigation { get; set; }
 
-        [Inject]
-        SecurityService securityService { get; set; }
+    [Inject]
+    SecurityService securityService { get; set; }
 
-        bool isSuccess = false;
-        bool isError = false;
+    [Inject]
+    NotificationService NotificationService { get; set; }
 
-        LoginDTO login = new LoginDTO();
+    bool isSuccess = false;
+    bool isError = false;
 
-        //private async Task OnLogin(LoginArgs args)
+    LoginDTO login = new LoginDTO();
 
-        //{
-        //    login.login = args.Username; // Aquí asignas el valor ingresado por el usuario a tu DTO
-        //    login.password = args.Password; // Aquí asignas el valor ingresado por el usuario a tu DTO
-        //}
+    //private async Task OnLogin(LoginArgs args)
 
-        private async Task Post()
+    //{
+    //    login.login = args.Username; // Aquí asignas el valor ingresado por el usuario a tu DTO
+    //    login.password = args.Password; // Aquí asignas el valor ingresado por el usuario a tu DTO
+    //}
+
+    private async Task Post()
+    {
+        var result = await securityService.post(login);
+        if (result.Data != null)
         {
-            var result = await securityService.post(login);
-            if (result != null){
-                isSuccess = true;
-                navigation.NavigateTo("/userList");
-            }
-    else{
+            isSuccess = true;
+            navigation.NavigateTo("/I");
+        }
+        else
+        {
             isError = true;
             isError = false;
-    }
-    
-            
+            NotificationService.Notify(NotificationSeverity.Error, "Error", "El usuario no existe");
+
+        }
     }
 
     private void loggedIn()

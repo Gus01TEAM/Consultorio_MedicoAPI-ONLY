@@ -1,5 +1,7 @@
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Blazor.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Radzen;
@@ -27,6 +29,24 @@ builder.Services.AddHttpClient("MEDICOAPI", c =>
     c.BaseAddress = new Uri(builder.Configuration["UrlsAPI:MEDICOAPI"]);
 });
 
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+//        .RequireAuthenticatedUser()
+//        .Build();
+//});
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+.AddCookie(options =>
+{
+    options.LoginPath = "/";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,7 +61,13 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.UseRouting();
+
+
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
