@@ -30,7 +30,9 @@ namespace Consultorio_Medico.Blazor.Data
             else
             {
                 var errorMessage = await response.Content.ReadAsStringAsync();
+                return null;
                 throw new Exception($"La solicitud POST no fue exitosa. Código de estado: {response.StatusCode}. Mensaje de error: {errorMessage}");
+                
             }
         }
     }

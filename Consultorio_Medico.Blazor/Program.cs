@@ -3,6 +3,8 @@ using Consultorio_Medico.Blazor.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Radzen;
 
@@ -12,6 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddRadzenComponents();
+builder.Services.AddAuthenticationCore();
+builder.Services.AddScoped<ProtectedSessionStorage>();
+builder.Services.AddScoped<CustomAuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
+
 builder.Services.AddSingleton<RolService>();
 builder.Services.AddSingleton<SecurityService>();
 builder.Services.AddSingleton<ScheduleService>();
@@ -36,16 +43,16 @@ builder.Services.AddHttpClient("MEDICOAPI", c =>
 //        .Build();
 //});
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-})
-.AddCookie(options =>
-{
-    options.LoginPath = "/";
-});
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//})
+//.AddCookie(options =>
+//{
+//    options.LoginPath = "/";
+//});
 
 var app = builder.Build();
 
