@@ -1,0 +1,155 @@
+﻿@page "/delete-user/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.userDTO;
+@using Consultorio_Medico.BL.DTOs.RolDTO;
+@using Consultorio_Medico.BL.DTOs.UserSchedule;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>@language.Traduction("¿Eliminar Usuario?", "Delete User?")</h3>
+@if (isSuccess == false && isError == false)
+{
+    <div class="row">
+        <RadzenRow Style="margin-top: 10px; width: 100%">
+            <RadzenFormField Text="@(language.Traduction("Rol","Rol Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+                <RadzenTextBox @bind-Value="rol.Name" ReadOnly="true" />
+            </RadzenFormField>
+
+            <RadzenFormField Text="@(language.Traduction("-Estado-","-Status-"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+                <RadzenDropDown @bind-Value="user.Status" Data="GetStatusOptions()" Placeholder="" TextProperty="Text" ValueProperty="Value" Style="width: 50%" ReadOnly="true" />
+            </RadzenFormField>
+        </RadzenRow>
+    </div>
+
+    <div class="row">
+        <RadzenFormField Text="@(language.Traduction("Nombre","Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="user.Name" ReadOnly="true" />
+        </RadzenFormField>
+
+        <RadzenFormField Text="@(language.Traduction("Apellido","Last Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="user.LastName" ReadOnly="true" />
+        </RadzenFormField>
+    </div>
+
+    <div class="row">
+        <RadzenFormField Text="@(language.Traduction("Telefono","Phone Number"))" Style="width: 50%" Variant="@variant">
+            <RadzenTextBox @bind-Value="user.PhoneNumber" ReadOnly="true" />
+        </RadzenFormField>
+
+        <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
+            <RadzenTextBox @bind-Value="user.Dui" ReadOnly="true" />
+        </RadzenFormField>
+    </div>
+
+    <div class="row">
+        <RadzenFormField Text="Email" Style="width: 50%" Variant="@variant">
+            <RadzenTextBox @bind-Value="user.Email" ReadOnly="true" />
+        </RadzenFormField>
+
+        <RadzenFormField Text="@(language.Traduction("Nombre de Usuario","User Name"))" Style="width: 50%" Variant="@variant">
+            <RadzenTextBox Placeholder="User Name" @bind-Value="user.Login" />
+        </RadzenFormField>
+    </div>
+
+    <div class="row">
+        <RadzenFormField Text="@(language.Traduction("Fecha de Registro","Registration Date"))" Style="width: 50%" Variant="@variant">
+            <RadzenDatePicker @bind-Value="user.FechaRegistro" ReadOnly="true" />
+        </RadzenFormField>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <RadzenButton Text="@(language.Traduction("Eliminar","Delete"))" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <RadzenButton Text="@(language.Traduction("Cancelar","Cancel"))" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+        </div>
+    </div>
+}
+else if (isSuccess)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        @(language.Traduction("El Usuario se elimino con éxito", "The User was successfully deleted!"))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Volver a la Lista","Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        @(language.Traduction("Ocurrió un error al eliminar el registro.", "An error occurred while trying to delete."))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Aceptar","Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    UserService userService { get; set; }
+
+    [Inject]
+    RolService rolService { get; set; }
+
+    [Inject]
+    UserScheduleService userSchedule { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
+
+    userSearchOutputDTO user = new userSearchOutputDTO();
+    RolSearchingOutputDTO rol = new RolSearchingOutputDTO();
+    UserScheduleSearchOutputDTO sched = new UserScheduleSearchOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    bool disabled = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await userService.GetById(Id);
+        if (response.Success)
+        {
+            user = response.Data;
+        }
+
+        var role = await rolService.GetById(user.RolId);
+        if (role.Success)
+        {
+            rol = role.Data;
+        }
+    }
+
+    private async Task Delete()
+    {
+        var result = await userService.Delete(Id);
+
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "ACTIVO", Value = (byte)1 };
+        yield return new { Text = "INACTIVO", Value = (byte)2 };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/userList");
+    }
+}

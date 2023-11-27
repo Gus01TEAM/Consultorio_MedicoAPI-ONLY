@@ -11,6 +11,24 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
 {
     public class userUpdateDTO
     {
+        public userUpdateDTO()
+        {
+
+        }
+
+        public userUpdateDTO(userSearchOutputDTO userOu)
+        {
+            UserId = userOu.UserId;
+            RolId = userOu.RolId;
+            Name = userOu.Name;
+            LastName = userOu.LastName;
+            PhoneNumber = userOu.PhoneNumber;
+            Dui = userOu.Dui;
+            Email = userOu.Email;
+            Login = userOu.Login;
+            Status = userOu.Status;
+        }
+
         public int UserId { get; set; }
         [ForeignKey("Rol")]
         [Required(ErrorMessage = "Rol es obligatorio.")]

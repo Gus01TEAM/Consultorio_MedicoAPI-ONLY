@@ -1,0 +1,156 @@
+﻿@page "/edit-user/{Id:int}"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.userDTO;
+@using Consultorio_Medico.BL.DTOs.RolDTO;
+@using Consultorio_Medico.BL.DTOs.UserSchedule;
+@using Consultorio_Medico.Blazor.Data;
+
+
+<h3>@language.Traduction("Editar Usuario", "Edit User")</h3>
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="userAdd" OnValidSubmit="@Edit">
+
+        <div class="row">
+            <RadzenRow Style="margin-top: 10px; width: 100%">
+                <RadzenDropDown @bind-Value="userAdd.RolId" Data=@rols TextProperty="Name" ValueProperty="RolId" Placeholder="@(language.Traduction("-Seleccione un Rol-","-Select rol-"))" Style="width: 50%; max-width: 400px;" />
+
+                <RadzenDropDown @bind-Value="userAdd.Status" Data="GetStatusOptions()" Placeholder="@(language.Traduction("-Seleccione Status-","-Slect Status-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+            </RadzenRow>
+        </div>
+
+        <div class="row">
+            <RadzenFormField Text="@(language.Traduction("Nombre","Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+                <RadzenTextBox @bind-Value="userAdd.Name" />
+            </RadzenFormField>
+
+            <RadzenFormField Text="@(language.Traduction("Apellido","Last Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+                <RadzenTextBox @bind-Value="userAdd.LastName" />
+            </RadzenFormField>
+        </div>
+
+        <div class="row">
+            <RadzenFormField Text="@(language.Traduction("Telefono","Phone Number"))" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="userAdd.PhoneNumber" />
+            </RadzenFormField>
+
+            <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="userAdd.Dui" />
+            </RadzenFormField>
+        </div>
+
+        <div class="row">
+            <RadzenFormField Text="Email" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="userAdd.Email" />
+            </RadzenFormField>
+
+            <RadzenFormField Text="@(language.Traduction("Nombre de Usuario","User Name"))" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox Placeholder="User Name" @bind-Value="userAdd.Login" />
+            </RadzenFormField>
+        </div>
+
+        <div class="row">
+            @*<RadzenFormField Style="width: 50%" Variant="@variant">
+                <RadzenDatePicker Placeholder="@(language.Traduction("Fecha de Registro","Registration Date"))" @bind-Value="userAdd.FechaRegistro" />
+            </RadzenFormField>*@     
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Editar Usuario","Update User"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="@(language.Traduction("Cancelar","Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    userAdd = new userUpdateDTO();
+
+    isError = false;
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        @language.Traduction("¡El usuario se actualizó con éxito!", "User updated successfully!")       
+    </RadzenAlert>
+    <RadzenButton Text="@language.Traduction("Regresar a la Lista", "Return to List")" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        @language.Traduction("Ocurrió un error al tratar de actualizar.", "An error occurred while trying to update user.")
+        
+    </RadzenAlert>
+    <RadzenButton Text="@language.Traduction("Aceptar", "Accept")" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    UserService userService { get; set; }
+
+    [Inject]
+    RolService rolService { get; set; }
+
+    [Inject]
+    UserScheduleService userSchedule { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
+
+    List<UserScheduleSearchOutputDTO> userSchedules = new List<UserScheduleSearchOutputDTO>();
+    List<RolSearchingOutputDTO> rols = new List<RolSearchingOutputDTO>();
+
+    userUpdateDTO userAdd = new userUpdateDTO();
+    userSearchOutputDTO userOu = new userSearchOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await userService.GetById(Id);
+        userOu = user.Data;
+        userAdd = new userUpdateDTO(userOu);
+
+        var response = await rolService.Search();
+        if (response.Success)
+        {
+            rols = response.Data;
+        }
+    }
+
+    private async Task Edit()
+    {
+        var result = await userService.Edit(Id, userAdd);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = "ACTIVO", Value = (byte)1 };
+        yield return new { Text = "INACTIVO", Value = (byte)2 };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/userList");
+    }
+}
