@@ -21,7 +21,7 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
         //public string SpecialtieName { get; set;}
         [ForeignKey("Patient")]
         public int PatientId { get; set; }
-        public string PatientName { get; set; }
+        //public string PatientName { get; set; }
         public string Reason { get; set; }
         
         public byte Status { get; set; }
