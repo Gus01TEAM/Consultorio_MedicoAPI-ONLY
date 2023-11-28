@@ -35,7 +35,9 @@ namespace Consultorio_Medico.DAL
         }
         public async Task<Appointment> GetById (int Id)
         {
-            var Appointment = await _context.Appointment.Include(s => s.UserSchedules).Include(s => s.Patient).FirstOrDefaultAsync(s => s.AppointmentId == Id);
+            var Appointment = await _context.Appointment.Include(s => s.UserSchedules).ThenInclude(s => s.User)
+              .Include(s => s.UserSchedules).ThenInclude(s => s.Specialties)
+                .Include(s => s.Patient).FirstOrDefaultAsync(s => s.AppointmentId == Id);
             return Appointment;
         }
         public async Task<List<Appointment>> Search(Appointment pAppoitment)

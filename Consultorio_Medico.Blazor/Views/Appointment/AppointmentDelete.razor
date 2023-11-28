@@ -1,0 +1,163 @@
+﻿@page "/delete-appoint/{Id:int}"
+
+@using Consultorio_Medico.BL.DTOs.PatientDTO
+@using Consultorio_Medico.BL.DTOs.UserSchedule
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>@language.Traduction("¿Eliminar Cita?", "Delete Appointment?")</h3>
+@if (isSuccess == false && isError == false)
+{
+    <div class="row">
+        <RadzenRow Style="margin-top: 10px; width: 100%">
+            <RadzenFormField Text="@(language.Traduction("Nombre del Doctor","Doctor Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+                <RadzenTextBox @bind-Value="appointment.UserName" ReadOnly=true />
+            </RadzenFormField>
+
+            <RadzenFormField Text="@(language.Traduction("Estado de la cita","Appointment Status"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+                <RadzenDropDown @bind-Value="appointment.Status" Data="GetStatusOptions()" Placeholder="" ReadOnly=true TextProperty="Text" ValueProperty="Value" Style="width: 50%; margin-bottom: 10px" />
+            </RadzenFormField>
+        </RadzenRow>
+    </div>
+
+    <div class="row">
+        <RadzenRow Style="margin-top: 10px; width: 100%">
+            <RadzenFormField Text="@(language.Traduction("Nombre del Paciente","Patient Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+                <RadzenTextBox @bind-Value="appointment.PatientName" ReadOnly=true />
+            </RadzenFormField>
+        </RadzenRow>
+    </div>
+
+    <div class="row">
+        <RadzenFormField Text="@(language.Traduction("Rason de cita","Appointment Reason"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="appointment.Reason" ReadOnly="true" />
+        </RadzenFormField>
+
+        <RadzenFormField Text="@(language.Traduction("Hora de cita","Appointment Hour"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenNumeric @bind-Value="appointment.Appointment_Hour" ReadOnly="true" />
+        </RadzenFormField>
+    </div>
+
+    <div class="row">
+        <RadzenFormField Text="@(language.Traduction("Fecha de Cita","Appointment Date"))" Style="width: 50%" Variant="@variant">
+            <RadzenDatePicker @bind-Value="appointment.Appointment_date" ReadOnly="true" />
+        </RadzenFormField>
+
+        <RadzenFormField Text="@(language.Traduction("Turno","Shift"))" Style="width: 50%" Variant="@variant">
+            <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" TextProperty="Text" ValueProperty="Value" Style="width: 50%" ReadOnly="true" />
+        </RadzenFormField>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <RadzenButton Text="@(language.Traduction("Eliminar","Delete"))" Icon="delete" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Delete"></RadzenButton>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <RadzenButton Text="@(language.Traduction("Cancelar","Cancel"))" ButtonStyle="ButtonStyle.Info" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+        </div>
+    </div>
+}
+else if (isSuccess)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        @(language.Traduction("La cita se elimino con éxito", "The Appointment was successfully deleted!"))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Volver a la Lista","Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        @(language.Traduction("Ocurrió un error al eliminar el registro.", "An error occurred while trying to delete."))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Aceptar","Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    AppointmentService appointmentService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
+
+    [Inject]
+    UserScheduleService userScheduleService { get; set; }
+
+    [Inject]
+    PatientService patientService { get; set; }
+
+    AppointmentSearchOutputDTO appoinment = new AppointmentSearchOutputDTO();
+    UserScheduleSearchOutputDTO userSchedule = new UserScheduleSearchOutputDTO();
+    patientSearchOutputDTO patient = new patientSearchOutputDTO();
+
+    AppointmentSearchOutputDTO appointment = new AppointmentSearchOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool disabled = true;
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var appoin = await appointmentService.GetById(Id);
+        if (appoin.Success)
+        {
+            appointment = appoin.Data;
+        }
+
+        var response = await patientService.GetById(appoinment.PatientId);
+        if (response.Success)
+        {
+            patient = response.Data;
+        }
+
+        var sched = await userScheduleService.GetById(appoinment.UserSchedulesId);
+        if (sched.Success)
+        {
+            userSchedule = sched.Data;
+        }
+    }
+
+    private async Task Delete()
+    {
+        var result = await appointmentService.Delete(Id);
+
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = (language.Traduction("Hecha", "Done")), Value = (byte)1 };
+        yield return new { Text = (language.Traduction("Inactiva", "Inactive")), Value = (byte)2 };
+        yield return new { Text = (language.Traduction("Pendiente", "Pending")), Value = (byte)3 };
+        yield return new { Text = (language.Traduction("Cancelada", "Canceled")), Value = (byte)4 };
+    }
+
+    IEnumerable<dynamic> Shift()
+    {
+        yield return new { Text = "AM", Value = true };
+        yield return new { Text = "PM", Value = false };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/appointList");
+    }
+}

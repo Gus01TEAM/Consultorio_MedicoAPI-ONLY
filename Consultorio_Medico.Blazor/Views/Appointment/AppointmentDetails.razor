@@ -12,22 +12,20 @@
 
 <div class="row">
     <RadzenRow Style="margin-top: 10px; width: 100%">
-        <RadzenFormField Text="@(language.Traduction("Nombre del Doctor","Doctor´s Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
-            <RadzenTextBox @bind-Value="userSchedule.UserName" ReadOnly=true />
+        <RadzenFormField Text="@(language.Traduction("Nombre del Doctor","Doctor Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="appointment.UserName" ReadOnly=true />
         </RadzenFormField>
 
-        <RadzenDropDown @bind-Value="appointment.Status" Data="GetStatusOptions()" Placeholder="@(language.Traduction("-Estado de la cita-","-Appointment Status-"))" ReadOnly="true" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
-    </RadzenRow>
+        <RadzenFormField Text="@(language.Traduction("Estado de la cita","Appointment Status"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenDropDown @bind-Value="appointment.Status" Data="GetStatusOptions()" Placeholder="" ReadOnly=true TextProperty="Text" ValueProperty="Value" Style="width: 50%; margin-bottom: 10px" />
+        </RadzenFormField>
+        </RadzenRow>
 </div>
 
 <div class="row">
     <RadzenRow Style="margin-top: 10px; width: 100%">
-        <RadzenFormField Text="@(language.Traduction("Nombre del Paciente","Patient´s Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
-            <RadzenTextBox @bind-Value="patient.Name" ReadOnly=true />
-        </RadzenFormField>
-
-        <RadzenFormField Text="@(language.Traduction("Apllido del Paciente","Pateint Last Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
-            <RadzenTextBox @bind-Value="patient.LastName" ReadOnly="true"/>
+        <RadzenFormField Text="@(language.Traduction("Nombre del Paciente","Patient Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="appointment.PatientName" ReadOnly=true />
         </RadzenFormField>
     </RadzenRow>
 </div>
@@ -37,16 +35,18 @@
         <RadzenTextBox @bind-Value="appointment.Reason" ReadOnly="true"/>
     </RadzenFormField>
 
-    <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" Placeholder="@(language.Traduction("-Turno-","-Shift-"))" ReadOnly="true" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+    <RadzenFormField Text="@(language.Traduction("Hora de cita","Appointment Hour"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+        <RadzenNumeric @bind-Value="appointment.Appointment_Hour" ReadOnly="true" />
+    </RadzenFormField>
 </div>
 
 <div class="row">
-    <RadzenFormField Style="width: 50%" Variant="@variant">
-        <RadzenDatePicker Placeholder="@(language.Traduction("Fecha de Cita","Appointment Date"))" @bind-Value="appointment.Appointment_date" ReadOnly="true"/>
+    <RadzenFormField Text="@(language.Traduction("Fecha de Cita","Appointment Date"))" Style="width: 50%" Variant="@variant">
+        <RadzenDatePicker @bind-Value="appointment.Appointment_date" ReadOnly="true"/>
     </RadzenFormField>
 
-    <RadzenFormField Style="width: 50%" Variant="@variant">
-        <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" Placeholder="@(language.Traduction("-Turno-","-Shift-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" ReadOnly="true"/>
+    <RadzenFormField Text="@(language.Traduction("Turno","Shift"))" Style="width: 50%" Variant="@variant">
+        <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" TextProperty="Text" ValueProperty="Value" Style="width: 50%" ReadOnly="true"/>
     </RadzenFormField>
 </div>
 

@@ -10,6 +10,23 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
 {
     public class AppointmentInputDTO
     {
+        public AppointmentInputDTO()
+        {
+
+        }
+
+        public AppointmentInputDTO(AppointmentSearchOutputDTO appointOut)
+        {
+            AppointmentId = appointOut.AppointmentId;
+            UserSchedulesId = appointOut.UserSchedulesId;
+            PatientId = appointOut.PatientId;
+            Reason = appointOut.Reason;
+            Appointment_date = appointOut.Appointment_date;
+            Appointment_Hour = appointOut.Appointment_Hour;
+            Status = appointOut.Status;
+            Shift = appointOut.Shift;
+        }
+
         [Key]
         public int AppointmentId { get; set; }
         [ForeignKey("UserSchedules")]

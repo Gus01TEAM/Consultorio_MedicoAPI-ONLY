@@ -12,7 +12,6 @@
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="appointment" OnValidSubmit="@Create">
-
         <div class="row">
             <RadzenRow Style="margin-top: 10px; width: 100%">
                 <RadzenDropDown @bind-Value="appointment.UserSchedulesId" Data=@userSchedules TextProperty="UserName" ValueProperty="UserSchedulesId" Placeholder="@(language.Traduction("-Seleccione un Docto-","-Select Doctor-"))" Style="width: 50%; max-width: 400px;" />
@@ -116,6 +115,7 @@ else if (isError)
         yield return new { Text = (language.Traduction("Cancelada", "Canceled")), Value = (byte)4 };
 
     }
+
     private async Task Create()
     {
         var result = await appointmentService.Create(appointment);
@@ -124,6 +124,7 @@ else if (isError)
         else
             isError = true;
     }
+
     protected override async Task OnInitializedAsync()
     {
         var response = await patientService.Search();
@@ -138,6 +139,7 @@ else if (isError)
             userSchedules = sched.Data;
         }
     }
+
     private void GoCreate()
     {
         isSuccess = false;
