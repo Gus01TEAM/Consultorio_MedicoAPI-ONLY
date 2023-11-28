@@ -46,7 +46,7 @@ namespace Consultorio_Medico.DAL
         public Users Login(string Login, string Password)
         {
             try
-            {
+            {              
                 Users pUsers = new Users();
                 pUsers = DbContext.Users.Include(s => s.Rol).AsQueryable().FirstOrDefault(s => s.Login == Login && s.Password == Password && s.Status == (byte)Users_Status.ACTIVE);
                 if (pUsers is null)

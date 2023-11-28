@@ -90,7 +90,6 @@ else if (isSuccess)
     isError = false;
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
         @(language.Traduction("¡El usuario se creó con éxito!", "User created successfully!"))
-        User created successfully!
     </RadzenAlert>
     <RadzenButton Text="@(language.Traduction("Ir a Crear","Go to Create"))" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
     <RadzenButton Text="@(language.Traduction("Regresar a la Lista","Return to List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
