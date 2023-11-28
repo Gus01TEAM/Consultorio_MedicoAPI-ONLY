@@ -31,7 +31,7 @@ namespace Consultorio_Medico.BL
             try
             {              
                 login.password = _securityDAL.EncriptarSHA256(login.password);
-
+                
                 var User = _securityDAL.Login(login.login,login.password);
                 securityDTO secDTO = new securityDTO()
                 {

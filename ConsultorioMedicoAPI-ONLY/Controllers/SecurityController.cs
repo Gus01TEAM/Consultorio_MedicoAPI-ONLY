@@ -1,6 +1,7 @@
 ﻿using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
@@ -28,9 +29,29 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
             _logger = logger;
             secrectkey = config.GetSection("settings").GetSection("secretkey").ToString();
         }
-       
-            // POST api/<SecurityController>
-            [HttpPost]
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Get()
+        {
+            //var currentUser = GetCurrentUser();
+            // Accede a los claims del usuario autenticado
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+       // var userRoles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+
+        // Realiza las operaciones necesarias con los claims
+        var result = new
+        {
+            UserId = userId,
+            UserName = userName,
+          //  UserRoles = userRoles
+        };
+
+        return Ok(result);
+        }
+        // POST api/<SecurityController>
+        [HttpPost]
         [Route("validate")]
         public IActionResult Post(LoginDTO login)
         {
@@ -77,6 +98,11 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
                 return NotFound(DTOGenRes);
             }
 
+        }
+        private securityDTO GetCurrentUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            return null;
         }
     }
 }

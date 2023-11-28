@@ -7,14 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ScriptDB\**" />
+    <EmbeddedResource Remove="ScriptDB\**" />
+    <None Remove="ScriptDB\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Consultorio_Medico.BL.DTOs\Consultorio_Medico.BL.DTOs.csproj" />
     <ProjectReference Include="..\Consultorio_Medico.BL.Interfaces\Consultorio_Medico.BL.Interfaces.csproj" />
     <ProjectReference Include="..\Consultorio_Medico.Entities.Interfaces\Consultorio_Medico.Entities.Interfaces.csproj" />
     <ProjectReference Include="..\Consultorio_Medico.Entities\Consultorio_Medico.Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ScriptDB\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -48,6 +48,7 @@ namespace Consultorio_Medico.DAL
             try
             {              
                 Users pUsers = new Users();
+                //var users= DbContext.Users.ToList();
                 pUsers = DbContext.Users.Include(s => s.Rol).AsQueryable().FirstOrDefault(s => s.Login == Login && s.Password == Password && s.Status == (byte)Users_Status.ACTIVE);
                 if (pUsers is null)
                     throw new ArgumentException("El usuario no Existe");
