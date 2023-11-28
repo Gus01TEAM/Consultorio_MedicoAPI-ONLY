@@ -28,9 +28,9 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
             _logger = logger;
             secrectkey = config.GetSection("settings").GetSection("secretkey").ToString();
         }
-
-        // POST api/<SecurityController>
-        [HttpPost]
+       
+            // POST api/<SecurityController>
+            [HttpPost]
         [Route("validate")]
         public IActionResult Post(LoginDTO login)
         {
@@ -43,7 +43,8 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
                     var KeyBytes = Encoding.ASCII.GetBytes(secrectkey);
                     var claims = new ClaimsIdentity();
 
-                    claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, security.userName));
+                    claims.AddClaim(new Claim(ClaimTypes.Name, security.userName));
+                    claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, security.userId.ToString()));
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {

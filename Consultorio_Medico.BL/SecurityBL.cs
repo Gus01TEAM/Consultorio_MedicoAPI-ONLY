@@ -26,7 +26,7 @@ namespace Consultorio_Medico.BL
             throw new NotImplementedException();
         }
 
-        public securityDTO Login(LoginDTO login)
+        public  securityDTO Login(LoginDTO login)
         {
             try
             {              

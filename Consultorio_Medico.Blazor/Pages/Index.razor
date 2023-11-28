@@ -1,9 +1,30 @@
 ﻿@page "/I"
 
+<AuthorizeView>
+    <Authorized>
+        <h1>Hello, @authState.User.Identity.Name!</h1>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Hello, Guest!</h1>
+    </NotAuthorized>
+</AuthorizeView>
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
+
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
+    private AuthenticationState authState ;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await authenticationState;
+    }
+}

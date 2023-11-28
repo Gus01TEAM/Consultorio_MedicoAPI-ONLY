@@ -2,7 +2,6 @@
 
 
 @using Consultorio_Medico.Blazor.Data;
-
 @using Consultorio_Medico.BL.DTOs.userDTO;
 
 
@@ -58,8 +57,7 @@
     NotificationService NotificationService { get; set; }
 
     [Inject]
-    CustomAuthenticationStateProvider customAuthenticationStateProvider { get; set; }
-
+    AuthenticationStateProvider authStateProvider { get; set; }
     [Inject]
     IJSRuntime js { get; set; }
 
@@ -88,20 +86,21 @@
     private async Task Authenticate()
     {
         var userAccount = await securityService.post(login);
-        if (userAccount.Data == null)
+        if (userAccount == null)
         {
-            NotificationService.Notify(NotificationSeverity.Error, "Error", "El usuario no existe");
+            await js.InvokeVoidAsync("alert", "Invalid User Name or Password");
             return;
         }
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
 
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)customAuthenticationStateProvider;
+       // var customAuthStateProvider = (CustomAuthenticationStateProvider)customAuthenticationStateProvider;
         await customAuthStateProvider.UpdateAuthenticationState(new securityDTO
             {
-                userName = security.userName,
-                RolName = security.RolName,
+                userName = "Marvin",
+                RolName = "Admin",
+              
             });
-        navigation.NavigateTo("/I", true);
-       
+        navigation.NavigateTo("/I", true); 
     }
 
 

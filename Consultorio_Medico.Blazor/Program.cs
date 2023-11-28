@@ -16,7 +16,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddRadzenComponents();
 builder.Services.AddAuthenticationCore();
 builder.Services.AddScoped<ProtectedSessionStorage>();
-builder.Services.AddScoped<CustomAuthenticationStateProvider, CustomAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 
 builder.Services.AddSingleton<RolService>();
