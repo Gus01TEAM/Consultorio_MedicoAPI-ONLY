@@ -1,7 +1,5 @@
 ﻿using Consultorio_Medico.BL.DTOs.userDTO;
-using Consultorio_Medico.BL.Interfaces;
-using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
-using Microsoft.Identity.Client;
+using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using System.Net.Http.Json;
 using System.Text.Json;
 

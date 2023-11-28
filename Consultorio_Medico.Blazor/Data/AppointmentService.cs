@@ -1,6 +1,5 @@
 ﻿using Consultorio_Medico.BL.DTOs.AppointmentDTO;
-
-using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
+using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using System.Text.Json;
 
 namespace Consultorio_Medico.Blazor.Data

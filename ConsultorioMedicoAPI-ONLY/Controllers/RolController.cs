@@ -1,6 +1,6 @@
-﻿using Consultorio_Medico.BL.DTOs.RolDTO;
+﻿using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
+using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.Interfaces;
-using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

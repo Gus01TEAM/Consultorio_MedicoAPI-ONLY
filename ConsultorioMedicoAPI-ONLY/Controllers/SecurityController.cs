@@ -1,6 +1,6 @@
-﻿using Consultorio_Medico.BL.DTOs.userDTO;
+﻿using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
+using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.Interfaces;
-using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;

@@ -1,4 +1,4 @@
-﻿using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
+﻿using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.userDTO;
 using System.Text.Json;
 

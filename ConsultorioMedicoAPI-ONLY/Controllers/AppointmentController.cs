@@ -1,10 +1,10 @@
 ﻿
 using Consultorio_Medico.BL;
 using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.UserSchedule;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
-using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

@@ -2,8 +2,7 @@
 using Consultorio_Medico.BL.DTOs;
 using Consultorio_Medico.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using ConsultorioMedicoAPI_ONLY.DTOGenericResponse;
-
+using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 
 namespace ConsultorioMedicoAPI_ONLY.Controllers
 {
