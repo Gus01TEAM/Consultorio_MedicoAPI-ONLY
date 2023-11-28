@@ -12,6 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 var secretkey = builder.Configuration.GetSection("settings").GetSection("secretkey").ToString();
 var keyBytes = Encoding.UTF8.GetBytes(secretkey);
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("LoggedInPolicy", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+    });
+});
+
 builder.Services.AddAuthentication(config =>
 {
     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

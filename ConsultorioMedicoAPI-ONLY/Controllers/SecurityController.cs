@@ -38,14 +38,14 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
             // Accede a los claims del usuario autenticado
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-       // var userRoles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+        var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
         // Realiza las operaciones necesarias con los claims
         var result = new
         {
             UserId = userId,
             UserName = userName,
-          //  UserRoles = userRoles
+           UserRoles = userRole
         };
 
         return Ok(result);
@@ -66,6 +66,7 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
 
                     claims.AddClaim(new Claim(ClaimTypes.Name, security.userName));
                     claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, security.userId.ToString()));
+                     claims.AddClaim(new Claim(ClaimTypes.Role, security.RolName));
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
