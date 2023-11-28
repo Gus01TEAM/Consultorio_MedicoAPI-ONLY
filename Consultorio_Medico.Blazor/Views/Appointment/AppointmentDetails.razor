@@ -1,0 +1,129 @@
+﻿@page "/appoint-details/{Id:int}"
+
+@using Consultorio_Medico.BL.DTOs.PatientDTO
+@using Consultorio_Medico.BL.DTOs.UserSchedule
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>@language.Traduction("Detalles de Cita", "Appointment Details")</h3>
+
+<div class="row">
+    <RadzenRow Style="margin-top: 10px; width: 100%">
+        <RadzenFormField Text="@(language.Traduction("Nombre del Doctor","Doctor´s Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="userSchedule.UserName" ReadOnly=true />
+        </RadzenFormField>
+
+        <RadzenDropDown @bind-Value="appointment.Status" Data="GetStatusOptions()" Placeholder="@(language.Traduction("-Estado de la cita-","-Appointment Status-"))" ReadOnly="true" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+    </RadzenRow>
+</div>
+
+<div class="row">
+    <RadzenRow Style="margin-top: 10px; width: 100%">
+        <RadzenFormField Text="@(language.Traduction("Nombre del Paciente","Patient´s Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="patient.Name" ReadOnly=true />
+        </RadzenFormField>
+
+        <RadzenFormField Text="@(language.Traduction("Apllido del Paciente","Pateint Last Name"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenTextBox @bind-Value="patient.LastName" ReadOnly="true"/>
+        </RadzenFormField>
+    </RadzenRow>
+</div>
+
+<div class="row">
+    <RadzenFormField Text="@(language.Traduction("Rason de cita","Appointment Reason"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+        <RadzenTextBox @bind-Value="appointment.Reason" ReadOnly="true"/>
+    </RadzenFormField>
+
+    <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" Placeholder="@(language.Traduction("-Turno-","-Shift-"))" ReadOnly="true" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+</div>
+
+<div class="row">
+    <RadzenFormField Style="width: 50%" Variant="@variant">
+        <RadzenDatePicker Placeholder="@(language.Traduction("Fecha de Cita","Appointment Date"))" @bind-Value="appointment.Appointment_date" ReadOnly="true"/>
+    </RadzenFormField>
+
+    <RadzenFormField Style="width: 50%" Variant="@variant">
+        <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" Placeholder="@(language.Traduction("-Turno-","-Shift-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" ReadOnly="true"/>
+    </RadzenFormField>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <RadzenButton Text="@(language.Traduction("Volver a Lista","Return To List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    AppointmentService appointmentService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
+
+    [Inject]
+    UserScheduleService userScheduleService { get; set; }
+
+    [Inject]
+    PatientService patientService { get; set; }
+
+    AppointmentSearchOutputDTO appoinment = new AppointmentSearchOutputDTO();
+    UserScheduleSearchOutputDTO userSchedule = new UserScheduleSearchOutputDTO();
+    patientSearchOutputDTO patient = new patientSearchOutputDTO();
+
+    AppointmentSearchOutputDTO appointment = new AppointmentSearchOutputDTO();
+
+    Variant variant = Variant.Outlined;
+
+    bool disabled = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var appoin = await appointmentService.GetById(Id);
+        if (appoin.Success)
+        {
+            appointment = appoin.Data;
+        }
+
+        var response = await patientService.GetById(appoinment.PatientId);
+        if (response.Success)
+        {
+            patient = response.Data;
+        }
+
+        var sched = await userScheduleService.GetById(appoinment.UserSchedulesId);
+        if (sched.Success)
+        {
+            userSchedule = sched.Data;
+        }
+    }
+
+    IEnumerable<dynamic> GetStatusOptions()
+    {
+        yield return new { Text = (language.Traduction("Hecha", "Done")), Value = (byte)1 };
+        yield return new { Text = (language.Traduction("Inactiva", "Inactive")), Value = (byte)2 };
+        yield return new { Text = (language.Traduction("Pendiente", "Pending")), Value = (byte)3 };
+        yield return new { Text = (language.Traduction("Cancelada", "Canceled")), Value = (byte)4 };
+    }
+
+    IEnumerable<dynamic> Shift()
+    {
+        yield return new { Text = "AM", Value = true };
+        yield return new { Text = "PM", Value = false };
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/appointList");
+    }
+}

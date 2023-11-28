@@ -6,7 +6,7 @@
 @using Consultorio_Medico.BL.DTOs.AppointmentDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>@language.Traduction("Appointment List", "Lista de Citas")</h3>
+<h3>@language.Traduction("Lista de Citas", "Appointment List")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
@@ -23,7 +23,7 @@
 
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Appointment_date" Title="@(language.Traduction("Fecha de la Cita", "Appointment Date"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="EndOfAppointmet" Title="@(language.Traduction("Fin de la Cita", "End of Appointment"))" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Appointment_Hour" Title="@(language.Traduction("Fin de la Cita", "End of Appointment"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Status" Title="@(language.Traduction("Estado", "Status"))" Frozen="true" Width="160px" />
 

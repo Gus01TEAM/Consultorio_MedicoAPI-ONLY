@@ -14,17 +14,17 @@
     <EditForm Model="appointment" OnValidSubmit="@Create">
 
         <div class="row">
-        <RadzenRow Style="margin-top: 10px; width: 100%">
-                <RadzenDropDown @bind-Value="appointment.UserSchedulesId" Data=@userSchedules TextProperty="UserName" ValueProperty="UserSchedulesId" Placeholder="@(language.Traduction("-Seleccione un Usuario-","-Select Doctor-"))" Style="width: 50%; max-width: 400px;" />
+            <RadzenRow Style="margin-top: 10px; width: 100%">
+                <RadzenDropDown @bind-Value="appointment.UserSchedulesId" Data=@userSchedules TextProperty="UserName" ValueProperty="UserSchedulesId" Placeholder="@(language.Traduction("-Seleccione un Docto-","-Select Doctor-"))" Style="width: 50%; max-width: 400px;" />
 
                 <RadzenDropDown @bind-Value="appointment.Status" Data="GetStatusOptions()" Placeholder="@(language.Traduction("-Estado de la cita-","-Appointment Status-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
-        </RadzenRow>
+            </RadzenRow>
         </div>
         <div class="row">
 
             <RadzenRow Style="margin-top: 10px; width: 100%">
-                
-                <RadzenDropDown @bind-Value="appointment.PatientId" Data=@patients TextProperty="Name" ValueProperty="PatientId" Placeholder="@(language.Traduction("-Seleccione un Paciente-","-Select Patient-"))" Style="width: 50%; max-width: 400px;" />
+
+                <RadzenDropDown @bind-Value="appointment.PatientId" Data=@patients TextProperty="Name" ValueProperty="patientId" Placeholder="@(language.Traduction("-Seleccione un Paciente-","-Select Patient-"))" Style="width: 50%; max-width: 400px;" />
             </RadzenRow>
 
             <RadzenFormField Text="@(language.Traduction("Rason de cita","Appointment Reason"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
@@ -36,11 +36,47 @@
             <RadzenFormField Style="width: 50%" Variant="@variant">
                 <RadzenDatePicker Placeholder="@(language.Traduction("Fecha de Cita","Appointment Date"))" @bind-Value="appointment.Appointment_date" />
             </RadzenFormField>
-             
+
+            <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" Placeholder="@(language.Traduction("-Turno-","-Shift-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
         </div>
-         
-        </EditForm>
-        }
+
+        <div class="row">
+            <RadzenFormField Style="=width: 50%" Variant="@variant">
+                <RadzenNumeric @bind-Value="appointment.Appointment_Hour" />
+            </RadzenFormField>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Guardar", "Save"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    appointment = new AppointmentInputDTO();
+
+    isError = false;
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        @(language.Traduction("¡Cita creada con éxito!", "Appointment created successfully!"))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Seguir Creando", "Go to Create"))" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        @(language.Traduction("Ocurrió un error al intentar crear la cita.", "An error occurred while trying to register."))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
 
 
 @code {
@@ -74,10 +110,10 @@
 
     IEnumerable<dynamic> GetStatusOptions()
     {
-        yield return new { Text = "Done", Value = (byte)1 };
-        yield return new { Text = "Inactive", Value = (byte)2 };
-        yield return new { Text = "Pending", Value = (byte)3 };
-        yield return new { Text = "Canceled", Value = (byte)4 };
+        yield return new { Text = (language.Traduction("Hecha", "Done")), Value = (byte)1 };
+        yield return new { Text = (language.Traduction("Inactiva", "Inactive")), Value = (byte)2 };
+        yield return new { Text = (language.Traduction("Pendiente", "Pending")), Value = (byte)3 };
+        yield return new { Text = (language.Traduction("Cancelada", "Canceled")), Value = (byte)4 };
 
     }
     private async Task Create()
@@ -108,10 +144,18 @@
         isError = false;
     }
 
-    IEnumerable<dynamic> Shift(){
-        yield return new { Text = "AM", Value = (byte)1 };
+    IEnumerable<dynamic> Shift()
+    {
+        yield return new { Text = "AM", Value = true};
+        yield return new { Text = "PM", Value = false };
+    }
+
+    IEnumerable<dynamic> Hour()
+    {
+        yield return new { Text = "8:", Value = (byte)1 };
         yield return new { Text = "PM", Value = (byte)2 };
     }
+
     private void Cancel()
     {
         navigation.NavigateTo("/appointList");
