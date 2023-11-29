@@ -31,25 +31,26 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+       // [Authorize]
         public IActionResult Get()
         {
-            //var currentUser = GetCurrentUser();
-            // Accede a los claims del usuario autenticado
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-        var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+                //var currentUser = GetCurrentUser();
+                // Accede a los claims del usuario autenticado
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
-        // Realiza las operaciones necesarias con los claims
-        var result = new
-        {
-            UserId = userId,
-            UserName = userName,
-           UserRoles = userRole
-        };
+            // Realiza las operaciones necesarias con los claims
+            var result = new
+            {
+                UserId = userId,
+                UserName = userName,
+               UserRoles = userRole
+            };
 
-        return Ok(result);
+            return Ok(result);
         }
+
         // POST api/<SecurityController>
         [HttpPost]
         [Route("validate")]
@@ -66,7 +67,7 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
 
                     claims.AddClaim(new Claim(ClaimTypes.Name, security.userName));
                     claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, security.userId.ToString()));
-                     claims.AddClaim(new Claim(ClaimTypes.Role, security.RolName));
+                    claims.AddClaim(new Claim(ClaimTypes.Role, security.RolName));
 
                     var tokenDescriptor = new SecurityTokenDescriptor
                     {
@@ -79,6 +80,8 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
                     var tokenConfig = tokenHandler.CreateToken(tokenDescriptor);
 
                     string tokenCreado = tokenHandler.WriteToken(tokenConfig);
+
+                    //claims.AddClaim(new Claim(tokenCreado, security.Token));
 
                     return StatusCode(StatusCodes.Status200OK, new { token = tokenCreado });
 

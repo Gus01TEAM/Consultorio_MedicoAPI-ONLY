@@ -13,6 +13,7 @@ namespace Consultorio_Medico.BL.DTOs.userDTO
         public string Login { get; set; }
         public int rolId { get; set; }
         public string RolName { get; set; }
+        public string Token { get; set; }
 
     }
 }

@@ -3,7 +3,9 @@
 
 @using Consultorio_Medico.Blazor.Data;
 @using Consultorio_Medico.BL.DTOs.userDTO;
-
+@inject HttpClient Http;
+@using Microsoft.AspNetCore.Identity;
+@using Blazored.LocalStorage 
 
 <RadzenRow Gap="0" Class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
     <RadzenColumn Size="12" SizeMD="6">
@@ -58,8 +60,12 @@
 
     [Inject]
     AuthenticationStateProvider authStateProvider { get; set; }
+
     [Inject]
     IJSRuntime js { get; set; }
+
+    [Inject]
+    ILocalStorageService LocalStorage { get; set; }
 
     bool isSuccess = false;
     bool isError = false;
@@ -67,47 +73,35 @@
     LoginDTO login = new LoginDTO();
     securityDTO security = new securityDTO();
 
-    //public async Task Post()
-    //{
-    //    var result = await securityService.post(login);
-    //    if (result.Data != null)
-    //    {
-    //        isSuccess = true;
-    //        navigation.NavigateTo("/I");
-    //    }
-    //    else
-    //    {
-    //        isError = true;
-    //        
-
-    //    }
-    //}
-
     private async Task Authenticate()
     {
+
         var userAccount = await securityService.post(login);
+
         if (userAccount == null)
         {
             await js.InvokeVoidAsync("alert", "Invalid User Name or Password");
             return;
         }
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        else
+        {
+            var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            //if (userAccount != null)
+            //{
+            
 
-       // var customAuthStateProvider = (CustomAuthenticationStateProvider)customAuthenticationStateProvider;
-        await customAuthStateProvider.UpdateAuthenticationState(new securityDTO
-            {
-                userName = "Marvin",
-                RolName = "Admin",
-              
-            });
-        navigation.NavigateTo("/I", true); 
-    }
+            var user = await securityService.GetUserInfo(userAccount.token);
+            //    security = user.Data;
+            //}
 
-
-
-    private void loggedIn()
-    {
-        navigation.NavigateTo("userList");
+            await customAuthStateProvider.UpdateAuthenticationState(new securityDTO
+                {
+                    userName = security.userName,
+                    RolName = security.RolName,
+                    Token = userAccount.token
+                });
+            navigation.NavigateTo("/I", true);
+        }   
     }
 
     string value = "";
