@@ -28,9 +28,11 @@ namespace Consultorio_Medico.Blazor.Data
                 if (userSession == null)
                     return await Task.FromResult(new AuthenticationState(_anonymous));
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, userSession.userName),
-                    new Claim(ClaimTypes.Role, userSession.RolName)
+                {            
+                      new Claim(ClaimTypes.Name, userSession.userName),
+                    new Claim(ClaimTypes.Role, userSession.RolName),
+                     new Claim(ClaimTypes.NameIdentifier, userSession.userId.ToString()),
+                      new Claim("Token", userSession.Token)
                 }, "CustomAuth"));
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
             }
@@ -50,7 +52,9 @@ namespace Consultorio_Medico.Blazor.Data
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, userSession.userName),
-                    new Claim(ClaimTypes.Role, userSession.RolName)
+                    new Claim(ClaimTypes.Role, userSession.RolName),
+                     new Claim(ClaimTypes.NameIdentifier, userSession.userId.ToString()),
+                      new Claim("Token", userSession.Token)
                 }));
             }
             else

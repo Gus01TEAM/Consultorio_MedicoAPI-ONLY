@@ -78,7 +78,7 @@
 
         var userAccount = await securityService.post(login);
 
-        if (userAccount == null)
+        if (userAccount == null || userAccount.token == null )
         {
             await js.InvokeVoidAsync("alert", "Invalid User Name or Password");
             return;
@@ -88,18 +88,13 @@
             var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
             //if (userAccount != null)
             //{
-            
+
 
             var user = await securityService.GetUserInfo(userAccount.token);
             //    security = user.Data;
             //}
-
-            await customAuthStateProvider.UpdateAuthenticationState(new securityDTO
-                {
-                    userName = security.userName,
-                    RolName = security.RolName,
-                    Token = userAccount.token
-                });
+            user.Data.Token = userAccount.token;
+            await customAuthStateProvider.UpdateAuthenticationState(user.Data);
             navigation.NavigateTo("/I", true);
         }   
     }

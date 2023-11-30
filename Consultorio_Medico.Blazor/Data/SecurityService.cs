@@ -41,33 +41,12 @@ namespace Consultorio_Medico.Blazor.Data
             {
                 _httpClientAPI.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
-                var response = await _httpClientAPI.GetAsync("/api/Security/");
+                var securityDTO = await _httpClientAPI.GetFromJsonAsync<securityDTO>("/api/Security/");
                 return new DTOGenericResponse<securityDTO>
                 {
                     Success = true,
-                    Data = new securityDTO()
-                };
-                /* if (response != null && response.Success)
-                 {
-                     var user = response.Data;
-
-                     var securityDTO = new securityDTO
-                     {
-                         userId = user.userId,
-                         userName = user.userName,
-                         RolName = user.RolName
-                     };
-
-                     return new DTOGenericResponse<securityDTO>
-                     {
-                         Success = true,
-                         Data = securityDTO
-                     };
-                 }
-                 else
-                 {
-                     throw new Exception("La solicitud GET no fue exitosa.");
-                 }*/
+                    Data = securityDTO
+                };               
             }
             catch (Exception ex)
             {

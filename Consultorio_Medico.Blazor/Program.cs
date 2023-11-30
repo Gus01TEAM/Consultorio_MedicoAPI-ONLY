@@ -22,16 +22,17 @@ builder.Services.AddScoped<ProtectedSessionStorage>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 
-builder.Services.AddSingleton<RolService>();
-builder.Services.AddSingleton<SecurityService>();
-builder.Services.AddSingleton<ScheduleService>();
-builder.Services.AddSingleton<PatientService>();
-builder.Services.AddSingleton<SpecialtyService>();
-builder.Services.AddSingleton<UserScheduleService>();
-builder.Services.AddSingleton<UserService>();
-builder.Services.AddSingleton<AppointmentService>();
-builder.Services.AddSingleton<LanguageService>();
+builder.Services.AddScoped<RolService>();
+builder.Services.AddScoped<SecurityService>();
+builder.Services.AddScoped<ScheduleService>();
+builder.Services.AddScoped<PatientService>();
+builder.Services.AddScoped<SpecialtyService>();
+builder.Services.AddScoped<UserScheduleService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<AppointmentService>();
+builder.Services.AddScoped<LanguageService>();
 builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<InformacionSession>();
 //builder.Services.AddScoped<ISecurityBL>();
 
 builder.Services.AddHttpClient("MEDICOAPI", c =>

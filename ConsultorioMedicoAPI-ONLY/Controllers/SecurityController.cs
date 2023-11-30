@@ -31,21 +31,21 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
         }
 
         [HttpGet]
-       // [Authorize]
+        [Authorize]
         public IActionResult Get()
         {
                 //var currentUser = GetCurrentUser();
                 // Accede a los claims del usuario autenticado
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var userName = User.FindFirst(ClaimTypes.Name)?.Value;
-            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            var _userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var _userName = User.FindFirst(ClaimTypes.Name)?.Value;
+            var _userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
             // Realiza las operaciones necesarias con los claims
-            var result = new
+            var result = new securityDTO
             {
-                UserId = userId,
-                UserName = userName,
-               UserRoles = userRole
+                userId = int.Parse(_userId),
+                userName = _userName,
+               RolName = _userRole
             };
 
             return Ok(result);

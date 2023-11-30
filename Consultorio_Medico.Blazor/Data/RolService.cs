@@ -1,6 +1,8 @@
 ﻿using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using System.Text.Json;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 
 namespace Consultorio_Medico.Blazor.Data
 {
@@ -8,13 +10,15 @@ namespace Consultorio_Medico.Blazor.Data
     {
         readonly HttpClient _httpClientAPI;
 
-        public RolService(IHttpClientFactory httpClientFactory)
+        private readonly InformacionSession _InfoSession;
+        public RolService(IHttpClientFactory httpClientFactory, InformacionSession infoSession)
         {
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
-        }
-
+            _InfoSession = infoSession;
+        }       
         public async Task<DTOGenericResponse<List<RolSearchingOutputDTO>>>Search()
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<RolSearchingOutputDTO>>>("/api/Rol");
 
             if (response != null)
@@ -29,6 +33,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<RolSearchingOutputDTO>> GetById(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<RolSearchingOutputDTO>>($"/api/Rol/{id}");
 
             if (response != null)
@@ -43,6 +48,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<RolSearchingOutputDTO>> Create(RolInputDTO createRolDTO)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PostAsJsonAsync("/api/Rol", createRolDTO);
 
             if (response.IsSuccessStatusCode)
@@ -58,6 +64,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<RolSearchingOutputDTO>> Edit(int id, RolInputDTO rolInput)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PutAsJsonAsync($"/api/Rol/{id}", rolInput);
 
             if (response.IsSuccessStatusCode)
@@ -74,6 +81,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<RolSearchingOutputDTO>> Delete(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.DeleteAsync($"/api/Rol/{id}");
 
             if (response.IsSuccessStatusCode)
