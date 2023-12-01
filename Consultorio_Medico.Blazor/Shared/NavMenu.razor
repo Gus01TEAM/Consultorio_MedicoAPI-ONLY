@@ -1,4 +1,5 @@
 ﻿@using Consultorio_Medico.Blazor.Data;
+@inject AuthenticationStateProvider authStateProvider
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -16,15 +17,10 @@
     <nav class="flex-column">
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+            <NavLink class="nav-link" href="/I" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </NavLink>
         </div>
-        @*<div class="nav-item px-3">
-            <NavLink class="nav-link" href="Login" style="padding-right: 10px;">
-                <span class="oi oi-person" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>*@
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="roles" style="padding-right: 10px;">
                 <span class="oi oi-lock-locked" aria-hidden="true"></span> Roles
@@ -55,11 +51,17 @@
                 <span class="oi oi-plus" aria-hidden="true"></span> @(language.Traduction("Citas","Appointments"))
             </NavLink>
         </div>
-         <div class="nav-item px-3">
-           <NavLink class="nav-link" href="userList" style="padding-right: 10px;">
-                <span class="oi oi-people" aria-hidden="true"></span> @(language.Traduction("Usuarios","Users"))
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="userList" style="padding-right: 10px;">
+                        <span class="oi oi-people" aria-hidden="true"></span> @(language.Traduction("Usuarios", "Users"))
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+        
+
     </nav>
 </div>
 
@@ -98,5 +100,14 @@
         language.Language = language.Language == 0 ? 1 : 0;
 
         navigation.NavigateTo(navigation.Uri, forceLoad: true);
+    }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
+    private AuthenticationState authState;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await authenticationState;
     }
 }

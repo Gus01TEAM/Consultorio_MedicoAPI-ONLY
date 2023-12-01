@@ -27,7 +27,7 @@
                         <RadzenIcon Icon="account_circle" />
                     </Start>
                     <ChildContent>
-                        <RadzenTextBox @bind-Value=@(login.login) />
+                        <RadzenTextBox Style="margin: 10px" Name="Login" @bind-Value=@(login.login) />
                     </ChildContent>
                 </RadzenFormField>
                 <br />
@@ -35,13 +35,12 @@
                     <Start>
                         <RadzenIcon Icon="security" />
                     </Start>
-                    <ChildContent>
-                        <RadzenTextBox @bind-Value=@(login.password) />
-                        @*<RadzenPassword @bind-Value=@(login.password) Visible=()/>*@
+                    <ChildContent >
+                        <RadzenTextBox Style="margin: 10px" Name="Pass" @bind-Value=@(login.password) />
                     </ChildContent>
                 </RadzenFormField>
                 <br />
-                <RadzenButton Text="Login" ButtonStyle="ButtonStyle.Primary" Click="@Authenticate" />
+                <RadzenButton Style="margin-top: 10px" Text="Login" ButtonStyle="ButtonStyle.Primary" Click="@Authenticate" />
             </RadzenTemplateForm>
         </RadzenCard>
     </RadzenColumn>
@@ -69,6 +68,7 @@
 
     bool isSuccess = false;
     bool isError = false;
+    bool popup;
 
     LoginDTO login = new LoginDTO();
     securityDTO security = new securityDTO();

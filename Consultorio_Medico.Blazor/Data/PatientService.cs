@@ -8,14 +8,17 @@ namespace Consultorio_Medico.Blazor.Data
     public class PatientService
     {
         readonly HttpClient _httpClientAPI;
+        private readonly InformacionSession _InfoSession;
 
-        public PatientService(IHttpClientFactory httpClientFactory)
+        public PatientService(IHttpClientFactory httpClientFactory, InformacionSession infoSession)
         {
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
+            _InfoSession = infoSession;
         }
 
         public async Task<DTOGenericResponse<List<patientSearchOutputDTO>>> Search()
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<patientSearchOutputDTO>>>("/api/patient");
 
             if (response != null)
@@ -32,6 +35,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> GetById(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<patientSearchOutputDTO>>($"/api/patient/{id}");
 
             if (response != null)
@@ -46,6 +50,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> Create(patientAddDTO createPatient)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PostAsJsonAsync("/api/Patient", createPatient);
 
             if (response.IsSuccessStatusCode)
@@ -61,6 +66,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> Edit(int id, patientAddDTO patientInput)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PutAsJsonAsync($"/api/Patient/{id}", patientInput);
 
             if (response.IsSuccessStatusCode)
@@ -77,6 +83,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<patientSearchOutputDTO>> Delete(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.DeleteAsync($"/api/Patient/{id}");
 
             if (response.IsSuccessStatusCode)
