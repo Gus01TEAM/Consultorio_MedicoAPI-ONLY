@@ -26,6 +26,7 @@ namespace Consultorio_Medico.Blazor.Data
                 throw new Exception("La solicitud GET no fue exitosa.");
             }
         }
+
         public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> GetById(int id)
         {
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<ScheduleSearchOutPutDTO>>($"/api/Schedules/{id}");
@@ -39,6 +40,7 @@ namespace Consultorio_Medico.Blazor.Data
                 throw new Exception("La solicitud GET no fue exitosa.");
             }
         }
+
         public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> Create(ScheduleInputDTO createSchedule)
         {
             var response = await _httpClientAPI.PostAsJsonAsync("/api/Schedules", createSchedule);
@@ -53,6 +55,7 @@ namespace Consultorio_Medico.Blazor.Data
                 throw new Exception("La solicitud POST no fue exitosa.");
             }
         }
+
         public async Task<DTOGenericResponse<ScheduleSearchOutPutDTO>> Edit(int id, ScheduleInputDTO createSchedule)
         {
             var response = await _httpClientAPI.PutAsJsonAsync($"/api/Schedules/{id}", createSchedule);
