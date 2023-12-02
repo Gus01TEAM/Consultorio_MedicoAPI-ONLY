@@ -12,6 +12,7 @@ namespace Consultorio_Medico.BL.DTOs.DTOs
         public int ClinicsId { get; set; }
 
         public string OfficeName { get; set; }
+
         public string OfficeAddres { get; set; }
 
         public string OfficeEmail { get; set; }

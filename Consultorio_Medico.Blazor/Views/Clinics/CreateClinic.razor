@@ -1,5 +1,104 @@
-﻿<h3>CreateClinic</h3>
+﻿@page "/create-clinic"
+
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.DTOs;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>@language.Traduction("¡Añade una nueva Clinica!", "Create New Clinic!")</h3>
+@if (isSuccess == false && isError == false)
+{
+    <EditForm Model="clinicInput" OnValidSubmit="@Create">
+        <div class="row">
+            <RadzenFormField Text="@(language.Traduction("Nombre de Oficina", "Office Name"))" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="clinicInput.OfficeName" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="@(language.Traduction("Direccion de Oficina", "Office Address"))" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="clinicInput.OfficeAddres" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+        <RadzenFormField Text="@(language.Traduction("Email de Oficina", "Office Email"))" Style="width: 50%" Variant="@variant">
+            <RadzenTextBox @bind-Value="clinicInput.OfficeEmail" />
+        </RadzenFormField>
+        </div>
+        <div class="row">
+            <RadzenFormField Text="@(language.Traduction("Numero de la Oficina", "Office Phone Number"))" Style="width: 50%" Variant="@variant">
+                <RadzenTextBox @bind-Value="clinicInput.OfficePhone" />
+            </RadzenFormField>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Guardar", "Save"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Danger" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+            </div>
+        </div>
+    </EditForm>
+}
+else if (isSuccess)
+{
+    clinicInput = new ClinicInputDTO();
+
+    isError = false;
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
+        @(language.Traduction("¡La nueva Clinica se agregó con éxito!", "Clinic created successfully!"))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Seguir Creando", "Go to Create"))" Icon="check_circle" Style="margin-top: 10px" Click="@GoCreate"></RadzenButton>
+    <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Secondary" Icon="cancel" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
+else if (isError)
+{
+    <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Danger" Size="AlertSize.Medium" Shade="Shade.Dark" AllowClose=false>
+        @(language.Traduction("Ocurrió un error al intentar crear el registro.", "An error occurred while trying to register."))
+    </RadzenAlert>
+    <RadzenButton Text="@(language.Traduction("Aceptar", "Accept"))" ButtonStyle="ButtonStyle.Secondary" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+}
 
 @code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    ClinicService clinicService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
+
+    ClinicInputDTO clinicInput = new ClinicInputDTO();
+
+    bool isSuccess = false;
+    bool isError = false;
+
+    Variant variant = Variant.Outlined;
+
+    private async Task Create()
+    {
+        var result = await clinicService.Create(clinicInput);
+        if (result != null)
+            isSuccess = true;
+        else
+            isError = true;
+    }
+
+    private void GoCreate()
+    {
+        isSuccess = false;
+        isError = false;
+    }
+
+    private void Cancel()
+    {
+        navigation.NavigateTo("/clinics");
+    }
 
 }

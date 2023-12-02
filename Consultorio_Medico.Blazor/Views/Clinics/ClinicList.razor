@@ -1,0 +1,86 @@
+﻿@page "/clinics"
+
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using System.ComponentModel.DataAnnotations;
+@using Consultorio_Medico.BL.DTOs.DTOs;
+@using Consultorio_Medico.Blazor.Data;
+
+<h3>@language.Traduction("Lista de Clinicas", "Clinics List")</h3>
+@if (isOcultarGrid)
+{
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
+                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                Style="border-radius: 10px"
+                Data="@clinicOutput" TItem="SearchOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
+                IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
+        <Columns>
+
+            <RadzenDataGridColumn TItem="SearchOutputDTO" Property="OfficeName" Title="@(language.Traduction("Nombre De Oficina", "Office Name"))" Frozen="true" Width="160px" />
+
+            <RadzenDataGridColumn TItem="SearchOutputDTO" Property="OfficeAddres" Title="@(language.Traduction("Dirección", "Office Address"))" Width="165px" />
+
+            <RadzenDataGridColumn TItem="SearchOutputDTO" Property="OfficeEmail" Title="@(language.Traduction("Email", "Email"))" Width="165px" />
+
+            <RadzenDataGridColumn TItem="SearchOutputDTO" Property="OfficePhone" Title="@(language.Traduction("Telefono", "Ofice Phone"))" Width="165px" />
+
+
+            <RadzenDataGridColumn TItem="SearchOutputDTO" Context="clinic" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+                <Template Context="clinic">
+                    @*<RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDelete(clinic))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="details" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoDetails(clinic))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoEdit(clinic))" @onclick:stopPropagation="true">
+                    </RadzenButton>*@
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+
+    </RadzenDataGrid>
+}
+<br>
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+
+
+@code {
+
+    [Inject]
+    NavigationManager navigation { get; set; }
+
+    [Inject]
+    ClinicService clinicService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
+
+    bool isLoading = false;
+    async Task ShowLoading()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        isLoading = false;
+    }
+    bool isOcultarGrid = true;
+
+    List<SearchOutputDTO> clinicOutput = new List<SearchOutputDTO>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await clinicService.Search();
+        if (response.Success)
+        {
+            clinicOutput = response.Data;
+        }
+    }
+
+    private void GoCreate()
+    {
+        navigation.NavigateTo($"/create-clinic");
+    }
+}

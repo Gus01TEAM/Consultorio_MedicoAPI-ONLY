@@ -30,6 +30,7 @@ builder.Services.AddScoped<SpecialtyService>();
 builder.Services.AddScoped<UserScheduleService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AppointmentService>();
+builder.Services.AddScoped<ClinicService>();
 builder.Services.AddSingleton<LanguageService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<InformacionSession>();
