@@ -13,13 +13,13 @@ namespace Consultorio_Medico.BL.Interfaces
 {
     public interface IClinicBL
     {
-        Task<int> Create(CreateInputDTO pClinic);
+        Task<int> Create(ClinicInputDTO pClinic);
 
-        Task<int> Update(UpdateDTO pClinic);
+        Task<int> Update(SearchOutputDTO pClinic);
 
         Task<int> Delete(int Id);
 
-        Task<GetByIdOutputDTO> GetById(int Id);
+        Task<SearchOutputDTO> GetById(int Id);
 
         Task<List<SearchOutputDTO>> Search(SearchinputDTO pClinic);
       

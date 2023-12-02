@@ -14,8 +14,6 @@ namespace Consultorio_Medico.Entities
         [Key]
         public int ClinicsId { get; set; }
 
-        [ForeignKey("Users")]
-        public int UserId { get; set; } 
         public string OfficeName { get; set; }
 
         public string OfficeAddres { get; set; }
@@ -23,9 +21,6 @@ namespace Consultorio_Medico.Entities
         public string OfficeEmail  { get; set; } 
 
         public string OfficePhone { get; set; }
-
-        public Users Users { get; set; }
-
        
     }
 }

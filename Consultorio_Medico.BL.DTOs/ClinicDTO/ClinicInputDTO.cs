@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Consultorio_Medico.BL.DTOs.DTOs
 {
-    public class CreateOutputDTO
+    public class ClinicInputDTO
     {
 
-        public int ClincisId { get; set; }
+        public int ClinicsId { get; set; }
 
-        public int UserId { get; set; }
         public string OfficeName { get; set; }
         public string OfficeAddres { get; set; }
 
@@ -19,6 +18,5 @@ namespace Consultorio_Medico.BL.DTOs.DTOs
 
         public string OfficePhone { get; set; }
 
-    
     }
 }

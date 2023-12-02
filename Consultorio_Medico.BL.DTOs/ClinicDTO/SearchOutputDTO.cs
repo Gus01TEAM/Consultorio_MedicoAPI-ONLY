@@ -9,10 +9,6 @@ namespace Consultorio_Medico.BL.DTOs.DTOs
     public class SearchOutputDTO
     {
         public int ClinicsId { get; set; }
-
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string UserLastName { get; set; }
         public string OfficeName { get; set; }
         public string OfficeAddres { get; set; }
 

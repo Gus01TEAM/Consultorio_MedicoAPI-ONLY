@@ -93,3 +93,11 @@ CREATE TABLE [dbo].[Appointment] (
 	CONSTRAINT FK2_Appointment_Patient FOREIGN KEY (PatientId) REFERENCES Patient (PatientId)
 )
 GO
+CREATE TABLE [dbo].[Clinics] (
+	[ClinicsId] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	[OfficeName] [varchar] (50) NOT NULL,
+	[OfficeAddres] [varchar] (50) NOT NULL,
+	[OfficeEmail] [varchar] (50) NOT NULL,
+	[OfficePhone] [varchar] (15) NOT NULL	
+)
+GO

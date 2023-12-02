@@ -23,7 +23,7 @@ namespace Consultorio_Medico.BL
         unitOfWork = pUnitWork;
         }
 
-        public async Task<int> Create(CreateInputDTO pClinic)
+        public async Task<int> Create(ClinicInputDTO pClinic)
         {
             Clinic clinic = new Clinic
             {
@@ -53,34 +53,33 @@ namespace Consultorio_Medico.BL
 
       
 
-        public async Task<List<ClinicGetAllDTO>> GetAll()
+        public async Task<List<ClinicInputDTO>> GetAll()
         {
             
             List<Clinic> clinic = await clinicDAL.GetAll();
-            List<ClinicGetAllDTO> list = new List<ClinicGetAllDTO>();
-            clinic.ForEach(s => list.Add(new ClinicGetAllDTO
+            List<ClinicInputDTO> list = new List<ClinicInputDTO>();
+            clinic.ForEach(s => list.Add(new ClinicInputDTO
             {
-                ClincisId = s.ClinicsId,
+                ClinicsId = s.ClinicsId,
                 OfficeName = s.OfficeName,
                 OfficeAddres = s.OfficeAddres,
                 OfficeEmail = s.OfficeEmail,
                 OfficePhone = s.OfficePhone,
-                UserId = s.UserId,
             }));
             return list;
         }
 
-        public async Task<GetByIdOutputDTO> GetById(int id)
+        public async Task<SearchOutputDTO> GetById(int id)
         {
             Clinic clinic = await clinicDAL.GetById(id);
-            return new GetByIdOutputDTO
+            return new SearchOutputDTO
             {
-                ClincisId = clinic.ClinicsId,
+                ClinicsId = clinic.ClinicsId,
                 OfficeName = clinic.OfficeName,
                 OfficeAddres = clinic.OfficeAddres,
                 OfficeEmail = clinic.OfficeEmail,
                 OfficePhone = clinic.OfficePhone,
-                UserId = clinic.UserId,
+         
             };
         }
 
@@ -88,7 +87,7 @@ namespace Consultorio_Medico.BL
 
         public async Task<List<SearchOutputDTO>> Search(SearchinputDTO pClinic)
         {
-            List<Clinic> clinics = await clinicDAL.Search(new Clinic { OfficePhone = pClinic.OfficePhoneLike, OfficeName = pClinic.OfficeNameLike });
+            List<Clinic> clinics = await clinicDAL.Search(new Clinic { ClinicsId = pClinic.ClinicsIdLike, OfficeName = pClinic.OfficeNameLike });
             List<SearchOutputDTO> list = new List<SearchOutputDTO>();
             clinics.ForEach(s => list.Add(new SearchOutputDTO
             {
@@ -96,20 +95,17 @@ namespace Consultorio_Medico.BL
                 OfficeEmail = s.OfficeEmail,
                 OfficeName = s.OfficeName,
                 OfficeAddres = s.OfficeAddres,
-                OfficePhone= s.OfficePhone,
-                UserId= s.UserId,
-                UserName=s.Users.Name,
-                UserLastName=s.Users.LastName,
+                OfficePhone= s.OfficePhone,             
             }));
             return list;
         }
 
         
 
-        public async Task<int> Update(UpdateDTO pClinic)
+        public async Task<int> Update(SearchOutputDTO pClinic)
         {
-          Clinic eClinic = await clinicDAL.GetById(pClinic.ClincisId);
-            if (eClinic.ClinicsId == pClinic.ClincisId)
+          Clinic eClinic = await clinicDAL.GetById(pClinic.ClinicsId);
+            if (eClinic.ClinicsId == pClinic.ClinicsId)
             {
                 eClinic.OfficeName = pClinic.OfficeEmail;
                 clinicDAL.Update(eClinic);

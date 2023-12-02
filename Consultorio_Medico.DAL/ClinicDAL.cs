@@ -54,9 +54,11 @@ namespace Consultorio_Medico.DAL
                 query = query.Where(s => s.OfficeEmail == pClinic.OfficeEmail);
             if (!string.IsNullOrWhiteSpace(pClinic.OfficeAddres))
                 query = query.Where(s => s.OfficeAddres == pClinic.OfficeAddres);
+            if (!string.IsNullOrWhiteSpace(pClinic.OfficePhone))
                 query = query.Where(s => s.OfficePhone == pClinic.OfficePhone);
-            query = query.OrderByDescending(s=>s.ClinicsId).AsQueryable();
-            query = query.Include(s => s.Users).AsQueryable();       
+            if (pClinic.ClinicsId > 0)
+                query = query.Where(s => s.ClinicsId == pClinic.ClinicsId);
+            //query = query.OrderByDescending(s=>s.ClinicsId).AsQueryable();   
             return await query.ToListAsync();
 
         }

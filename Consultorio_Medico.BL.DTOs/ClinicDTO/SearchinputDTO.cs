@@ -9,9 +9,9 @@ namespace Consultorio_Medico.BL.DTOs.DTOs
     public class SearchinputDTO
     {
        
-        public string? OfficeNameLike { get; set; }
+        public int ClinicsIdLike { get; set; }
 
-        public string? OfficePhoneLike { get; set; }
+        public string? OfficeNameLike { get; set; }
      
     }
 }
