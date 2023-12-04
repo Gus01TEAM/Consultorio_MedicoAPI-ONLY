@@ -1,74 +1,79 @@
 ﻿@using Consultorio_Medico.Blazor.Data;
 @inject AuthenticationStateProvider authStateProvider
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Consultorio Medico</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        
-    </div>
-   
-</div>
+<AuthorizeView>
+    <Authorized>
+        <div class="top-row ps-3 navbar navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="">Consultorio Medico</a>
+                <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/I" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="roles" style="padding-right: 10px;">
-                <span class="oi oi-lock-locked" aria-hidden="true"></span> Roles
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="schedules" style="padding-right: 10px;">
-                <span class="oi oi-calendar" aria-hidden="true"></span> @(language.Traduction("Horarios", "Schedules"))
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="patients" style="padding-right: 10px;">
-                <span class="oi oi-people" aria-hidden="true"></span> @(language.Traduction("Pacientes","Patients"))
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="specialties" style="padding-right: 10px;">
-                <span class="oi oi-star" aria-hidden="true"></span> @(language.Traduction("Especialidades","Specialties"))
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="userSched" style="padding-right: 10px;">
-                <span class="oi oi-bell" aria-hidden="true"></span> @(language.Traduction("Horarios-Usuario","User Schedules"))
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="appointList" style="padding-right: 10px;">
-                <span class="oi oi-plus" aria-hidden="true"></span> @(language.Traduction("Citas","Appointments"))
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="clinics" style="padding-right: 10px;">
-                <span class="oi oi-window" aria-hidden="true"></span> @(language.Traduction("Clinicas", "Clinics"))
-            </NavLink>
-        </div>
-        <AuthorizeView>
-            <Authorized>
+
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+            <nav class="flex-column">
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/I" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="roles" style="padding-right: 10px;">
+                        <span class="oi oi-lock-locked" aria-hidden="true"></span> Roles
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="schedules" style="padding-right: 10px;">
+                        <span class="oi oi-calendar" aria-hidden="true"></span> @(language.Traduction("Horarios", "Schedules"))
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="patients" style="padding-right: 10px;">
+                        <span class="oi oi-people" aria-hidden="true"></span> @(language.Traduction("Pacientes", "Patients"))
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="specialties" style="padding-right: 10px;">
+                        <span class="oi oi-star" aria-hidden="true"></span> @(language.Traduction("Especialidades", "Specialties"))
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="userSched" style="padding-right: 10px;">
+                        <span class="oi oi-bell" aria-hidden="true"></span> @(language.Traduction("Horarios-Usuario", "User Schedules"))
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="appointList" style="padding-right: 10px;">
+                        <span class="oi oi-plus" aria-hidden="true"></span> @(language.Traduction("Citas", "Appointments"))
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="clinics" style="padding-right: 10px;">
+                        <span class="oi oi-window" aria-hidden="true"></span> @(language.Traduction("Clinicas", "Clinics"))
+                    </NavLink>
+                </div>
+
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="userList" style="padding-right: 10px;">
                         <span class="oi oi-people" aria-hidden="true"></span> @(language.Traduction("Usuarios", "Users"))
                     </NavLink>
                 </div>
-            </Authorized>
-        </AuthorizeView>
-        
 
-    </nav>
-</div>
+
+
+            </nav>
+        </div>
+
+    </Authorized>
+</AuthorizeView>
+
+
 
 @code {
     private bool collapseNavMenu = true;

@@ -11,9 +11,10 @@ namespace Consultorio_Medico.Blazor.Data
         readonly HttpClient _httpClientAPI;
 
         private readonly InformacionSession _InfoSession;
-        public SpecialtyService(IHttpClientFactory httpClientFactory)
+        public SpecialtyService(IHttpClientFactory httpClientFactory, InformacionSession infoSession)
         {
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
+            _InfoSession = infoSession;
         }
         public async Task<DTOGenericResponse<List<SpecialtiesOutputDTO>>> Search()
         {

@@ -6,26 +6,32 @@
 <PageTitle>Consultorio_Medico.Blazor</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
+
+   <AuthorizeView>
+        <Authorized>
+    <div class="sidebar" >
         <NavMenu />
+
     </div>
+        </Authorized>
+     </AuthorizeView>
 
     <main>
         <div class="top-row px-4">
 
             <RadzenButton Click="@(() => OnClick())" Style="justify-items: legacy left; margin-right: 10px" Text="@(language.Traduction("Change Language", "Cambiar Idioma"))" Icon="refresh" ButtonStyle="ButtonStyle.Light" />
-
-            <AuthorizeView>
-                <Authorized>
+       <AuthorizeView>
+        <Authorized>
                     <RadzenButton Click="@(() => Logout())" Style="justify-items: legacy left" Text="@(language.Traduction("Logout", "Cerrar Sesión"))" Icon="power" ButtonStyle="ButtonStyle.Danger" />
-                </Authorized>
-            </AuthorizeView>
+        </Authorized>
+    </AuthorizeView>
         </div>
         
         <article class="content px-4">
             @Body
         </article>
     </main>
+    
 </div>
 
 @code{
