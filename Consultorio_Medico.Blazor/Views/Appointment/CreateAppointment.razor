@@ -41,7 +41,7 @@
 
         <div class="row">
             <RadzenFormField Style="=width: 50%" Variant="@variant">
-                <RadzenNumeric @bind-Value="appointment.Appointment_Hour" />
+                <RadzenNumeric TValue="decimal" @bind-Value="appointment.Appointment_Hour" />
             </RadzenFormField>
         </div>
 
@@ -79,6 +79,8 @@ else if (isError)
 
 
 @code {
+
+    //private decimal? Appointment_Hour;
 
     [Inject]
     NavigationManager navigation { get; set; }
@@ -162,4 +164,6 @@ else if (isError)
     {
         navigation.NavigateTo("/appointList");
     }
+   
+      
 }

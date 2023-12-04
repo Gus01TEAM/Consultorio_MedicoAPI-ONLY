@@ -3,6 +3,7 @@
 @using Consultorio_Medico.Blazor.Data;
 @using System.Timers
 
+<RadzenComponents/>
 <PageTitle>Consultorio_Medico.Blazor</PageTitle>
 
 <div class="page">
@@ -18,11 +19,11 @@
 
     <main>
         <div class="top-row px-4">
-
-            <RadzenButton Click="@(() => OnClick())" Style="justify-items: legacy left; margin-right: 10px" Text="@(language.Traduction("Change Language", "Cambiar Idioma"))" Icon="refresh" ButtonStyle="ButtonStyle.Light" />
-       <AuthorizeView>
+            
+   <AuthorizeView>
         <Authorized>
-                    <RadzenButton Click="@(() => Logout())" Style="justify-items: legacy left" Text="@(language.Traduction("Logout", "Cerrar Sesión"))" Icon="power" ButtonStyle="ButtonStyle.Danger" />
+            <RadzenButton Click="@(() => OnClick())" Style="justify-items: legacy left; margin-right: 10px" Text="@(language.Traduction("Change Language", "Cambiar Idioma"))" Icon="refresh" ButtonStyle="ButtonStyle.Light" />
+             <RadzenButton Click="@(() => Logout())" Style="justify-items: legacy left" Text="@(language.Traduction("Logout", "Cerrar Sesión"))" Icon="power" ButtonStyle="ButtonStyle.Danger" />
         </Authorized>
     </AuthorizeView>
         </div>

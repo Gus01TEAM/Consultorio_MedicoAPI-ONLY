@@ -28,17 +28,17 @@
             <RadzenDropDown @bind-Value="userSchedulesIn.SpecialtieId" Data=@specialties TextProperty="Specialty" ValueProperty="Id" Placeholder="@(language.Traduction("-Seleccione una Especialidad-","-Select Specialty-"))" Style="width: 100%; max-width: 400px;" />
         </RadzenRow>
         <br>
-        <div class="row">
+        @*<div class="row">
             <RadzenFormField Text="@(language.Traduction("Horas en Cargo","Number Of Hours Used"))" Style="width: 50%" Variant="@variant">
                 <RadzenNumeric @bind-Value="userSchedulesIn.NumberHoursUsed" />
             </RadzenFormField>
         </div>
-        <br>
-        <div class="row">
+        <br>*@
+        @*<div class="row">
             <RadzenFormField Text="@(language.Traduction("Numero de Horas Libres","Number Hours Free"))" Style="width: 50%" Variant="@variant">
                 <RadzenNumeric @bind-Value="userSchedulesIn.NumberHoursFree" />
             </RadzenFormField>
-        </div>
+        </div>*@
         <br>
         <div class="row">
             <div class="col-12">

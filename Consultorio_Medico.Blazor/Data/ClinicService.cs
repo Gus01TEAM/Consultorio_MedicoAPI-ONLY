@@ -16,6 +16,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<List<SearchOutputDTO>>> Search()
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<SearchOutputDTO>>>("/api/Clinics");
 
             if (response != null)
@@ -30,6 +31,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<SearchOutputDTO>> Create(ClinicInputDTO clinicInput)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PostAsJsonAsync("/api/Clinics", clinicInput);
 
             if (response.IsSuccessStatusCode)

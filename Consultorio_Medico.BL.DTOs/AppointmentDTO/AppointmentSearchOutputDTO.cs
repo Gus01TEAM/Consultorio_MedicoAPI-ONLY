@@ -24,6 +24,47 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
         public byte Status { get; set; }
         public bool? Shift { get; set; }
         // public decimal Cupo { get; set; }
+        string strStatus = "";
+        public String StrStatus
+        {
+            get
+            {
+                if (Status == 1)
+                {
+                    strStatus = "Done";
+                }
+                else if (Status == 2)
+                {
+                    strStatus = "Inactive";
+                }
+                else if (Status == 3)
+                {
+                    strStatus = "Pending";
+                }
+                else
+                {
+                    strStatus = "Canceled";
+                }
+
+                return strStatus;
+            }
+        }
+        string strStatus2 = "";
+        public String StrStatus2
+        {
+            get
+            {
+                if (Shift == true)
+                {
+                    strStatus = "AM";
+                }
+                else
+                {
+                    strStatus = "PM";
+                }
+                return strStatus;
+            }
+        }
     }
     public enum Appointment_Status
     {
@@ -32,10 +73,11 @@ namespace Consultorio_Medico.BL.DTOs.AppointmentDTO
         Pending = 3,
         Canceled = 4,
     }
-
+ 
     public enum Appointment_Shift
     {
         AM = 1,
         PM = 2,
     }
+
 }

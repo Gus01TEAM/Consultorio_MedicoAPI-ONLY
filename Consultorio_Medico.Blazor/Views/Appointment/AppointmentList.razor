@@ -25,8 +25,8 @@
 
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Appointment_Hour" Title="@(language.Traduction("Hora de Cita", "Hour of Appointment"))" Frozen="true" Width="160px" />
 
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Status" Title="@(language.Traduction("Estado", "Status"))" Frozen="true" Width="160px" />
-
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="StrStatus" Title="@(language.Traduction("Estado", "Status"))" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="StrStatus2" Title="@(language.Traduction("Turno", "Shift"))" Frozen="true" Width="160px" />
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Context="appoint" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
                 <Template Context="appoint">
                     <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
