@@ -1,5 +1,6 @@
 
 using Blazored.LocalStorage;
+using Blazorise;
 using Consultorio_Medico.Blazor.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddBlazorise();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddRadzenComponents();
 builder.Services.AddBlazoredLocalStorage();
