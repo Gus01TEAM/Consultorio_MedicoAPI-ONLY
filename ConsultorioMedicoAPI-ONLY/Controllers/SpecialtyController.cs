@@ -1,6 +1,7 @@
 ﻿using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.SpecialtiesDTO;
 using Consultorio_Medico.BL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,6 +10,7 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SpecialtyController : ControllerBase
     {
         // GET: api/<SpecialtieController>

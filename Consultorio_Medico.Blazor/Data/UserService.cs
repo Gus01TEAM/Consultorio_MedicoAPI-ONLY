@@ -8,14 +8,16 @@ namespace Consultorio_Medico.Blazor.Data
     public class UserService
     {
         readonly HttpClient _httpClientAPI;
-
-        public UserService(IHttpClientFactory httpClientFactory)
+        private readonly InformacionSession _InfoSession;
+        public UserService(IHttpClientFactory httpClientFactory, InformacionSession infoSession)
         {
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
+            _InfoSession = infoSession;
         }
 
         public async Task<DTOGenericResponse<List<userSearchOutputDTO>>> Search()
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<userSearchOutputDTO>>>("/api/User");
 
             if (response != null)
@@ -30,6 +32,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<userSearchOutputDTO>> GetById(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<userSearchOutputDTO>>($"/api/User/{id}");
 
             if (response != null)
@@ -44,6 +47,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<userSearchOutputDTO>> Create(UserAddDTO createUser)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PostAsJsonAsync("/api/User", createUser);
 
             if (response.IsSuccessStatusCode)
@@ -60,6 +64,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<userSearchOutputDTO>> Edit(int id, userUpdateDTO userInput)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PutAsJsonAsync($"/api/User/{id}", userInput);
 
             if (response.IsSuccessStatusCode)
@@ -76,6 +81,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<userSearchOutputDTO>> Delete(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.DeleteAsync($"/api/User/{id}");
 
             if (response.IsSuccessStatusCode)

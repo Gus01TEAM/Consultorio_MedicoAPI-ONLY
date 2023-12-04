@@ -3,12 +3,14 @@ using Consultorio_Medico.BL.DTOs;
 using Consultorio_Medico.BL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConsultorioMedicoAPI_ONLY.Controllers
 {
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WorkPlaceController : ControllerBase
     {
         private  readonly IWorkPlaceBL _workPlaceBL;

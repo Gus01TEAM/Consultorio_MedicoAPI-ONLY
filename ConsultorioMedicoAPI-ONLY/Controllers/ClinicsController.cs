@@ -3,6 +3,7 @@ using Consultorio_Medico.BL.DTOs.DTOGenericResponse;
 using Consultorio_Medico.BL.DTOs.DTOs;
 using Consultorio_Medico.BL.DTOs.RolDTO;
 using Consultorio_Medico.BL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace ConsultorioMedicoAPI_ONLY.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClinicsController : ControllerBase
     {
         private readonly IClinicBL _clinicBL;

@@ -7,10 +7,11 @@ namespace Consultorio_Medico.Blazor.Data
     public class ClinicService
     {
         readonly HttpClient _httpClientAPI;
-
-        public ClinicService(IHttpClientFactory httpClientFactory)
+        private readonly InformacionSession _InfoSession;
+        public ClinicService(IHttpClientFactory httpClientFactory, InformacionSession infoSession)
         {
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
+            _InfoSession = infoSession; 
         }
 
         public async Task<DTOGenericResponse<List<SearchOutputDTO>>> Search()

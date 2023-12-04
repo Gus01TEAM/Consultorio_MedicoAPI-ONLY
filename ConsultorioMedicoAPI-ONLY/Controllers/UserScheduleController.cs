@@ -4,6 +4,7 @@ using Consultorio_Medico.BL.DTOs.userDTO;
 using Consultorio_Medico.BL.DTOs.UserSchedule;
 using Consultorio_Medico.BL.Interfaces;
 using Consultorio_Medico.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,6 +13,7 @@ namespace Consultorio_Medico.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserScheduleController : ControllerBase
     {
         private readonly IUserSchedulesBL _userScheduleBL;

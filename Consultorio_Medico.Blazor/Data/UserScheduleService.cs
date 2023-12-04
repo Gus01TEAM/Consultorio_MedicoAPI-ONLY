@@ -8,13 +8,15 @@ namespace Consultorio_Medico.Blazor.Data
     public class UserScheduleService
     {
         readonly HttpClient _httpClientAPI;
-
-        public UserScheduleService(IHttpClientFactory httpClientFactory)
+        private readonly InformacionSession _InfoSession;
+        public UserScheduleService(IHttpClientFactory httpClientFactory, InformacionSession infoSession)
         {
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
+            _InfoSession = infoSession; 
         }
         public async Task<DTOGenericResponse<List<UserScheduleSearchOutputDTO>>> Search()
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<UserScheduleSearchOutputDTO>>>("/api/UserSchedule");
 
             if (response != null)
@@ -29,6 +31,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> GetById(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<UserScheduleSearchOutputDTO>>($"/api/UserSchedule/{id}");
 
             if (response != null)
@@ -42,6 +45,7 @@ namespace Consultorio_Medico.Blazor.Data
         }
         public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Create(UserScheduleInputDTO createUserSchedule)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PostAsJsonAsync("/api/UserSchedule", createUserSchedule);
 
             if (response.IsSuccessStatusCode)
@@ -57,6 +61,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Edit(int id, UserScheduleInputDTO createUserSchedule)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PutAsJsonAsync($"/api/UserSchedule/{id}", createUserSchedule);
 
             if (response.IsSuccessStatusCode)
@@ -72,6 +77,7 @@ namespace Consultorio_Medico.Blazor.Data
         }
         public async Task<DTOGenericResponse<UserScheduleSearchOutputDTO>> Delete(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.DeleteAsync($"/api/UserSchedule/{id}");
 
             if (response.IsSuccessStatusCode)

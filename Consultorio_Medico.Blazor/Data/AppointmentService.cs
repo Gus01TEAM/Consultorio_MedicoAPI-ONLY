@@ -7,14 +7,16 @@ namespace Consultorio_Medico.Blazor.Data
     public class AppointmentService
     {
         readonly HttpClient _httpClientAPI;
-
-        public AppointmentService(IHttpClientFactory httpClientFactory)
+        private readonly InformacionSession _InfoSession;
+        public AppointmentService(IHttpClientFactory httpClientFactory, InformacionSession infoSession)
         {
             _httpClientAPI = httpClientFactory.CreateClient("MEDICOAPI");
+            _InfoSession = infoSession;
         }
 
         public async Task<DTOGenericResponse<List<AppointmentSearchOutputDTO>>> Search()
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<List<AppointmentSearchOutputDTO>>>("/api/Appointment");
 
             if (response != null)
@@ -29,6 +31,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<AppointmentSearchOutputDTO>> GetById(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.GetFromJsonAsync<DTOGenericResponse<AppointmentSearchOutputDTO>>($"/api/Appointment/{id}");
 
             if (response != null)
@@ -43,6 +46,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<AppointmentSearchOutputDTO>> Create(AppointmentInputDTO createAppointment)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PostAsJsonAsync("/api/Appointment", createAppointment);
 
             if (response.IsSuccessStatusCode)
@@ -59,6 +63,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<AppointmentSearchOutputDTO>> Edit(int id, AppointmentInputDTO appointmentInput)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.PutAsJsonAsync($"/api/Appointment/{id}", appointmentInput);
 
             if (response.IsSuccessStatusCode)
@@ -75,6 +80,7 @@ namespace Consultorio_Medico.Blazor.Data
 
         public async Task<DTOGenericResponse<AppointmentSearchOutputDTO>> Delete(int id)
         {
+            await _InfoSession.SetTokenHttp(_httpClientAPI);
             var response = await _httpClientAPI.DeleteAsync($"/api/Appointment/{id}");
 
             if (response.IsSuccessStatusCode)
