@@ -27,7 +27,7 @@
 
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="StrStatus" Title="@(language.Traduction("Estado", "Status"))" Frozen="true" Width="160px" />
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="StrStatus2" Title="@(language.Traduction("Turno", "Shift"))" Frozen="true" Width="160px" />
-            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Context="appoint" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="156px">
+            <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Context="appoint" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="160px">
                 <Template Context="appoint">
                     <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => GoDelete(appoint))" @onclick:stopPropagation="true">
@@ -37,6 +37,9 @@
                     </RadzenButton>
                     <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => GoEdit(appoint))" @onclick:stopPropagation="true">
+                    </RadzenButton>
+                    <RadzenButton Icon="open_in_new" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
+                              Click="@(args => GoWhassap(appoint))" @onclick:stopPropagation="true">
                     </RadzenButton>
                 </Template>
             </RadzenDataGridColumn>
@@ -98,5 +101,14 @@
     private void GoDelete(AppointmentSearchOutputDTO appointment)
     {
         navigation.NavigateTo($"/delete-appoint/{appointment.AppointmentId}");
+    }
+    private void GoWhassap(AppointmentSearchOutputDTO appointment)
+    {
+        string phone="50376156062";
+        string mensaje = "Su cita fue creada con exito";
+        int idCita = 100;
+        string urlCita = navigation.BaseUri + $"/appoint-details/{idCita}";
+        mensaje += " puede consulta su cita:"+urlCita;
+        navigation.NavigateTo($"https://wa.me/{phone}?text={mensaje}", forceLoad: true);
     }
 }

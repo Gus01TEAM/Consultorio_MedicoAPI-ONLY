@@ -1,5 +1,5 @@
 ﻿@page "/userList"
-@attribute [Authorize(Roles = "Administrator")]
+@*@attribute [Authorize(Roles = "Administrator")]*@
 
 
 @using Microsoft.AspNetCore.Components;
@@ -41,6 +41,7 @@
                     <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => GoEdit(user))" @onclick:stopPropagation="true">
                     </RadzenButton>
+
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
