@@ -1,5 +1,5 @@
 ﻿@page "/userList"
-@*@attribute [Authorize(Roles = "Administrator")]*@
+@attribute [Authorize(Roles = "Administrador")]
 
 
 @using Microsoft.AspNetCore.Components;
@@ -12,12 +12,11 @@
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
-                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                AllowGrouping="false" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
                 Style="border-radius: 10px"
                 Data="@users" TItem="userSearchOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
-
             <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="Name" Title="@(language.Traduction("Nombre","Name"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="userSearchOutputDTO" Property="LastName" Title="@(language.Traduction("Apellido","Last Name"))" Frozen="true" Width="160px" />
@@ -41,15 +40,13 @@
                     <RadzenButton Icon="edit" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
                               Click="@(args => GoEdit(user))" @onclick:stopPropagation="true">
                     </RadzenButton>
-
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
 }
-
 <br>
-<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar","Add New"))" Style="margin-top: 10px" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar","Add New"))" Style="margin-bottom: 5px; margin-top: 5px" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 
 

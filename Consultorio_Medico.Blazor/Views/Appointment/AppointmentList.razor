@@ -4,13 +4,15 @@
 @using Microsoft.AspNetCore.Components.Forms;
 @using System.ComponentModel.DataAnnotations;
 @using Consultorio_Medico.BL.DTOs.AppointmentDTO;
+@using Consultorio_Medico.BL.DTOs.PatientDTO;
 @using Consultorio_Medico.Blazor.Data;
+@inject IJSRuntime IJSRuntime;
 
 <h3>@language.Traduction("Lista de Citas", "Appointment List")</h3>
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
-                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                AllowGrouping="false" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
                 Data="@appointments" TItem="AppointmentSearchOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
@@ -26,7 +28,9 @@
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="Appointment_Hour" Title="@(language.Traduction("Hora de Cita", "Hour of Appointment"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="StrStatus" Title="@(language.Traduction("Estado", "Status"))" Frozen="true" Width="160px" />
+
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Property="StrStatus2" Title="@(language.Traduction("Turno", "Shift"))" Frozen="true" Width="160px" />
+
             <RadzenDataGridColumn TItem="AppointmentSearchOutputDTO" Context="appoint" Filterable="false" Sortable="false" TextAlign="TextAlign.Right" Width="160px">
                 <Template Context="appoint">
                     <RadzenButton Icon="delete" IconColor="@Colors.Danger" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
@@ -39,16 +43,15 @@
                               Click="@(args => GoEdit(appoint))" @onclick:stopPropagation="true">
                     </RadzenButton>
                     <RadzenButton Icon="open_in_new" IconColor="@Colors.PrimaryLight" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium"
-                              Click="@(args => GoWhassap(appoint))" @onclick:stopPropagation="true">
+                              Click="@(args => GoWhatsapp(appoint))" @onclick:stopPropagation="true">
                     </RadzenButton>
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
 }
-
-<br>
-<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
+<br />
+<RadzenButton Click=GoCreate Text="@(language.Traduction("Agregar", "Add New"))" Style="margin-bottom: 1px; margin-top: 3px" Icon="add_circle_outline" ButtonStyle="ButtonStyle.Primary" />
 
 @code {
 
@@ -59,9 +62,13 @@
     AppointmentService appointmentService { get; set; }
 
     [Inject]
+    PatientService patientService { get; set; }
+
+    [Inject]
     LanguageService language { get; set; }
 
     List<AppointmentSearchOutputDTO> appointments = new List<AppointmentSearchOutputDTO>();
+    patientSearchOutputDTO patient = new patientSearchOutputDTO();
 
     bool isLoading = false;
     bool isOcultarGrid = true;
@@ -102,13 +109,25 @@
     {
         navigation.NavigateTo($"/delete-appoint/{appointment.AppointmentId}");
     }
-    private void GoWhassap(AppointmentSearchOutputDTO appointment)
-    {
-        string phone="50376156062";
+
+    private async void GoWhatsapp(AppointmentSearchOutputDTO appointment)
+    {     
         string mensaje = "Su cita fue creada con exito";
-        int idCita = 100;
-        string urlCita = navigation.BaseUri + $"/appoint-details/{idCita}";
-        mensaje += " puede consulta su cita:"+urlCita;
-        navigation.NavigateTo($"https://wa.me/{phone}?text={mensaje}", forceLoad: true);
+
+        var idCita = await patientService.GetById(appointment.PatientId);
+
+        if (idCita.Success)
+        {
+            patient = idCita.Data;
+        }
+
+        string urlCita = navigation.BaseUri + $"/appoint-details/{appointment.AppointmentId}";
+        mensaje += " puede consulta su cita:" + urlCita;
+
+        var url = $"https://wa.me/{patient.Telefono}?text={mensaje}";
+
+        var script = $"window.open('{url}', '_blank');";
+
+        await IJSRuntime.InvokeVoidAsync("eval", script);
     }
 }

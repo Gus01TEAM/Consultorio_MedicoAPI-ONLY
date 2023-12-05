@@ -10,11 +10,10 @@
 @if (isOcultarGrid)
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced"
-                AllowGrouping="true" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
+                AllowGrouping="false" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left"
                 Data="@userSchedules" TItem="UserScheduleSearchOutputDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" ShowPagingSummary="true"
                 IsLoading=@isLoading Sort="@ShowLoading" Page="@ShowLoading" Group="@ShowLoading" Filter="@ShowLoading">
         <Columns>
-
             <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="UserName" Title="@(language.Traduction("Usuario","User Name"))" Frozen="true" Width="160px" />
 
             <RadzenDataGridColumn TItem="UserScheduleSearchOutputDTO" Property="Schedule" Title="@(language.Traduction("Horario","Schedule"))" Frozen="true" Width="160px" />
