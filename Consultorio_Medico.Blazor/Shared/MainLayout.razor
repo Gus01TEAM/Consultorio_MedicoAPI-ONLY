@@ -3,13 +3,11 @@
 @using Consultorio_Medico.Blazor.Data;
 @using System.Timers
 
+
 <RadzenComponents />
 <PageTitle>Consultorio_Medico.Blazor</PageTitle>
 
 <div class="page">
-
-    <AuthorizeView>
-        <Authorized>
             <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
                 <symbol id="bootstrap" viewBox="0 0 118 94">
                     <title>Bootstrap</title>
@@ -45,17 +43,26 @@
                 </symbol>
             </svg>
 
-            <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 4.5rem; height: 100vh; overflow-y: auto;">
+     <AuthorizeView>
+        <Authorized Context="authorizedContext">
+            <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 4.5rem; height: 100vh;">
                 <a href="/" class="d-block p-3 link-body-emphasis text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
                     <svg class="bi pe-none" width="40" height="32"><use xlink:href="#bootstrap" /></svg>
                     <span class="visually-hidden">Icon-only</span>
                 </a>
                 <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                    <li class="nav-item">
-                        <a href="clinics" class="nav-link py-3 border-bottom rounded-0" title="Clinics" data-bs-toggle="tooltip" data-bs-placement="right">
-                            <svg class="bi bi-person-bounding-box" width="24" height="24" role="img" aria-label="Clinics"><use xlink:href="#clinics" /></svg>
-                        </a>                       
-                    </li>
+                    
+                    <AuthorizeView Roles="Administrador">
+                        <Authorized Context="adminContext">
+                            <li class="nav-item">
+                                <a href="clinics" class="nav-link py-3 border-bottom rounded-0" title="Clinics" data-bs-toggle="tooltip" data-bs-placement="right">
+                                    <svg class="bi bi-person-bounding-box" width="24" height="24" role="img" aria-label="Clinics"><use xlink:href="#clinics" /></svg>
+                                </a>
+                            </li>
+                        </Authorized>
+                    </AuthorizeView>
+                        
+                    
                     <li>
                         <a href="patients" class="nav-link py-3 border-bottom rounded-0" title="Patients" data-bs-toggle="tooltip" data-bs-placement="right">
                             <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Patients"><use xlink:href="#patients" /></svg>
@@ -76,11 +83,18 @@
                             <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Specialties"><use xlink:href="#specialty" /></svg>
                         </a>
                     </li>
-                    <li>
-                        <a href="userList" class="nav-link py-3 border-bottom rounded-0" title="Users" data-bs-toggle="tooltip" data-bs-placement="right">
-                            <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Users"><use xlink:href="#users" /></svg>
-                        </a>
-                    </li>
+
+                    <AuthorizeView Roles="Administrador">
+                        <Authorized Context="adminContext">
+                            <li>
+                                <a href="userList" class="nav-link py-3 border-bottom rounded-0" title="Users" data-bs-toggle="tooltip" data-bs-placement="right">
+                                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Users"><use xlink:href="#users" /></svg>
+                                </a>
+                            </li>
+                        </Authorized>
+                    </AuthorizeView>
+                        
+
                     <li>
                         <a href="schedules" class="nav-link py-3 border-bottom rounded-0" title="Schedules" data-bs-toggle="tooltip" data-bs-placement="right">
                             <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Schedules"><use xlink:href="#sched" /></svg>
@@ -106,12 +120,7 @@
 
     <main>
         <div class="top-row px-4">
-            <AuthorizeView>
-                <Authorized>
-                    <RadzenButton Click="@(() => OnClick())" Style="justify-items: legacy left; margin-right: 10px" Text="@(language.Traduction("Change Language", "Cambiar Idioma"))" Icon="refresh" ButtonStyle="ButtonStyle.Light" />
-                    <RadzenButton Click="@(() => Logout())" Style="justify-items: legacy left" Text="@(language.Traduction("Logout", "Cerrar Sesión"))" Icon="power" ButtonStyle="ButtonStyle.Danger" />
-                </Authorized>
-            </AuthorizeView>
+           
         </div>
 
         <article class="content px-4">
