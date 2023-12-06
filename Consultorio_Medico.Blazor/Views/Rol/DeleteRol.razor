@@ -1,4 +1,5 @@
 ﻿@page "/delete-rol/{Id:int}"
+@attribute [Authorize]
 
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Forms;
@@ -8,7 +9,7 @@
 
 
 <h3>@language.Traduction("¿Eliminar Rol?", "Delete Role?")</h3>
-*@if (isSuccess == false && isError == false)
+@if (isSuccess == false && isError == false)
 {
 
     <div class="row">
@@ -18,9 +19,9 @@
     </div>
 
     <br>
-    <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rol.Status" Data="GetStatusOptions()" Disabled="@disabled" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
-    </RadzenDropDown>
-
+    <RadzenFormField Text="@(language.Traduction("Estado", "Status"))">
+        <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rol.Status" Data="GetStatusOptions()" Disabled="@disabled" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+    </RadzenFormField>
 
     <div class="row">
         <div class="col-12">
@@ -39,8 +40,7 @@
 else if (isSuccess)
 {
     <RadzenAlert Variant="Variant.Filled" AlertStyle="AlertStyle.Success" Size="AlertSize.Medium" Shade="Shade.Light" AllowClose=false>
-        @(language.Traduction("¡El Rol eliminado con éxito!", "Role was successfully deleted!"))
-        
+        @(language.Traduction("¡El Rol eliminado con éxito!", "Role was successfully deleted!")) 
     </RadzenAlert>
     <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" ButtonStyle="ButtonStyle.Primary" Icon="check_circle" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
 }

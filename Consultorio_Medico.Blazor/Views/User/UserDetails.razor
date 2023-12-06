@@ -1,4 +1,5 @@
 ﻿@page "/user-details/{Id:int}"
+@attribute [Authorize(Roles = "Administrador")]
 
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Forms;

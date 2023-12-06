@@ -1,4 +1,5 @@
 ﻿@page "/sched-details/{Id:int}"
+@attribute [Authorize]
 
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Forms;
@@ -7,7 +8,7 @@
 @using Consultorio_Medico.Blazor.Data;
 
 
-<h3>ScheduleDetails</h3>
+<h3>@language.Traduction("Detalle de Horario", "Schedule Details")</h3>
 <div class="row">
     <RadzenFormField Text="Day Name" Style="width: 50%" Variant="@variant">
         <RadzenTextBox @bind-Value="schedule.DayName" ReadOnly="true" />
@@ -37,6 +38,9 @@
 
     [Inject]
     ScheduleService scheduleService { get; set; }
+
+    [Inject]
+    LanguageService language { get; set; }
 
     [Inject]
     NavigationManager navigation { get; set; }

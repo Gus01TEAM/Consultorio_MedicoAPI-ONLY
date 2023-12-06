@@ -1,26 +1,26 @@
 ﻿@page "/rol-details/{Id:int}"
+@attribute [Authorize]
 
 @using Consultorio_Medico.Blazor.Data;
 @using Consultorio_Medico.BL.DTOs.RolDTO;
 
 
 <h3>@language.Traduction("Detalle de Rol", "Role Details")</h3>
-<h3>ROLE DETAILS</h3>
-
-    <div class="row">
+<div class="row">
     <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
         <RadzenTextBox @bind-Value="rol.Name" ReadOnly="true" />
-        </RadzenFormField>
-    </div>
-    <br>
-    <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rol.Status" Data="GetStatusOptions()" Disabled="@disabled" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
-    </RadzenDropDown>
+    </RadzenFormField>
+</div>
+<br>
+<RadzenFormField Text="@(language.Traduction("Estado", "Status"))">
+    <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rol.Status" Data="GetStatusOptions()" Disabled="@disabled" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+</RadzenFormField>
 
-    <div class="row">
-        <div class="col-12">
+<div class="row">
+    <div class="col-12">
         <RadzenButton Text="@(language.Traduction("Regresar a la Lista", "Return to List"))" Icon="refresh" Style="margin-top: 10px" ButtonStyle="ButtonStyle.Secondary" Click="@Cancel"></RadzenButton>
-        </div>
     </div>
+</div>
 
 @code {
 

@@ -1,4 +1,5 @@
 ﻿@page "/create-user"
+@attribute [Authorize(Roles = "Administrador")]
 
 @using Microsoft.AspNetCore.Components;
 @using Microsoft.AspNetCore.Components.Forms;

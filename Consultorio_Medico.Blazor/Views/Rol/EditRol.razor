@@ -1,10 +1,11 @@
 ﻿@page "/edit-rol/{Id:int}"
+@attribute [Authorize]
 
 @using System.ComponentModel.DataAnnotations;
 @using Consultorio_Medico.BL.DTOs.RolDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>@language.Traduction("Lista de Roles", "Edit Role")</h3>
+<h3>@language.Traduction("Editar Rol", "Edit Role")</h3>
 @if (isSuccess == false && isError == false)
 {
 
@@ -16,19 +17,20 @@
             </RadzenFormField>
         </div>
         <br>
-        <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rolInput.Status" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%">
+        <RadzenFormField Text="@(language.Traduction("Estado", "Status"))">
+            <RadzenDropDown Placeholder="@(language.Traduction("Estado", "Status"))" @bind-Value="rolInput.Status" Data="GetStatusOptions()" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
             <ValidationMessage For="() => rolInput.Status" />
-        </RadzenDropDown>
-
+        </RadzenFormField>
+        
         <div class="row">
             <div class="col-12">
-                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Guardar", "Save"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="@(language.Traduction("Actualizar", "Update"))" Icon="check_circle" Style="margin-top: 10px"></RadzenButton>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Text="@(language.Traduction("Cancelar", "Cancel"))" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
