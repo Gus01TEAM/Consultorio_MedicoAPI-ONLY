@@ -123,7 +123,7 @@
         }
 
         string urlCita = navigation.BaseUri + $"/appoint-details/{appointment.AppointmentId}";
-        mensaje += " puede consulta su cita:" + urlCita;
+        mensaje += " puede consulta su cita: " + urlCita;
 
         var url = $"https://wa.me/{patient.Telefono}?text={mensaje}";
 

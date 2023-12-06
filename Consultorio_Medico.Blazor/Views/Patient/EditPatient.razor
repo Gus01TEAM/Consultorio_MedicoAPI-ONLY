@@ -11,25 +11,25 @@
 {
     <EditForm Model="patientI" OnValidSubmit="@Edit">
         <div class="row">
-            <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%; margin: 10px" Variant="@variant">
                 <RadzenTextBox @bind-Value="patientI.Name" />
                 <ValidationMessage For="() => patientI.Name" />
             </RadzenFormField>            
         </div>
         <div class="row">
-            <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%; margin: 10px" Variant="@variant">
                 <RadzenTextBox @bind-Value="patientI.LastName" />
                 <ValidationMessage For="() => patientI.LastName" />
             </RadzenFormField>
         </div>
         <div class="row">
-            <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%; margin: 10px" Variant="@variant">
                 <RadzenTextBox @bind-Value="patientI.Telefono" />
                 <ValidationMessage For="() => patientI.Telefono" />
             </RadzenFormField>
         </div>
         <div class="row">
-            <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
+            <RadzenFormField Text="DUI" Style="width: 50%; margin: 10px" Variant="@variant">
                 <RadzenTextBox @bind-Value="patientI.DUI" />
                 <ValidationMessage For="() => patientI.DUI" />
             </RadzenFormField>

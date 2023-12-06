@@ -8,25 +8,25 @@
 
 <h3>@language.Traduction("Detalles del Paciente", "Patient Details")</h3>
 <div class="row">
-    <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Nombre", "Name"))" Style="width: 50%; margin: 10px" Variant="@variant">
         <RadzenTextBox @bind-Value="patient.Name" ReadOnly="true" />
     </RadzenFormField>
 </div>
-<br />
+
 <div class="row">
-    <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Apellido", "Last Name"))" Style="width: 50%; margin: 10px" Variant="@variant">
         <RadzenTextBox @bind-Value="patient.LastName" ReadOnly="true" />
     </RadzenFormField>
 </div>
-<br />
+
 <div class="row">
-    <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="@(language.Traduction("Telefono", "Phone Number"))" Style="width: 50%; margin: 10px" Variant="@variant">
         <RadzenTextBox @bind-Value="patient.Telefono" ReadOnly="true" />
     </RadzenFormField>
 </div>
-<br />
+
 <div class="row">
-    <RadzenFormField Text="DUI" Style="width: 50%" Variant="@variant">
+    <RadzenFormField Text="DUI" Style="width: 50%; margin: 10px" Variant="@variant">
         <RadzenTextBox @bind-Value="patient.DUI" ReadOnly="true" />
     </RadzenFormField>
 </div>

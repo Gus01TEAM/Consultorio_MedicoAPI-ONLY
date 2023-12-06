@@ -8,40 +8,39 @@
 @using Consultorio_Medico.BL.DTOs.AppointmentDTO;
 @using Consultorio_Medico.Blazor.Data;
 
-<h3>@language.Traduction("Crear Nuevo Usuario", "Create New User")</h3>
+<h3>@language.Traduction("Crear Nueva Cita", "Create New Appointment")</h3>
 @if (isSuccess == false && isError == false)
 {
     <EditForm Model="appointment" OnValidSubmit="@Create">
         <div class="row">
-            <RadzenRow Style="margin-top: 10px; width: 100%">
-                <RadzenDropDown @bind-Value="appointment.UserSchedulesId" Data=@userSchedules TextProperty="UserName" ValueProperty="UserSchedulesId" Placeholder="@(language.Traduction("-Seleccione un Docto-","-Select Doctor-"))" Style="width: 50%; max-width: 400px;" />
+            <RadzenRow Style="margin: 10px; width: 100%">
+                <RadzenDropDown @bind-Value="appointment.UserSchedulesId" Data=@userSchedules TextProperty="UserName" ValueProperty="UserSchedulesId" Placeholder="@(language.Traduction("-Seleccione un Doctor-","-Select Doctor-"))" Style="width: 50%; max-width: 400px;" />
 
                 <RadzenDropDown @bind-Value="appointment.Status" Data="GetStatusOptions()" Placeholder="@(language.Traduction("-Estado de la cita-","-Appointment Status-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
             </RadzenRow>
         </div>
         <div class="row">
-
-            <RadzenRow Style="margin-top: 10px; width: 100%">
-
+            <RadzenRow Style="margin: 10px; width: 50%">
                 <RadzenDropDown @bind-Value="appointment.PatientId" Data=@patients TextProperty="Name" ValueProperty="patientId" Placeholder="@(language.Traduction("-Seleccione un Paciente-","-Select Patient-"))" Style="width: 50%; max-width: 400px;" />
             </RadzenRow>
 
-            <RadzenFormField Text="@(language.Traduction("Rason de cita","Appointment Reason"))" Style="width: 50%; margin-bottom: 10px" Variant="@variant">
+            <RadzenFormField Text="@(language.Traduction("Rason de cita","Appointment Reason"))" Style="width: 50%; margin: 10px" Variant="@variant">
                 <RadzenTextBox @bind-Value="appointment.Reason" />
             </RadzenFormField>
         </div>
 
         <div class="row">
-            <RadzenFormField Style="width: 50%" Variant="@variant">
-                <RadzenDatePicker Placeholder="@(language.Traduction("Fecha de Cita","Appointment Date"))" @bind-Value="appointment.Appointment_date" />
-            </RadzenFormField>
+            <RadzenRow Style="margin: 10px; width: 100%">
+                <RadzenFormField Style="width: 50%" Variant="@variant">
+                    <RadzenDatePicker Placeholder="@(language.Traduction("Fecha de Cita","Appointment Date"))" @bind-Value="appointment.Appointment_date" />
+                </RadzenFormField>
 
-            <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" Placeholder="@(language.Traduction("-Turno-","-Shift-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+                <RadzenDropDown @bind-Value="appointment.Shift" Data="Shift()" Placeholder="@(language.Traduction("-Turno-","-Shift-"))" TextProperty="Text" ValueProperty="Value" Style="width: 50%" />
+            </RadzenRow>
         </div>
-
         <div class="row">
-            <RadzenFormField Style="=width: 50%" Variant="@variant">
-                <RadzenNumeric TValue="decimal" @bind-Value="appointment.Appointment_Hour" />
+            <RadzenFormField Style="width: 50%; margin: 10px" Text="@(language.Traduction("-Hora de la Cita-","-Appointment Hour-"))" Variant="@variant">
+                <RadzenNumeric @bind-Value="appointment.Appointment_Hour" />
             </RadzenFormField>
         </div>
 
@@ -53,7 +52,7 @@
 
         <div class="row">
             <div class="col-12">
-                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
+                <RadzenButton Text="@(language.Traduction("Cancelar", "Cancel"))" ButtonStyle="ButtonStyle.Danger" Style="margin-top: 10px" Click="@Cancel"></RadzenButton>
             </div>
         </div>
     </EditForm>
@@ -150,7 +149,7 @@ else if (isError)
 
     IEnumerable<dynamic> Shift()
     {
-        yield return new { Text = "AM", Value = true};
+        yield return new { Text = "AM", Value = true };
         yield return new { Text = "PM", Value = false };
     }
 
@@ -164,6 +163,6 @@ else if (isError)
     {
         navigation.NavigateTo("/appointList");
     }
-   
-      
+
+
 }
